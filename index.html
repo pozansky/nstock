@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="theme.css" />
-    <link rel="stylesheet" href="polish.css?v=20260929-3" />
+    <link rel="stylesheet" href="polish.css?v=20260929-4" />
   </head>
   <body>
     <div class="app-shell">
@@ -24,11 +24,12 @@
         <div class="workspace-label">研究工作台</div>
         <nav class="nav-list" aria-label="主导航">
           <button class="nav-item active" data-view="overview"><span class="nav-index">01</span><span>市场驾驶舱</span><span class="nav-dot"></span></button>
-          <button class="nav-item" data-view="factors"><span class="nav-index">02</span><span>因子实验室</span></button>
-          <button class="nav-item" data-view="candidates"><span class="nav-index">03</span><span>候选选股</span><span class="nav-badge">—</span></button>
-          <button class="nav-item" data-view="portfolio"><span class="nav-index">04</span><span>组合与风控</span></button>
-          <button class="nav-item" data-view="backtest"><span class="nav-index">05</span><span>回测实验</span></button>
-          <button class="nav-item" data-view="audit"><span class="nav-index">06</span><span>复盘审计</span></button>
+          <button class="nav-item" data-view="agents"><span class="nav-index">02</span><span>Agent 协作台</span><span class="nav-agent-state">LIVE</span></button>
+          <button class="nav-item" data-view="factors"><span class="nav-index">03</span><span>因子实验室</span></button>
+          <button class="nav-item" data-view="backtest"><span class="nav-index">04</span><span>回测实验</span></button>
+          <button class="nav-item" data-view="candidates"><span class="nav-index">05</span><span>候选选股</span><span class="nav-badge">—</span></button>
+          <button class="nav-item" data-view="portfolio"><span class="nav-index">06</span><span>组合与风控</span></button>
+          <button class="nav-item" data-view="audit"><span class="nav-index">07</span><span>复盘审计</span></button>
         </nav>
         <div class="sidebar-bottom">
           <div class="system-state"><span class="state-light"></span><div><strong id="systemStatus">等待数据</strong><small id="systemSync">未同步</small></div></div>
@@ -89,6 +90,36 @@
           </div>
         </section>
 
+        <section class="agent-collab-view" id="agentCollabView" hidden>
+          <div class="page-heading animate-in"><div><div class="eyebrow">MULTI-AGENT RESEARCH CONTROL</div><h1>Agent 协作台</h1><p>总控 Agent 调度真实数据、因子、回测、质疑与风控流程；所有结论均可追溯到当前研究文件。</p></div><div class="heading-actions"><button class="button ghost" id="agentRefreshButton">刷新状态</button><button class="button primary" id="agentRunButton">运行完整闭环 <span>↗</span></button></div></div>
+
+          <div class="agent-mission-strip animate-in delay-1">
+            <div><span class="eyebrow">CURRENT MISSION</span><strong id="agentMission">等待真实研究结果</strong><small id="agentMissionMeta">尚未读取 Agent 运行记录</small></div>
+            <div class="mission-stat"><span>研究日</span><strong id="agentResearchDate">—</strong></div>
+            <div class="mission-stat"><span>研究股池</span><strong id="agentUniverseCount">—</strong></div>
+            <div class="mission-stat"><span>闭环状态</span><strong id="agentLoopState">—</strong></div>
+          </div>
+
+          <div class="agent-control-grid animate-in delay-2">
+            <section class="agent-pipeline-panel">
+              <div class="panel-toolbar"><div class="toolbar-title"><span class="live-bar"></span><strong>协作链</strong><span class="timestamp" id="agentRunTime">等待运行记录</span></div><span class="agent-orchestrator-badge">ORCHESTRATOR</span></div>
+              <div class="agent-pipeline" id="agentPipeline"><div class="data-loading">正在读取真实 Agent 状态…</div></div>
+            </section>
+            <aside class="agent-decision-panel">
+              <div class="eyebrow">FINAL DECISION</div>
+              <h3 id="agentDecisionTitle">等待闭环完成</h3>
+              <p id="agentDecisionRule">不会在没有真实因子与回测记录时生成候选。</p>
+              <div class="agent-top3" id="agentTop3"><div class="data-loading">等待真实 Top3…</div></div>
+              <div class="agent-approval"><span>人工审批</span><strong>必须</strong><small>系统不会自动下单</small></div>
+            </aside>
+          </div>
+
+          <div class="agent-evidence-grid animate-in delay-3">
+            <section class="agent-evidence-panel"><div class="panel-toolbar"><div class="toolbar-title"><span class="blue-marker"></span><strong>证据链</strong></div><span class="timestamp">真实运行文件</span></div><div id="agentEvidence" class="agent-evidence-list"><div class="data-loading">读取因子与回测证据…</div></div></section>
+            <section class="agent-critic-panel"><div class="panel-toolbar"><div class="toolbar-title"><span class="red-marker"></span><strong>质疑 Agent</strong></div><span class="timestamp" id="criticCount">—</span></div><div id="agentCritiques" class="agent-critique-list"><div class="data-loading">检查过拟合与风险…</div></div></section>
+          </div>
+        </section>
+
         <section class="factor-lab-view" id="factorLabView" hidden>
           <div class="page-heading animate-in"><div><div class="eyebrow">FACTOR RESEARCH LAB</div><h1>因子实验室</h1><p>先把因子讲清楚，再让模型去挖掘。当前目录与数值均来自真实行情计算。</p></div><div class="heading-actions"><button class="button ghost" id="factorRefreshButton">刷新真实因子</button><button class="button primary" id="mineFactorButton">配置挖掘实验 <span>↗</span></button></div></div>
           <div class="factor-lab-summary"><div><span class="eyebrow">ACTIVE MODEL</span><strong id="labModelName">Technical Cross-Section v0.1</strong><small id="labModelNote">腾讯实时 + 前复权日线 · 当前研究宇宙</small></div><div><span class="eyebrow">FACTORS IN USE</span><strong id="labFactorCount">—</strong><small>真实计算因子</small></div><div><span class="eyebrow">LAST CALCULATION</span><strong id="labLatestDate">—</strong><small id="labSource">—</small></div></div>
@@ -106,6 +137,6 @@
       </main>
     </div>
     <div class="toast" id="toast"><span class="toast-icon">✓</span><span id="toastText">等待真实数据</span></div>
-    <script src="app.js?v=20260929-3"></script>
+    <script src="app.js?v=20260929-4"></script>
   </body>
 </html>
