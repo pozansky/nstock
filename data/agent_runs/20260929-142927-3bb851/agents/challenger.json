@@ -1,0 +1,25 @@
+{
+  "id": "challenger",
+  "name": "Challenger Agent",
+  "team": "实验验证组",
+  "role": "寻找过拟合、回撤和可成交性问题",
+  "status": "警告",
+  "started_at": "2026-09-29 14:33:07",
+  "finished_at": "2026-09-29 14:33:07",
+  "summary": "发现 3 项需要人工关注的问题",
+  "evidence": [
+    "当前策略排名仍来自同一研究样本，必须继续做滚动样本外观察",
+    "最大回撤 -31.40% 超过20%",
+    "年化 +52.13% 偏高，需排查过拟合与可成交性"
+  ],
+  "artifact": "data/agent_runs/20260929-142927-3bb851/agents/challenger.json",
+  "output": {
+    "approved_for_research": true,
+    "approved_for_live_trading": false,
+    "findings": [
+      "当前策略排名仍来自同一研究样本，必须继续做滚动样本外观察",
+      "最大回撤 -31.40% 超过20%",
+      "年化 +52.13% 偏高，需排查过拟合与可成交性"
+    ]
+  }
+}

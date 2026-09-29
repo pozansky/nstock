@@ -1,0 +1,26 @@
+{
+  "id": "experiment_design",
+  "name": "实验设计 Agent",
+  "team": "实验验证组",
+  "role": "固定时间切分、成本和样本外规则",
+  "status": "完成",
+  "started_at": "2026-09-29 14:31:45",
+  "finished_at": "2026-09-29 14:31:45",
+  "summary": "采用时间顺序切分和滚动样本外复核；禁止随机打散时间序列",
+  "evidence": [
+    "历史区间 2024-01-02 至 2026-09-28",
+    "15bp × 换手率",
+    "信号T日，T+1建仓，T+2退出"
+  ],
+  "artifact": "data/agent_runs/20260929-142927-3bb851/agents/experiment_design.json",
+  "output": {
+    "split": {
+      "train": "前60%",
+      "validation": "中20%",
+      "test": "后20%"
+    },
+    "walk_forward": true,
+    "cost_bps": 15,
+    "leakage_policy": "测试集不得用于选择因子"
+  }
+}

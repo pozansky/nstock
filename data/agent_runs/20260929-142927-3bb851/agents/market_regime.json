@@ -1,0 +1,24 @@
+{
+  "id": "market_regime",
+  "name": "市场状态 Agent",
+  "team": "市场情报组",
+  "role": "识别指数、市场广度和波动状态",
+  "status": "完成",
+  "started_at": "2026-09-29 14:31:45",
+  "finished_at": "2026-09-29 14:31:45",
+  "summary": "当前市场状态：震荡",
+  "evidence": [
+    "指数平均涨跌 -0.08%",
+    "科技股上涨/下跌 601/296",
+    "数据截止 2026-09-28"
+  ],
+  "artifact": "data/agent_runs/20260929-142927-3bb851/agents/market_regime.json",
+  "output": {
+    "regime": "震荡",
+    "average_index_pct": -0.082,
+    "breadth": {
+      "up": 601,
+      "down": 296
+    }
+  }
+}

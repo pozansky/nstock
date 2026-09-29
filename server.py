@@ -8,6 +8,7 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from itertools import combinations
 import json, math, statistics, time, subprocess, re, threading, os, gzip, hashlib
+from multi_agent import load_latest as read_multi_agent_run, run_research_council
 
 HOST, PORT = "127.0.0.1", 4173
 GUPIAO_UNIVERSE_FILE = Path("/Users/pozansky/Documents/gupiao/fixed_universe_codes.json")
@@ -26,6 +27,8 @@ TECH_HISTORY_MANIFEST_FILE = DATA_DIR / "tech_history_manifest.json"
 FIXED_TECH_UNIVERSE_FILE = DATA_DIR / "fixed_tech_universe.json"
 CACHE_LOCK = threading.Lock()
 REFRESH_THREAD = None
+MULTI_AGENT_THREAD = None
+MULTI_AGENT_LOCK = threading.Lock()
 # A complete 930-name refresh is expensive; stale-while-revalidate on a
 # 15-minute cadence prevents permanent refresh loops during market hours.
 REFRESH_TTL_SECONDS = 15 * 60
@@ -1085,6 +1088,13 @@ def attach_research_runs(payload):
         if backtest_run["stale"]:
             backtest_run["stale_reason"] = "科技股池成员已变化；运行组合回测会先同步因子，再重算全部组合"
     payload["backtest_factor_run"] = backtest_run
+    council = read_multi_agent_run()
+    if council:
+        council = dict(council)
+        council["stale"] = council.get("universe_signature") != signature
+        if council["stale"]:
+            council["stale_reason"] = "科技股池已变化，需要重新运行十二 Agent 会签"
+    payload["multi_agent_run"] = council
     backtest = payload.get("backtest_factor_run")
     if agent and backtest and backtest.get("results") and payload.get("stocks"):
         combo = backtest["results"][0]
@@ -1117,6 +1127,33 @@ def attach_research_runs(payload):
             stock["agent_combo_breakdown"] = [{"key":column["key"], "name":validation_map.get(column["key"], {}).get("name", column["key"]), "direction":"正向" if column["direction"] == 1 else "反向", "score":round(column["scores"].get(stock["code"], 0), 1)} for column in rank_columns]
         payload["agent_selection"] = {"name":" / ".join(combo.get("names", [])), "factors":factor_keys, "direction_adjusted":True, "max_positions":3, "cutoff":cutoff, "selected_count":len(top_codes), "data_date":latest_data_date, "rule":"最新完整交易日先剔除近 20 日成交额最低 30%，再做方向调整后的因子截面排名并严格取 Top 3；科创板与 ST 已排除。"}
     return payload
+
+def build_multi_agent_context(dashboard):
+    factor_run = read_factor_agent_run() or {}
+    previous_top = [{"key": item.get("key"), "name": item.get("name"), "rank_ic": item.get("mean_rank_ic"), "gate": item.get("gate")}
+                    for item in factor_run.get("validation", {}).get("results", [])[:12]]
+    history = {}
+    try:
+        history = json.loads(TECH_HISTORY_MANIFEST_FILE.read_text(encoding="utf-8"))
+    except (FileNotFoundError, OSError, json.JSONDecodeError):
+        pass
+    candidates = [{"key": key, "name": name, "formula": formula} for key, name, formula in build_factor_search_space()]
+    return {"data_date": latest_completed_data_date(dashboard.get("stocks", [])),
+            "universe_signature": dashboard.get("universe_signature") or universe_signature_for_stocks(dashboard.get("stocks", [])),
+            "universe_size": len(dashboard.get("stocks", [])), "breadth": dashboard.get("breadth", {}),
+            "market": dashboard.get("market", {}), "stocks": dashboard.get("stocks", []),
+            "sectors": dashboard.get("tech_universe", {}).get("sectors", []), "history": history,
+            "factor_candidates": candidates, "previous_top": previous_top}
+
+def run_multi_agent_background(dashboard):
+    global MULTI_AGENT_THREAD
+    try:
+        stocks = dashboard.get("stocks", [])
+        context = build_multi_agent_context(dashboard)
+        run_research_council(context, lambda: run_factor_agent_loop(stocks), lambda: run_backtest_experiment(stocks))
+    finally:
+        with MULTI_AGENT_LOCK:
+            MULTI_AGENT_THREAD = None
 
 def select_by_factor_keys(stocks, factor_keys):
     agent = read_factor_agent_run()
@@ -1272,6 +1309,7 @@ def build_dashboard():
 
 class Handler(SimpleHTTPRequestHandler):
     def do_POST(self):
+        global MULTI_AGENT_THREAD
         parsed = urlparse(self.path)
         request_body = {}
         try:
@@ -1280,6 +1318,24 @@ class Handler(SimpleHTTPRequestHandler):
                 request_body = json.loads(self.rfile.read(length).decode("utf-8"))
         except (ValueError, json.JSONDecodeError):
             request_body = {}
+        if parsed.path == "/api/agents/run":
+            try:
+                dashboard = read_dashboard_cache()
+                if not dashboard or not dashboard.get("stocks"):
+                    raise RuntimeError("真实行情缓存尚未完成，十二 Agent 不会使用模拟输入")
+                with MULTI_AGENT_LOCK:
+                    if MULTI_AGENT_THREAD and MULTI_AGENT_THREAD.is_alive():
+                        payload = {"status": "运行中", "run": read_multi_agent_run()}
+                    else:
+                        MULTI_AGENT_THREAD = threading.Thread(target=run_multi_agent_background, args=(dashboard,), name="nstock-12-agent-council", daemon=True)
+                        MULTI_AGENT_THREAD.start()
+                        payload = {"status": "已启动", "agent_count": 12, "team_count": 4}
+                body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+                self.send_response(202); self.send_header("Content-Type", "application/json; charset=utf-8"); self.send_header("Cache-Control", "no-store"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
+            except Exception as exc:
+                body = json.dumps({"error": str(exc)}, ensure_ascii=False).encode("utf-8")
+                self.send_response(409); self.send_header("Content-Type", "application/json; charset=utf-8"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
+            return
         if parsed.path == "/api/universe":
             try:
                 selected = write_tech_config([str(key) for key in request_body.get("sectors", [])])
@@ -1357,6 +1413,12 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
+        if parsed.path == "/api/agents":
+            running = bool(MULTI_AGENT_THREAD and MULTI_AGENT_THREAD.is_alive())
+            payload = json.dumps({"running": running, "run": read_multi_agent_run(), "agent_count": 12, "team_count": 4}, ensure_ascii=False).encode("utf-8")
+            self.send_response(200); self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Cache-Control", "no-store"); self.send_header("Content-Length", str(len(payload))); self.end_headers(); self.wfile.write(payload)
+            return
         if parsed.path == "/api/dashboard":
             try:
                 payload = json.dumps(build_dashboard(), ensure_ascii=False).encode("utf-8")

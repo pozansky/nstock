@@ -33,49 +33,51 @@ function renderMarket(data) {
   document.querySelector('.market-strip-main .regime-dot').style.background = positive ? '#4ca67d' : '#be6c64';
   const counts = [data.stocks.length, data.stocks.filter((s) => s.status === '可建仓').length, data.stocks.filter((s) => s.status === '等待触发').length, data.stocks.filter((s) => s.factors.volatility20 > .8).length]; document.querySelectorAll('.filter-button span').forEach((el, i) => { el.textContent = counts[i]; });
 }
+const agentBlueprint={
+  '研究研发组':[['factor_hypothesis','因子假设 Agent'],['factor_developer','因子开发 Agent'],['model_research','模型研究 Agent']],
+  '市场情报组':[['market_regime','市场状态 Agent'],['industry_chain','科技产业链 Agent'],['event_news','事件新闻 Agent']],
+  '实验验证组':[['experiment_design','实验设计 Agent'],['backtest','回测 Agent'],['challenger','Challenger Agent']],
+  '决策执行组':[['portfolio_manager','组合经理 Agent'],['risk_execution','风控执行 Agent']]
+};
+const safe=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 function renderAgentCollaboration(data) {
-  const factorRun=data.agent_factor_run, backtest=data.backtest_factor_run, history=data.history_storage||{}, top=backtest?.results?.[0], result=top?.result||{}, holdings=(result.latest_holdings||[]).slice(0,3), validation=factorRun?.validation||{}, factorResults=validation.results||[], passed=factorResults.filter((item)=>item.gate==='通过').length, stale=Boolean(factorRun?.stale||backtest?.stale), ready=Boolean(factorRun&&backtest&&!stale);
-  setText('agentMission',top?`验证 ${top.names.join(' + ')}，输出最多 3 只候选`:'等待因子与回测闭环');
-  setText('agentMissionMeta',top?`${backtest.combination_count} 组策略完成比较 · 排名依据：${backtest.ranking_metric}`:'没有可用的真实组合回测记录');
-  setText('agentResearchDate',backtest?.data_date||factorRun?.data_date||'—'); setText('agentUniverseCount',`${backtest?.confirmation_universe||data.universe_size||0} 只`); setText('agentLoopState',ready?'已完成':stale?'需重算':'未完成'); setText('agentRunTime',backtest?.generated_at||factorRun?.generated_at||'等待运行记录');
-  const agents=[
-    {icon:'O',name:'总控 Agent',role:'核对股池签名并汇总最终结论',detail:ready?`因子与回测版本一致 · ${backtest.data_date}`:'等待完整闭环',state:ready?'完成':'等待',tone:ready?'complete':'warn'},
-    {icon:'D',name:'数据 Agent',role:'检查真实行情、完整收盘日与历史文件',detail:`行情 ${data.latest_date||'—'} · 研究 ${backtest?.data_date||'—'} · 历史 ${history.stock_count||0} 只`,state:data.errors?.length?'注意':'通过',tone:data.errors?.length?'warn':'complete'},
-    {icon:'I',name:'行业 Agent',role:'维护科技细分股池与板块归属',detail:`${data.tech_universe?.selected_sectors?.length||0} 个细分 · 排除科创板与 ST`,state:'完成',tone:'complete'},
-    {icon:'F',name:'因子 Agent',role:'生成假设并执行 Rank IC 验证',detail:`${factorRun?.search_space_size||0} 个公式 · ${passed} 个通过门槛`,state:factorRun&&!factorRun.stale?'完成':'待运行',tone:factorRun&&!factorRun.stale?'complete':'warn'},
-    {icon:'B',name:'回测 Agent',role:'执行单因子、双因子与三因子组合',detail:`${backtest?.combination_count||0} 组 · ${backtest?.usable_universe||0} 只可回测 · ${backtest?.cost_bps||0}bp`,state:backtest&&!backtest.stale?'完成':'待运行',tone:backtest&&!backtest.stale?'complete':'warn'},
-    {icon:'C',name:'质疑 Agent',role:'检查样本内偏差、回撤与异常收益',detail:`最大回撤 ${fmtPct(-Number(result.max_drawdown||0)*100)} · 样本 ${result.days||0} 天`,state:top?'已审查':'等待',tone:top?'warn':'idle'},
-    {icon:'R',name:'风控 Agent',role:'执行流动性、持仓数量与交易成本约束',detail:'流动性后 30% 剔除 · Top3 等权 · 不自动下单',state:top?'通过':'等待',tone:top?'complete':'idle'}
-  ];
-  document.getElementById('agentPipeline').innerHTML=agents.map((agent,index)=>`<div class="agent-pipeline-row ${agent.tone}"><div class="agent-node">${agent.icon}</div><div class="agent-pipeline-copy"><div><strong>${agent.name}</strong><span>${agent.role}</span></div><small>${agent.detail}</small></div><div class="agent-state">${agent.state}</div>${index<agents.length-1?'<i></i>':''}</div>`).join('');
-  setText('agentDecisionTitle',top?`#1 ${top.kind} · ${top.names.join(' + ')}`:'等待闭环完成'); setText('agentDecisionRule',top?`${result.portfolio}；研究结果不等同实际成交。`:'不会在没有真实因子与回测记录时生成候选。');
-  document.getElementById('agentTop3').innerHTML=holdings.length?holdings.map((stock,index)=>`<button class="agent-pick" data-symbol="${stock.code}"><span>0${index+1}</span><div><strong>${stock.name}</strong><small>${stock.code}</small></div><b>查看 →</b></button>`).join(''):'<div class="data-error">没有真实 Top3，决策 Agent 已阻断输出。</div>';
+  const run=data.multi_agent_run, allAgents=run?.agents||[], byId=Object.fromEntries(allAgents.map((item)=>[item.id,item])), waiting={status:'等待',summary:'等待首席研究 Agent 调度',evidence:[]};
+  const chief=byId.chief||{...waiting,name:'首席研究 Agent',role:'制定任务、检查依赖并签发最终研究结论'};
+  const decision=run?.decision||{}, holdings=(decision.holdings||[]).slice(0,3), completed=run&&['等待人工批准','阻断'].includes(run.status);
+  setText('agentMission',run?.mission||'十二 Agent、四团队量化研究会签');
+  setText('agentMissionMeta',run?`运行 ${run.run_id} · 版本 ${run.version}`:'因子假设由 Codex 推理；数值由确定性代码计算');
+  setText('agentResearchDate',run?.data_date||data.latest_date||'—'); setText('agentUniverseCount',`${run?.universe_size||data.universe_size||0} 只`); setText('agentLoopState',run?.status||'未运行'); setText('agentRunTime',run?.updated_at||'等待运行记录');
+  const chiefTone=chief.status==='失败'||chief.status==='阻断'?'risk':chief.status==='运行中'?'running':chief.status==='等待'?'idle':'complete';
+  document.getElementById('agentChief').innerHTML=`<div class="agent-chief-avatar">CIO</div><div><span>首席研究 Agent</span><strong>${safe(chief.summary)}</strong><small>${safe(chief.role||'制定任务、检查依赖并签发最终研究结论')}</small></div><b class="agent-status ${chiefTone}">${safe(chief.status)}</b>`;
+  document.getElementById('agentTeams').innerHTML=Object.entries(agentBlueprint).map(([team,members],teamIndex)=>`<section class="agent-team-column"><header><span>0${teamIndex+1}</span><div><strong>${team}</strong><small>${members.length} AGENTS</small></div></header><div class="agent-team-flow">${members.map(([id,name],index)=>{const item=byId[id]||{...waiting,name};const tone=['失败','阻断'].includes(item.status)?'risk':['警告','降级','数据受限'].includes(item.status)?'warn':item.status==='运行中'?'running':item.status==='完成'?'complete':'idle';const evidence=(item.evidence||[])[0]||item.role||'等待上游任务';return `<article class="agent-work-node ${tone}" data-agent-id="${id}"><div class="agent-work-top"><span>${String(index+1).padStart(2,'0')}</span><b>${safe(item.status)}</b></div><strong>${safe(item.name||name)}</strong><p>${safe(item.summary)}</p><small>${safe(evidence)}</small>${item.artifact?`<code>${safe(item.artifact)}</code>`:''}</article>`}).join('<i class="agent-flow-arrow">↓</i>')}</div></section>`).join('');
+  const strategy=(decision.strategy||[]).join(' + ');
+  setText('agentDecisionTitle',strategy?`组合经理：${strategy}`:'等待十二 Agent 会签'); setText('agentDecisionRule',holdings.length?'最多3只、等权研究组合；Challenger 未批准实盘，必须人工确认。':'没有完成全部真实验证前，组合经理不会输出股票。');
+  document.getElementById('agentTop3').innerHTML=holdings.length?holdings.map((stock,index)=>`<button class="agent-pick" data-symbol="${safe(stock.code)}"><span>0${index+1}</span><div><strong>${safe(stock.name)}</strong><small>${safe(stock.code)}</small></div><b>查看 →</b></button>`).join(''):`<div class="agent-empty-decision">${run?.status==='阻断'?'会签已阻断':'等待组合经理输出'}</div>`;
   document.querySelectorAll('.agent-pick').forEach((button)=>button.addEventListener('click',()=>{document.querySelector('[data-view="overview"]').click();selectStock(button.dataset.symbol);}));
-  const evidence=[
-    ['数据快照',`${history.stock_count||0} 只完整历史 · ${history.total_bars||0} 根日线 · 截止 ${history.last_date||'—'}`],
-    ['因子验证',`${factorRun?.search_space_size||0} 个公式 · ${passed} 个通过 · 引擎 ${factorRun?.engine_version||'未运行'}`],
-    ['组合回测',`${backtest?.combination_count||0} 组 · 最佳 Sharpe ${Number(result.sharpe||0).toFixed(2)} · 累计 ${fmtPct(Number(result.cumulative_return||0)*100)}`],
-    ['交易约束',backtest?.selection_rule||'等待真实回测规则']
-  ];
-  document.getElementById('agentEvidence').innerHTML=evidence.map(([name,detail],index)=>`<div class="agent-evidence-row"><span>${String(index+1).padStart(2,'0')}</span><div><strong>${name}</strong><small>${detail}</small></div></div>`).join('');
-  const critiques=[];
-  if(top)critiques.push({level:'warn',title:'样本内研究',detail:'当前排名经过同一历史样本筛选，正式交易前仍需滚动样本外与实盘观察验证。'});
-  if(Number(result.max_drawdown||0)>.20)critiques.push({level:'risk',title:'回撤超过 20%',detail:`当前最大回撤 ${fmtPct(-Number(result.max_drawdown)*100)}，需要仓位上限与组合止损。`});
-  if(Number(result.annual_return||0)>.50)critiques.push({level:'warn',title:'年化收益偏高',detail:`年化 ${fmtPct(Number(result.annual_return)*100)}，优先检查过拟合、幸存者偏差和成交可实现性。`});
-  if(data.errors?.length)critiques.push({level:'risk',title:'数据源存在失败项',detail:`${data.errors.length} 个标的未取得完整数据，未使用模拟值补齐。`});
-  if(!critiques.length)critiques.push({level:'ok',title:'未发现阻断项',detail:'仍需人工审批，系统不会自动执行交易。'});
-  setText('criticCount',`${critiques.length} 项`); document.getElementById('agentCritiques').innerHTML=critiques.map((item)=>`<div class="agent-critique-row ${item.level}"><span>${item.level==='risk'?'!':item.level==='warn'?'△':'✓'}</span><div><strong>${item.title}</strong><small>${item.detail}</small></div></div>`).join('');
+  const artifacts=allAgents.filter((item)=>item.artifact).slice().reverse();
+  document.getElementById('agentEvidence').innerHTML=artifacts.length?artifacts.map((item,index)=>`<div class="agent-evidence-row"><span>${String(artifacts.length-index).padStart(2,'0')}</span><div><strong>${safe(item.name)}</strong><small>${safe(item.summary)}</small><code>${safe(item.artifact)}</code></div></div>`).join(''):'<div class="data-loading">运行后会为每个 Agent 写入独立 JSON 产物</div>';
+  const warnings=run?.warnings||[]; setText('criticCount',`${warnings.length} 项`);
+  document.getElementById('agentCritiques').innerHTML=warnings.length?warnings.map((text,index)=>`<div class="agent-critique-row ${index===0?'risk':'warn'}"><span>${index===0?'!':'△'}</span><div><strong>${index===0?'Challenger 意见':'数据或执行限制'}</strong><small>${safe(text)}</small></div></div>`).join(''):'<div class="data-loading">尚未产生会签警告</div>';
+  const button=document.getElementById('agentRunButton'); button.disabled=Boolean(run&&!completed&&run.status==='运行中'); button.innerHTML=button.disabled?'十二 Agent 运行中…':'运行十二 Agent 闭环 <span>↗</span>';
+}
+async function pollAgentCouncil() {
+  for(let attempt=0;attempt<360;attempt++){
+    const response=await fetch('/api/agents',{cache:'no-store'}), payload=await response.json();
+    if(payload.run){state.dashboard.multi_agent_run=payload.run;renderAgentCollaboration(state.dashboard);}
+    if(!payload.running)return payload.run;
+    await new Promise((resolve)=>setTimeout(resolve,1500));
+  }
+  throw new Error('十二 Agent 运行超时，请刷新查看已落盘状态');
 }
 async function runAgentCollaboration() {
-  const button=document.getElementById('agentRunButton'), pipeline=document.getElementById('agentPipeline'); button.disabled=true; button.textContent='闭环运行中…'; pipeline.innerHTML='<div class="agent-running"><span></span><div><strong>总控 Agent 已启动</strong><small>正在执行真实因子验证，完成后自动进入组合回测。</small></div></div>';
+  const button=document.getElementById('agentRunButton'); button.disabled=true;button.textContent='正在启动十二 Agent…';
   try {
-    const factorResponse=await fetch('/api/mine/agent',{method:'POST'}), factorData=await factorResponse.json(); if(!factorResponse.ok||factorData.error)throw new Error(factorData.error||'因子验证失败');
-    pipeline.innerHTML='<div class="agent-running"><span></span><div><strong>因子 Agent 已完成</strong><small>正在对候选因子执行单因子、双因子和三因子真实组合回测。</small></div></div>';
-    const backtestResponse=await fetch('/api/backtest',{method:'POST'}), backtestData=await backtestResponse.json(); if(!backtestResponse.ok||backtestData.error)throw new Error(backtestData.error||'组合回测失败');
-    const dashboardResponse=await fetch('/api/dashboard',{cache:'no-store'}), dashboard=await dashboardResponse.json(); if(!dashboardResponse.ok||dashboard.error)throw new Error(dashboard.error||'协作结果读取失败');
-    state.dashboard=dashboard; renderMarket(dashboard); renderCandidates(dashboard); renderFactorLab(dashboard); renderBacktest(dashboard); renderAgentCollaboration(dashboard); toast(`Agent 闭环完成：${backtestData.combination_count} 组策略已复核`);
-  } catch(error) { pipeline.innerHTML=`<div class="data-error">协作闭环已阻断：${error.message}</div>`; toast('Agent 协作闭环未完成'); }
-  finally { button.disabled=false; button.innerHTML='运行完整闭环 <span>↗</span>'; }
+    const response=await fetch('/api/agents/run',{method:'POST'}), payload=await response.json();if(!response.ok||payload.error)throw new Error(payload.error||'启动失败');
+    toast('十二 Agent、四团队已启动'); await pollAgentCouncil();
+    const dashboardResponse=await fetch('/api/dashboard',{cache:'no-store'}), dashboard=await dashboardResponse.json();if(!dashboardResponse.ok||dashboard.error)throw new Error(dashboard.error||'结果读取失败');
+    state.dashboard=dashboard;renderMarket(dashboard);renderCandidates(dashboard);renderFactorLab(dashboard);renderBacktest(dashboard);renderAgentCollaboration(dashboard);toast(`十二 Agent 会签完成：${dashboard.multi_agent_run?.status||'已落盘'}`);
+  } catch(error){toast(`Agent 会签未完成：${error.message}`);}
+  finally{button.disabled=false;button.innerHTML='运行十二 Agent 闭环 <span>↗</span>';}
 }
 function rowTemplate(stock, index, useCombo=false) {
   const colors = ['red', 'orange', 'blue', 'purple'], f = stock.factors;
@@ -139,7 +141,7 @@ async function runFactorMining() {
     toast('真实因子挖掘未完成');
   }
 }
-async function loadDashboard() { setLoading('正在读取真实行情与日线 K 线…'); try { const response = await fetch('/api/dashboard',{cache:'no-store'}), data = await response.json(); if (!response.ok || data.error) throw new Error(data.error || '接口请求失败'); state.dashboard = data; renderMarket(data); renderCandidates(data); renderFactorLab(data); renderAgentCollaboration(data); toast(`已接入${data.source_label || '真实行情'} · ${data.latest_date || '无最新交易日'}`); } catch (error) { document.getElementById('candidateTable').innerHTML = `<div class="data-error">真实数据接口不可用：${error.message}<br><small>页面不会使用模拟数据。请确认通过 server.py 启动，并检查网络。</small></div>`; document.getElementById('agentList').innerHTML='<div class="data-error">无真实数据，不生成分析结论。</div>'; document.getElementById('factorMap').innerHTML='<div class="data-error">无真实数据，不计算因子。</div>'; document.getElementById('factorCatalog').innerHTML='<div class="data-error">无真实数据，不展示因子目录。</div>'; document.getElementById('formulaGrid').innerHTML='<div class="data-error">无真实数据，不展示公式。</div>'; document.getElementById('agentPipeline').innerHTML='<div class="data-error">无真实数据，Agent 协作已阻断。</div>'; document.getElementById('checkList').innerHTML='<div class="data-error">无真实数据，不允许进入交易确认。</div>'; setText('dataSource','未连接'); setText('systemStatus','数据阻断'); setText('systemSync','未同步'); setText('marketClockTime','未连接'); toast('真实数据连接失败，已阻断模拟内容'); } }
+async function loadDashboard() { setLoading('正在读取真实行情与日线 K 线…'); try { const response = await fetch('/api/dashboard',{cache:'no-store'}), data = await response.json(); if (!response.ok || data.error) throw new Error(data.error || '接口请求失败'); state.dashboard = data; renderMarket(data); renderCandidates(data); renderFactorLab(data); renderAgentCollaboration(data); toast(`已接入${data.source_label || '真实行情'} · ${data.latest_date || '无最新交易日'}`); } catch (error) { document.getElementById('candidateTable').innerHTML = `<div class="data-error">真实数据接口不可用：${error.message}<br><small>页面不会使用模拟数据。请确认通过 server.py 启动，并检查网络。</small></div>`; document.getElementById('agentList').innerHTML='<div class="data-error">无真实数据，不生成分析结论。</div>'; document.getElementById('factorMap').innerHTML='<div class="data-error">无真实数据，不计算因子。</div>'; document.getElementById('factorCatalog').innerHTML='<div class="data-error">无真实数据，不展示因子目录。</div>'; document.getElementById('formulaGrid').innerHTML='<div class="data-error">无真实数据，不展示公式。</div>'; document.getElementById('agentTeams').innerHTML='<div class="data-error">无真实数据，十二 Agent 协作已阻断。</div>'; document.getElementById('checkList').innerHTML='<div class="data-error">无真实数据，不允许进入交易确认。</div>'; setText('dataSource','未连接'); setText('systemStatus','数据阻断'); setText('systemSync','未同步'); setText('marketClockTime','未连接'); toast('真实数据连接失败，已阻断模拟内容'); } }
 document.querySelectorAll('.nav-item').forEach((button)=>button.addEventListener('click',()=>{const view=button.dataset.view;document.querySelectorAll('.nav-item').forEach((item)=>item.classList.toggle('active',item===button));setText('viewTitle',titles[view]);const overview=document.getElementById('overviewView'),agents=document.getElementById('agentCollabView'),factorLab=document.getElementById('factorLabView'),backtest=document.getElementById('backtestView'),placeholder=document.getElementById('placeholderView');overview.hidden=view!=='overview';agents.hidden=view!=='agents';factorLab.hidden=view!=='factors';backtest.hidden=view!=='backtest';placeholder.hidden=!['candidates','portfolio','audit'].includes(view);if(view==='agents'&&state.dashboard)renderAgentCollaboration(state.dashboard);if(view==='factors'&&state.dashboard)renderFactorLab(state.dashboard);if(view==='backtest'&&state.dashboard)renderBacktest(state.dashboard);if(!placeholder.hidden){setText('placeholderTitle',titles[view]);setText('placeholderCopy',copies[view]);}}));
 document.getElementById('starButton').addEventListener('click',(event)=>{if(!state.selected)return toast('暂无真实候选可收藏');state.starred=!state.starred;event.currentTarget.textContent=state.starred?'★':'☆';event.currentTarget.classList.toggle('starred',state.starred);toast(state.starred?'已加入观察列表':'已移出观察列表');});
 document.getElementById('refreshButton').addEventListener('click',(event)=>{const icon=event.currentTarget.querySelector('.refresh-icon');icon.animate([{transform:'rotate(0)'},{transform:'rotate(360deg)'}],{duration:600});loadDashboard();}); document.getElementById('researchButton').addEventListener('click',()=>toast('当前仅启动真实数据扫描，不生成虚构 Agent 结论')); document.getElementById('analysisButton').addEventListener('click',()=>state.selected?toast('完整分析将使用当前真实数据生成'):toast('暂无真实数据')); document.getElementById('backToOverview').addEventListener('click',()=>document.querySelector('[data-view="overview"]').click());

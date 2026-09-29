@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["summary", "hypotheses", "risks"],
+  "properties": {
+    "summary": {"type": "string"},
+    "hypotheses": {
+      "type": "array",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["candidate", "rationale", "expectation"],
+        "properties": {
+          "candidate": {"type": "string"},
+          "rationale": {"type": "string"},
+          "expectation": {"type": "string"}
+        }
+      }
+    },
+    "risks": {"type": "array", "items": {"type": "string"}, "maxItems": 5}
+  }
+}

@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="theme.css" />
-    <link rel="stylesheet" href="polish.css?v=20260929-4" />
+    <link rel="stylesheet" href="polish.css?v=20260929-5" />
   </head>
   <body>
     <div class="app-shell">
@@ -100,11 +100,13 @@
             <div class="mission-stat"><span>闭环状态</span><strong id="agentLoopState">—</strong></div>
           </div>
 
+          <div class="agent-chief-line animate-in delay-2">
+            <div class="agent-chief-node" id="agentChief"><div class="data-loading">等待首席研究 Agent…</div></div>
+            <div class="agent-chief-meta"><span class="agent-orchestrator-badge">ORCHESTRATOR</span><small id="agentRunTime">等待运行记录</small></div>
+          </div>
+
           <div class="agent-control-grid animate-in delay-2">
-            <section class="agent-pipeline-panel">
-              <div class="panel-toolbar"><div class="toolbar-title"><span class="live-bar"></span><strong>协作链</strong><span class="timestamp" id="agentRunTime">等待运行记录</span></div><span class="agent-orchestrator-badge">ORCHESTRATOR</span></div>
-              <div class="agent-pipeline" id="agentPipeline"><div class="data-loading">正在读取真实 Agent 状态…</div></div>
-            </section>
+            <section class="agent-team-board" id="agentTeams"><div class="data-loading">正在读取十二 Agent 状态…</div></section>
             <aside class="agent-decision-panel">
               <div class="eyebrow">FINAL DECISION</div>
               <h3 id="agentDecisionTitle">等待闭环完成</h3>
@@ -115,8 +117,8 @@
           </div>
 
           <div class="agent-evidence-grid animate-in delay-3">
-            <section class="agent-evidence-panel"><div class="panel-toolbar"><div class="toolbar-title"><span class="blue-marker"></span><strong>证据链</strong></div><span class="timestamp">真实运行文件</span></div><div id="agentEvidence" class="agent-evidence-list"><div class="data-loading">读取因子与回测证据…</div></div></section>
-            <section class="agent-critic-panel"><div class="panel-toolbar"><div class="toolbar-title"><span class="red-marker"></span><strong>质疑 Agent</strong></div><span class="timestamp" id="criticCount">—</span></div><div id="agentCritiques" class="agent-critique-list"><div class="data-loading">检查过拟合与风险…</div></div></section>
+            <section class="agent-evidence-panel"><div class="panel-toolbar"><div class="toolbar-title"><span class="blue-marker"></span><strong>Agent 产物</strong></div><span class="timestamp">逐节点写入文件</span></div><div id="agentEvidence" class="agent-evidence-list"><div class="data-loading">等待 Agent 产物…</div></div></section>
+            <section class="agent-critic-panel"><div class="panel-toolbar"><div class="toolbar-title"><span class="red-marker"></span><strong>会签警告</strong></div><span class="timestamp" id="criticCount">—</span></div><div id="agentCritiques" class="agent-critique-list"><div class="data-loading">等待 Challenger 与风控会签…</div></div></section>
           </div>
         </section>
 
@@ -137,6 +139,6 @@
       </main>
     </div>
     <div class="toast" id="toast"><span class="toast-icon">✓</span><span id="toastText">等待真实数据</span></div>
-    <script src="app.js?v=20260929-4"></script>
+    <script src="app.js?v=20260929-5"></script>
   </body>
 </html>
