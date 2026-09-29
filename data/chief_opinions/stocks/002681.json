@@ -1,0 +1,16 @@
+{
+  "code": "002681",
+  "name": "奋达科技",
+  "fetched_at": "2026-09-29 15:29:03",
+  "requested_limit": 1,
+  "opinion_count": 1,
+  "opinions": [
+    {
+      "opi_pubtime": "2026-08-03T11:23:44",
+      "publish_time_beijing": "2026-08-03 11:23:44",
+      "title": "京东外卖推出AI智能头盔，奋达科技与京东合作",
+      "content": "京东外卖推出AI智能头盔 奋达科技智能头盔+京东合作\nhttps://mp.weixin.qq.com/s/FCgVvfMpVG9tXyQNt3HU7A",
+      "opi_all": "{\"content\":\"京东外卖推出AI智能头盔 奋达科技智能头盔+京东合作\\nhttps://mp.weixin.qq.com/s/FCgVvfMpVG9tXyQNt3HU7A\",\"image\":\"[\\\"meeting-minutes/zsxq/20260803/1785726920541.png\\\"]\",\"title\":\"京东外卖推出AI智能头盔，奋达科技与京东合作\"}"
+    }
+  ]
+}

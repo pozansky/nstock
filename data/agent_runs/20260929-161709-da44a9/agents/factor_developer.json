@@ -1,0 +1,181 @@
+{
+  "id": "factor_developer",
+  "name": "因子开发 Agent",
+  "team": "研究研发组",
+  "role": "把假设限制在白名单公式并执行真实验证",
+  "status": "完成",
+  "started_at": "2026-09-29 16:17:09",
+  "finished_at": "2026-09-29 16:17:09",
+  "duration_ms": 26,
+  "confidence": 0.5,
+  "data_quality": "历史样本偏短",
+  "depends_on": [
+    "factor_hypothesis"
+  ],
+  "summary": "100 个白名单公式完成验证，52 个通过门槛",
+  "evidence": [
+    "全量确认股池 896 只",
+    "历史日线 35 根",
+    "引擎 tech-factor-v4-shared-top4-backtests"
+  ],
+  "artifact": "data\\agent_runs\\20260929-161709-da44a9\\agents\\factor_developer.json",
+  "process": [
+    {
+      "time": "2026-09-29 16:17:09",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-09-29 16:17:09",
+      "stage": "缓存命中",
+      "detail": "复用同一股池和交易日的因子验证结果"
+    },
+    {
+      "time": "2026-09-29 16:17:09",
+      "stage": "完成",
+      "detail": "100 个白名单公式完成验证，52 个通过门槛"
+    }
+  ],
+  "output": {
+    "passed_count": 52,
+    "top_factors": [
+      {
+        "key": "ma_3_120",
+        "name": "3/120 日均线差",
+        "formula": "Mean(close, 3) / Mean(close, 120) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0737,
+        "icir": -0.282,
+        "gate": "通过"
+      },
+      {
+        "key": "ma_5_60",
+        "name": "5/60 日均线差",
+        "formula": "Mean(close, 5) / Mean(close, 60) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0726,
+        "icir": -0.254,
+        "gate": "通过"
+      },
+      {
+        "key": "ma_3_60",
+        "name": "3/60 日均线差",
+        "formula": "Mean(close, 3) / Mean(close, 60) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0721,
+        "icir": -0.256,
+        "gate": "通过"
+      },
+      {
+        "key": "ma_10_60",
+        "name": "10/60 日均线差",
+        "formula": "Mean(close, 10) / Mean(close, 60) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0718,
+        "icir": -0.243,
+        "gate": "通过"
+      },
+      {
+        "key": "ma_5_120",
+        "name": "5/120 日均线差",
+        "formula": "Mean(close, 5) / Mean(close, 120) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0709,
+        "icir": -0.265,
+        "gate": "通过"
+      },
+      {
+        "key": "volume_ratio_3_120",
+        "name": "3/120 日量比",
+        "formula": "Mean(volume, 3) / Mean(volume, 120)",
+        "direction": "反向",
+        "mean_rank_ic": -0.0694,
+        "icir": -0.432,
+        "gate": "通过"
+      },
+      {
+        "key": "volume_ratio_5_120",
+        "name": "5/120 日量比",
+        "formula": "Mean(volume, 5) / Mean(volume, 120)",
+        "direction": "反向",
+        "mean_rank_ic": -0.068,
+        "icir": -0.415,
+        "gate": "通过"
+      },
+      {
+        "key": "momentum_40",
+        "name": "40 日动量",
+        "formula": "close / Ref(close, 40) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0679,
+        "icir": -0.24,
+        "gate": "通过"
+      },
+      {
+        "key": "reversal_40",
+        "name": "40 日反转",
+        "formula": "-(close / Ref(close, 40) - 1)",
+        "direction": "正向",
+        "mean_rank_ic": 0.0679,
+        "icir": 0.24,
+        "gate": "通过"
+      },
+      {
+        "key": "ma_10_120",
+        "name": "10/120 日均线差",
+        "formula": "Mean(close, 10) / Mean(close, 120) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0657,
+        "icir": -0.233,
+        "gate": "通过"
+      },
+      {
+        "key": "volume_ratio_10_120",
+        "name": "10/120 日量比",
+        "formula": "Mean(volume, 10) / Mean(volume, 120)",
+        "direction": "反向",
+        "mean_rank_ic": -0.0652,
+        "icir": -0.373,
+        "gate": "通过"
+      },
+      {
+        "key": "volatility_10",
+        "name": "10 日收益波动",
+        "formula": "Std(Return(close), 10)",
+        "direction": "反向",
+        "mean_rank_ic": -0.0599,
+        "icir": -0.187,
+        "gate": "通过"
+      }
+    ],
+    "hypothesis_input": {
+      "hypotheses": [
+        {
+          "candidate": "momentum5",
+          "rationale": "等待 LLM 研究解释",
+          "expectation": "仅进入代码验证"
+        },
+        {
+          "candidate": "momentum10",
+          "rationale": "等待 LLM 研究解释",
+          "expectation": "仅进入代码验证"
+        },
+        {
+          "candidate": "momentum20",
+          "rationale": "等待 LLM 研究解释",
+          "expectation": "仅进入代码验证"
+        },
+        {
+          "candidate": "momentum60",
+          "rationale": "等待 LLM 研究解释",
+          "expectation": "仅进入代码验证"
+        },
+        {
+          "candidate": "ma5_20",
+          "rationale": "等待 LLM 研究解释",
+          "expectation": "仅进入代码验证"
+        }
+      ]
+    }
+  }
+}

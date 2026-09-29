@@ -1,0 +1,16 @@
+{
+  "code": "300550",
+  "name": "和仁科技",
+  "fetched_at": "2026-09-29 15:53:03",
+  "requested_limit": 1,
+  "opinion_count": 1,
+  "opinions": [
+    {
+      "opi_pubtime": "2025-04-07T20:56:20",
+      "publish_time_beijing": "2025-04-07 20:56:20",
+      "title": "【华西计算机】0407｜OpenAI公布新模型发布计划，GPT-5推出时间推迟",
+      "content": null,
+      "opi_all": "{\"description\":\"近日，OpenAI 首席执行官奥尔特曼透露重要消息，OpenAI 将在未来几周内发布 o3 和 o4 - mini，未来几个月会推出 GPT-5。\",\"title\":\"【华西计算机】0407｜OpenAI公布新模型发布计划，GPT-5推出时间推迟\",\"url\":\"http://mp.weixin.qq.com/s?__biz=MzIwMjY3MjgxMA==&mid=2247530174&idx=1&sn=66a3b323f60f1cb3044e377d9fb2497f&chksm=970dc15a69cc6e5b43b18ccb578c6964bd90930da73e7e3ed8fa96e0aa357299a48f7215732f&mpshare=1&scene=1&srcid=0407H2oV7Z4yz81DOCyTwx2V&sharer_shareinfo=2fe6ef5f93303dd469a4ac99902d211d&sharer_shareinfo_first=2fe6ef5f93303dd469a4ac99902d211d#rd\"}"
+    }
+  ]
+}

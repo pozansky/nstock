@@ -1,0 +1,99 @@
+{
+  "id": "backtest",
+  "name": "回测 Agent",
+  "team": "实验验证组",
+  "role": "确定性执行单、双、三因子回测",
+  "status": "完成",
+  "started_at": "2026-09-29 16:16:02",
+  "finished_at": "2026-09-29 16:16:02",
+  "duration_ms": 23,
+  "confidence": 0.65,
+  "data_quality": "年化样本可用",
+  "depends_on": [
+    "factor_developer",
+    "model_research",
+    "experiment_design"
+  ],
+  "summary": "完成 14 组确定性回测；最佳成本后 Sharpe 1.32",
+  "evidence": [
+    "可回测 885 只",
+    "累计 +127.94%",
+    "最大回撤 -30.37%"
+  ],
+  "artifact": "data\\agent_runs\\20260929-161601-321509\\agents\\backtest.json",
+  "process": [
+    {
+      "time": "2026-09-29 16:16:02",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-09-29 16:16:02",
+      "stage": "缓存命中",
+      "detail": "复用同一股池和交易日的回测结果"
+    },
+    {
+      "time": "2026-09-29 16:16:02",
+      "stage": "完成",
+      "detail": "完成 14 组确定性回测；最佳成本后 Sharpe 1.32"
+    }
+  ],
+  "output": {
+    "top_strategy": {
+      "kind": "3 因子组合",
+      "factor_count": 3,
+      "factors": [
+        "ma_3_120",
+        "momentum_40",
+        "volatility_10"
+      ],
+      "names": [
+        "3/120 日均线差",
+        "40 日动量",
+        "10 日收益波动"
+      ],
+      "directions": [
+        "反向",
+        "反向",
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "600089",
+            "name": "特变电工"
+          },
+          {
+            "code": "300444",
+            "name": "双杰电气"
+          },
+          {
+            "code": "601179",
+            "name": "中国西电"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.001795,
+        "cumulative_return": 1.2794,
+        "annual_return": 0.4807,
+        "sharpe": 1.321,
+        "max_drawdown": 0.3037,
+        "win_rate": 0.539,
+        "equity": 2.2794,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 1,
+      "rank_metric": "成本后 Sharpe"
+    },
+    "engine_version": "tech-top3-v8-liquidity-screen",
+    "selection_rule": "T 日收盘计算因子，先剔除近 20 日成交额最低 30%，再做截面排名并取最高 3 只等权；T+1 收盘建仓，T+2 收盘退出，扣除 15bp × 换手率。"
+  }
+}

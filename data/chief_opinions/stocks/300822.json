@@ -1,0 +1,16 @@
+{
+  "code": "300822",
+  "name": "贝仕达克",
+  "fetched_at": "2026-09-29 16:02:35",
+  "requested_limit": 1,
+  "opinion_count": 1,
+  "opinions": [
+    {
+      "opi_pubtime": "2025-06-06T08:05:25",
+      "publish_time_beijing": "2025-06-06 08:05:25",
+      "title": "6.6山西证券研究 | 英伟达财报加速GB2...",
+      "content": "",
+      "opi_all": "{\"description\":\"您的专属研究报告\",\"title\":\"6.6山西证券研究 | 英伟达财报加速GB2...\",\"content\":\"\",\"url\":\"https://szzy.sxzq.com/szzy/#/?batchno=8619117665187594261\"}"
+    }
+  ]
+}

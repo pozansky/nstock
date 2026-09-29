@@ -1,0 +1,16 @@
+{
+  "code": "002400",
+  "name": "省广集团",
+  "fetched_at": "2026-09-29 15:24:08",
+  "requested_limit": 1,
+  "opinion_count": 1,
+  "opinions": [
+    {
+      "opi_pubtime": "2026-09-22T11:19:20",
+      "publish_time_beijing": "2026-09-22 11:19:20",
+      "title": "Meta muse发酵 省广集团Meta代理商业务",
+      "content": "#meta muse全面发酵 \n\n#省广集团 Meta大中华区认证官方代理商，省广国际承接品牌出海Meta广告投放，AI营销+跨境品牌推广。\n\n公司全面接入#Meta、Google、TikTok等海外主流媒体平台，为中国企业搭建出海营销合作桥梁",
+      "opi_all": "{\"title\":\"Meta muse发酵 省广集团Meta代理商业务\",\"content\":\"#meta muse全面发酵 \\n\\n#省广集团 Meta大中华区认证官方代理商，省广国际承接品牌出海Meta广告投放，AI营销+跨境品牌推广。\\n\\n公司全面接入#Meta、Google、TikTok等海外主流媒体平台，为中国企业搭建出海营销合作桥梁\"}"
+    }
+  ]
+}

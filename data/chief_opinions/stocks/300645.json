@@ -1,0 +1,16 @@
+{
+  "code": "300645",
+  "name": "正元智慧",
+  "fetched_at": "2026-09-29 15:56:52",
+  "requested_limit": 1,
+  "opinion_count": 1,
+  "opinions": [
+    {
+      "opi_pubtime": "2025-07-31T13:04:02",
+      "publish_time_beijing": "2025-07-31 13:04:02",
+      "title": "【民生计算机】迎接从“互联网+”到“AI+”的伟大跨越",
+      "content": "",
+      "opi_all": "{\"description\":\"\",\"title\":\"【民生计算机】迎接从“互联网+”到“AI+”的伟大跨越\",\"content\":\"\",\"url\":\"http://mp.weixin.qq.com/s?__biz=MjM5NjM2MzQwMQ==&mid=2650839079&idx=1&sn=8c3c74d699d6f2b5cfc0b7ab00db574b&chksm=bca2f99cc4cce664def7c48dd4ecf53d3b44b016c4dfefc1fb648fa1883e8825ae1a0a0c3c7e&scene=126&sessionid=1753934507#rd\"}"
+    }
+  ]
+}

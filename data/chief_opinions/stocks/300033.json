@@ -1,0 +1,16 @@
+{
+  "code": "300033",
+  "name": "同花顺",
+  "fetched_at": "2026-09-29 15:36:46",
+  "requested_limit": 1,
+  "opinion_count": 1,
+  "opinions": [
+    {
+      "opi_pubtime": "2026-09-28T15:34:36",
+      "publish_time_beijing": "2026-09-28 15:34:36",
+      "title": "【东吴非银 | 行业周报】险资获准投资港股通ETF；8月寿险保费增速转负",
+      "content": null,
+      "opi_all": "{\"description\":\"非银金融目前平均估值仍然较低，具有安全边际，攻守兼备。行业推荐排序为保险>证券>其他多元金融，重点推荐中国平安、中国太保、中国人寿、新华保险、中国人保、国泰海通、同花顺等。\",\"title\":\"【东吴非银 | 行业周报】险资获准投资港股通ETF；8月寿险保费增速转负\",\"url\":\"https://mp.weixin.qq.com/s?__biz=MzA3NjM0ODMxNQ==&mid=2650882796&idx=1&sn=4828746977e06d450505c98bebb26419&chksm=85117ac7ab37f25f83e4e765c983ca383e30170afcfdca960083a67bca236e31bb9b1d70b949&mpshare=1&scene=1&srcid=0928B3in8xZqchA334XmHnOO&sharer_shareinfo=7a7b87bb0c1dbba7e22e6d8dafa358c1&sharer_shareinfo_first=7a7b87bb0c1dbba7e22e6d8dafa358c1#rd\"}"
+    }
+  ]
+}

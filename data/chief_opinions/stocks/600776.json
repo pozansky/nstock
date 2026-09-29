@@ -1,0 +1,16 @@
+{
+  "code": "600776",
+  "name": "东方通信",
+  "fetched_at": "2026-09-29 16:24:17",
+  "requested_limit": 1,
+  "opinion_count": 1,
+  "opinions": [
+    {
+      "opi_pubtime": "2026-09-03T09:24:01",
+      "publish_time_beijing": "2026-09-03 09:24:01",
+      "title": "东方通信：OpenAiJalapeno方案细节及OCS行业增量新逻辑",
+      "content": "东方通信|OpenAiJalapeno方案细节及OCS行业增量新逻辑",
+      "opi_all": "{\"content\":\"东方通信|OpenAiJalapeno方案细节及OCS行业增量新逻辑\",\"image\":\"[\\\"meeting-minutes/zsxq/20260903/1788398138046.png\\\"]\",\"title\":\"东方通信：OpenAiJalapeno方案细节及OCS行业增量新逻辑\"}"
+    }
+  ]
+}

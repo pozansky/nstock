@@ -1,5 +1,6 @@
-.cache/
 __pycache__/
 *.pyc
 .DS_Store
-hot_rank_history.json
+.env
+.env.*
+!.env.example

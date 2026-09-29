@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "additionalProperties": false,
-  "required": ["summary", "hypotheses", "risks"],
+  "required": ["summary", "hypotheses", "generated_factors", "risks"],
   "properties": {
     "summary": {"type": "string"},
     "hypotheses": {
@@ -14,6 +14,24 @@
         "required": ["candidate", "rationale", "expectation"],
         "properties": {
           "candidate": {"type": "string"},
+          "rationale": {"type": "string"},
+          "expectation": {"type": "string"}
+        }
+      }
+    },
+    "generated_factors": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "left", "operator", "right", "rationale", "expectation"],
+        "properties": {
+          "name": {"type": "string", "minLength": 2, "maxLength": 24},
+          "left": {"type": "string"},
+          "operator": {"type": "string", "enum": ["multiply", "difference", "ratio", "confirm"]},
+          "right": {"type": "string"},
           "rationale": {"type": "string"},
           "expectation": {"type": "string"}
         }

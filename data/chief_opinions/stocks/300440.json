@@ -1,0 +1,16 @@
+{
+  "code": "300440",
+  "name": "运达科技",
+  "fetched_at": "2026-09-29 15:48:40",
+  "requested_limit": 1,
+  "opinion_count": 1,
+  "opinions": [
+    {
+      "opi_pubtime": "2026-08-09T21:24:23",
+      "publish_time_beijing": "2026-08-09 21:24:23",
+      "title": "重视磷化铟短缺",
+      "content": "",
+      "opi_all": "{\"description\":\"本周建议关注组合：胜通能源、正帆科技、紫光股份、金斯瑞生物科技、药石科技 八月建议关注组合：长鑫科技、运达科技、甘李药业、欧林生物\",\"title\":\"重视磷化铟短缺\",\"content\":\"\",\"url\":\"http://mp.weixin.qq.com/s?__biz=Mzg2MDY5NjgyNA==&mid=2247528186&idx=1&sn=c239429a4b502c1568759116c8232a7c&chksm=cf8b4fb9887dfc8a59267f1d5795d741aa3093a20728653df20e95c4dd70725171df32834b9e&scene=0&xtrack=1#rd\"}"
+    }
+  ]
+}

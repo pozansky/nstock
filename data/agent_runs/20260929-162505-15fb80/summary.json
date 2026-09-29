@@ -1,0 +1,1360 @@
+{
+  "run_id": "20260929-162505-15fb80",
+  "version": "nstock-multi-agent-v3",
+  "status": "等待人工批准",
+  "started_at": "2026-09-29 16:25:05",
+  "updated_at": "2026-09-29 16:25:05",
+  "completed_at": "2026-09-29 16:25:05",
+  "data_date": "2026-09-29",
+  "universe_signature": "semiconductor,electronic_components,optical_electronics,glass_substrate,communication_compute,software_ai,robotics_auto,advanced_manufacturing|da2ebb4f7e447235",
+  "universe_size": 896,
+  "mission": "在固定科技股池中研究可解释因子，并输出最多3只候选；不自动下单",
+  "teams": [
+    {
+      "id": "intelligence",
+      "name": "市场情报组",
+      "agents": [
+        "market_regime",
+        "industry_chain",
+        "event_news"
+      ]
+    },
+    {
+      "id": "research",
+      "name": "研究研发组",
+      "agents": [
+        "factor_hypothesis",
+        "factor_developer",
+        "model_research"
+      ]
+    },
+    {
+      "id": "validation",
+      "name": "实验验证组",
+      "agents": [
+        "experiment_design",
+        "backtest",
+        "challenger"
+      ]
+    },
+    {
+      "id": "decision",
+      "name": "决策执行组",
+      "agents": [
+        "portfolio_manager",
+        "risk_execution"
+      ]
+    }
+  ],
+  "agents": [
+    {
+      "id": "chief",
+      "name": "首席研究 Agent",
+      "team": "指挥层",
+      "role": "制定任务、检查依赖并签发最终研究结论",
+      "status": "完成",
+      "started_at": "2026-09-29 16:25:05",
+      "finished_at": "2026-09-29 16:25:05",
+      "duration_ms": 0,
+      "confidence": 0.7,
+      "data_quality": "内部量化证据 + 外部首席观点",
+      "depends_on": [],
+      "summary": "四个团队已完成会签；输出 3 只研究候选，关联 3 只股票的首席观点，订单数 0",
+      "evidence": [
+        "研究日 2026-09-29",
+        "固定科技股池 896 只",
+        "最终持仓上限 3 只",
+        "特变电工：【申万煤炭】大秦线检修在即，煤价预计整体偏强运行2026/09/27（2026-09-28 09:38:59）",
+        "双杰电气：周四舆情热度：电网、算力、机器人等行业动态（2026-07-23 22:23:43）",
+        "中国西电：资金配置动向与行业热点梳理（2026-09-23 06:14:26）"
+      ],
+      "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\chief.json",
+      "process": [
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "开始",
+          "detail": "读取真实输入"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "完成",
+          "detail": "先做市场情报，再进入因子研发、实验验证与决策执行"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "首席观点复核",
+          "detail": "匹配 3/3 只候选；只作复核，不改写量化分数"
+        }
+      ],
+      "output": {
+        "objective": "在固定科技股池中研究可解释因子，并输出最多3只候选；不自动下单",
+        "gates": [
+          "真实数据",
+          "可执行公式",
+          "成本后回测",
+          "Challenger审查",
+          "人工批准"
+        ],
+        "team_statuses": {
+          "factor_hypothesis": "降级",
+          "factor_developer": "完成",
+          "model_research": "完成",
+          "market_regime": "完成",
+          "industry_chain": "完成",
+          "event_news": "完成",
+          "experiment_design": "完成",
+          "backtest": "完成",
+          "challenger": "警告",
+          "portfolio_manager": "完成",
+          "risk_execution": "完成"
+        },
+        "chief_opinions": {
+          "source": "chief-opinions MCP",
+          "stocks": [
+            {
+              "code": "600089",
+              "name": "特变电工",
+              "latest_title": "【申万煤炭】大秦线检修在即，煤价预计整体偏强运行2026/09/27",
+              "latest_publish_time": "2026-09-28 09:38:59",
+              "opinion_count": 1
+            },
+            {
+              "code": "300444",
+              "name": "双杰电气",
+              "latest_title": "周四舆情热度：电网、算力、机器人等行业动态",
+              "latest_publish_time": "2026-07-23 22:23:43",
+              "opinion_count": 1
+            },
+            {
+              "code": "601179",
+              "name": "中国西电",
+              "latest_title": "资金配置动向与行业热点梳理",
+              "latest_publish_time": "2026-09-23 06:14:26",
+              "opinion_count": 3
+            }
+          ],
+          "artifact": "data\\chief_opinions\\latest.json",
+          "error": null
+        },
+        "decision_status": "等待人工批准",
+        "orders_created": 0
+      }
+    },
+    {
+      "id": "factor_hypothesis",
+      "name": "因子假设 Agent",
+      "team": "研究研发组",
+      "role": "根据历史实验提出可证伪的因子假设",
+      "status": "降级",
+      "started_at": "2026-09-29 16:25:05",
+      "finished_at": "2026-09-29 16:25:05",
+      "duration_ms": 5,
+      "confidence": 0.25,
+      "data_quality": "仅白名单回退",
+      "depends_on": [
+        "market_regime",
+        "industry_chain",
+        "event_news"
+      ],
+      "summary": "Codex 不可用，保留白名单候选但不冒充 LLM 假设",
+      "evidence": [
+        "未配置 OPENAI_API_KEY；Codex CLI 仅在 NSTOCK_AGENT_LLM=codex 时启用"
+      ],
+      "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\factor_hypothesis.json",
+      "process": [
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "开始",
+          "detail": "读取真实输入"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "完成",
+          "detail": "Codex 不可用，保留白名单候选但不冒充 LLM 假设"
+        }
+      ],
+      "output": {
+        "hypotheses": [
+          {
+            "candidate": "momentum5",
+            "rationale": "等待 LLM 研究解释",
+            "expectation": "仅进入代码验证"
+          },
+          {
+            "candidate": "momentum10",
+            "rationale": "等待 LLM 研究解释",
+            "expectation": "仅进入代码验证"
+          },
+          {
+            "candidate": "momentum20",
+            "rationale": "等待 LLM 研究解释",
+            "expectation": "仅进入代码验证"
+          },
+          {
+            "candidate": "momentum60",
+            "rationale": "等待 LLM 研究解释",
+            "expectation": "仅进入代码验证"
+          },
+          {
+            "candidate": "ma5_20",
+            "rationale": "等待 LLM 研究解释",
+            "expectation": "仅进入代码验证"
+          }
+        ]
+      },
+      "llm": "unavailable"
+    },
+    {
+      "id": "factor_developer",
+      "name": "因子开发 Agent",
+      "team": "研究研发组",
+      "role": "把假设限制在白名单公式并执行真实验证",
+      "status": "完成",
+      "started_at": "2026-09-29 16:25:05",
+      "finished_at": "2026-09-29 16:25:05",
+      "duration_ms": 17,
+      "confidence": 0.5,
+      "data_quality": "历史样本偏短",
+      "depends_on": [
+        "factor_hypothesis"
+      ],
+      "summary": "100 个白名单公式完成验证，52 个通过门槛",
+      "evidence": [
+        "全量确认股池 896 只",
+        "历史日线 35 根",
+        "引擎 tech-factor-v4-shared-top4-backtests"
+      ],
+      "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\factor_developer.json",
+      "process": [
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "开始",
+          "detail": "读取真实输入"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "缓存命中",
+          "detail": "复用同一股池和交易日的因子验证结果"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "完成",
+          "detail": "100 个白名单公式完成验证，52 个通过门槛"
+        }
+      ],
+      "output": {
+        "passed_count": 52,
+        "top_factors": [
+          {
+            "key": "ma_3_120",
+            "name": "3/120 日均线差",
+            "formula": "Mean(close, 3) / Mean(close, 120) - 1",
+            "direction": "反向",
+            "mean_rank_ic": -0.0737,
+            "icir": -0.282,
+            "gate": "通过"
+          },
+          {
+            "key": "ma_5_60",
+            "name": "5/60 日均线差",
+            "formula": "Mean(close, 5) / Mean(close, 60) - 1",
+            "direction": "反向",
+            "mean_rank_ic": -0.0726,
+            "icir": -0.254,
+            "gate": "通过"
+          },
+          {
+            "key": "ma_3_60",
+            "name": "3/60 日均线差",
+            "formula": "Mean(close, 3) / Mean(close, 60) - 1",
+            "direction": "反向",
+            "mean_rank_ic": -0.0721,
+            "icir": -0.256,
+            "gate": "通过"
+          },
+          {
+            "key": "ma_10_60",
+            "name": "10/60 日均线差",
+            "formula": "Mean(close, 10) / Mean(close, 60) - 1",
+            "direction": "反向",
+            "mean_rank_ic": -0.0718,
+            "icir": -0.243,
+            "gate": "通过"
+          },
+          {
+            "key": "ma_5_120",
+            "name": "5/120 日均线差",
+            "formula": "Mean(close, 5) / Mean(close, 120) - 1",
+            "direction": "反向",
+            "mean_rank_ic": -0.0709,
+            "icir": -0.265,
+            "gate": "通过"
+          },
+          {
+            "key": "volume_ratio_3_120",
+            "name": "3/120 日量比",
+            "formula": "Mean(volume, 3) / Mean(volume, 120)",
+            "direction": "反向",
+            "mean_rank_ic": -0.0694,
+            "icir": -0.432,
+            "gate": "通过"
+          },
+          {
+            "key": "volume_ratio_5_120",
+            "name": "5/120 日量比",
+            "formula": "Mean(volume, 5) / Mean(volume, 120)",
+            "direction": "反向",
+            "mean_rank_ic": -0.068,
+            "icir": -0.415,
+            "gate": "通过"
+          },
+          {
+            "key": "momentum_40",
+            "name": "40 日动量",
+            "formula": "close / Ref(close, 40) - 1",
+            "direction": "反向",
+            "mean_rank_ic": -0.0679,
+            "icir": -0.24,
+            "gate": "通过"
+          },
+          {
+            "key": "reversal_40",
+            "name": "40 日反转",
+            "formula": "-(close / Ref(close, 40) - 1)",
+            "direction": "正向",
+            "mean_rank_ic": 0.0679,
+            "icir": 0.24,
+            "gate": "通过"
+          },
+          {
+            "key": "ma_10_120",
+            "name": "10/120 日均线差",
+            "formula": "Mean(close, 10) / Mean(close, 120) - 1",
+            "direction": "反向",
+            "mean_rank_ic": -0.0657,
+            "icir": -0.233,
+            "gate": "通过"
+          },
+          {
+            "key": "volume_ratio_10_120",
+            "name": "10/120 日量比",
+            "formula": "Mean(volume, 10) / Mean(volume, 120)",
+            "direction": "反向",
+            "mean_rank_ic": -0.0652,
+            "icir": -0.373,
+            "gate": "通过"
+          },
+          {
+            "key": "volatility_10",
+            "name": "10 日收益波动",
+            "formula": "Std(Return(close), 10)",
+            "direction": "反向",
+            "mean_rank_ic": -0.0599,
+            "icir": -0.187,
+            "gate": "通过"
+          }
+        ],
+        "hypothesis_input": {
+          "hypotheses": [
+            {
+              "candidate": "momentum5",
+              "rationale": "等待 LLM 研究解释",
+              "expectation": "仅进入代码验证"
+            },
+            {
+              "candidate": "momentum10",
+              "rationale": "等待 LLM 研究解释",
+              "expectation": "仅进入代码验证"
+            },
+            {
+              "candidate": "momentum20",
+              "rationale": "等待 LLM 研究解释",
+              "expectation": "仅进入代码验证"
+            },
+            {
+              "candidate": "momentum60",
+              "rationale": "等待 LLM 研究解释",
+              "expectation": "仅进入代码验证"
+            },
+            {
+              "candidate": "ma5_20",
+              "rationale": "等待 LLM 研究解释",
+              "expectation": "仅进入代码验证"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "model_research",
+      "name": "模型研究 Agent",
+      "team": "研究研发组",
+      "role": "设计因子组合与排名模型",
+      "status": "完成",
+      "started_at": "2026-09-29 16:25:05",
+      "finished_at": "2026-09-29 16:25:05",
+      "duration_ms": 5,
+      "confidence": 0.65,
+      "data_quality": "历史样本偏短",
+      "depends_on": [
+        "factor_developer"
+      ],
+      "summary": "采用方向调整后的截面百分位等权模型，并限制组合最多3个异质因子",
+      "evidence": [
+        "单因子、双因子、三因子分别比较",
+        "按成本后 Sharpe 排名",
+        "因子家族去重，降低共线性"
+      ],
+      "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\model_research.json",
+      "process": [
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "开始",
+          "detail": "读取真实输入"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "完成",
+          "detail": "采用方向调整后的截面百分位等权模型，并限制组合最多3个异质因子"
+        }
+      ],
+      "output": {
+        "model": "direction-adjusted cross-sectional rank ensemble",
+        "max_factors": 3,
+        "max_positions": 3
+      }
+    },
+    {
+      "id": "market_regime",
+      "name": "市场状态 Agent",
+      "team": "市场情报组",
+      "role": "识别指数、市场广度和波动状态",
+      "status": "完成",
+      "started_at": "2026-09-29 16:25:05",
+      "finished_at": "2026-09-29 16:25:05",
+      "duration_ms": 5,
+      "confidence": 0.8,
+      "data_quality": "行情与市场广度可用",
+      "depends_on": [],
+      "summary": "市场偏多：上涨占比 67%，个股涨跌中位数 +0.78%",
+      "evidence": [
+        "指数平均涨跌 +0.09%",
+        "科技股上涨/下跌 599/297",
+        "高波动股票 48 只",
+        "类涨停/类跌停 21/0",
+        "数据截止 2026-09-29"
+      ],
+      "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\market_regime.json",
+      "process": [
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "开始",
+          "detail": "读取真实输入"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "完成",
+          "detail": "市场偏多：上涨占比 67%，个股涨跌中位数 +0.78%"
+        }
+      ],
+      "output": {
+        "regime": "偏多",
+        "regime_score": 2,
+        "average_index_pct": 0.095,
+        "breadth": {
+          "up": 599,
+          "down": 297,
+          "up_ratio": 0.669
+        },
+        "median_stock_pct": 0.779,
+        "high_volatility_count": 48,
+        "limit_up_like": 21,
+        "limit_down_like": 0
+      }
+    },
+    {
+      "id": "industry_chain",
+      "name": "科技产业链 Agent",
+      "team": "市场情报组",
+      "role": "比较科技细分板块强弱和覆盖",
+      "status": "完成",
+      "started_at": "2026-09-29 16:25:05",
+      "finished_at": "2026-09-29 16:25:05",
+      "duration_ms": 6,
+      "confidence": 0.7,
+      "data_quality": "板块覆盖可用",
+      "depends_on": [],
+      "summary": "软件、信创与 AI领先；强度同时考虑平均涨幅与上涨广度",
+      "evidence": [
+        "软件、信创与 AI：均值 +1.58% / 上涨 83% / 领涨 华是科技",
+        "电子元件与硬件：均值 +1.36% / 上涨 67% / 领涨 金禄电子",
+        "通信与算力：均值 +1.27% / 上涨 70% / 领涨 金百泽",
+        "机器人与智能汽车：均值 +0.68% / 上涨 67% / 领涨 理奇智能"
+      ],
+      "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\industry_chain.json",
+      "process": [
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "开始",
+          "detail": "读取真实输入"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "完成",
+          "detail": "软件、信创与 AI领先；强度同时考虑平均涨幅与上涨广度"
+        }
+      ],
+      "output": {
+        "sector_ranking": [
+          {
+            "key": "software_ai",
+            "name": "软件、信创与 AI",
+            "count": 177,
+            "average_pct": 1.578,
+            "median_pct": 1.34,
+            "up_ratio": 0.831,
+            "strength_score": 2.239,
+            "leaders": [
+              {
+                "code": "301218",
+                "name": "华是科技",
+                "pct": 13.18
+              },
+              {
+                "code": "603636",
+                "name": "南威软件",
+                "pct": 10.07
+              },
+              {
+                "code": "601519",
+                "name": "大智慧",
+                "pct": 10.01
+              }
+            ]
+          },
+          {
+            "key": "electronic_components",
+            "name": "电子元件与硬件",
+            "count": 258,
+            "average_pct": 1.358,
+            "median_pct": 0.787,
+            "up_ratio": 0.674,
+            "strength_score": 1.707,
+            "leaders": [
+              {
+                "code": "301282",
+                "name": "金禄电子",
+                "pct": 13.64
+              },
+              {
+                "code": "301041",
+                "name": "金百泽",
+                "pct": 12.12
+              },
+              {
+                "code": "300852",
+                "name": "四会富仕",
+                "pct": 11.46
+              }
+            ]
+          },
+          {
+            "key": "communication_compute",
+            "name": "通信与算力",
+            "count": 461,
+            "average_pct": 1.273,
+            "median_pct": 0.948,
+            "up_ratio": 0.705,
+            "strength_score": 1.683,
+            "leaders": [
+              {
+                "code": "301041",
+                "name": "金百泽",
+                "pct": 12.12
+              },
+              {
+                "code": "300852",
+                "name": "四会富仕",
+                "pct": 11.46
+              },
+              {
+                "code": "301314",
+                "name": "科瑞思",
+                "pct": 11.31
+              }
+            ]
+          },
+          {
+            "key": "robotics_auto",
+            "name": "机器人与智能汽车",
+            "count": 52,
+            "average_pct": 0.676,
+            "median_pct": 0.707,
+            "up_ratio": 0.673,
+            "strength_score": 1.022,
+            "leaders": [
+              {
+                "code": "301599",
+                "name": "理奇智能",
+                "pct": 6.89
+              },
+              {
+                "code": "300461",
+                "name": "田中精机",
+                "pct": 5.1
+              },
+              {
+                "code": "600215",
+                "name": "派斯林",
+                "pct": 2.94
+              }
+            ]
+          },
+          {
+            "key": "optical_electronics",
+            "name": "光学光电子",
+            "count": 135,
+            "average_pct": 0.584,
+            "median_pct": 0.495,
+            "up_ratio": 0.6,
+            "strength_score": 0.784,
+            "leaders": [
+              {
+                "code": "002813",
+                "name": "路畅科技",
+                "pct": 10.01
+              },
+              {
+                "code": "300909",
+                "name": "汇创达",
+                "pct": 8.55
+              },
+              {
+                "code": "603228",
+                "name": "景旺电子",
+                "pct": 5.82
+              }
+            ]
+          },
+          {
+            "key": "semiconductor",
+            "name": "半导体与芯片",
+            "count": 152,
+            "average_pct": 0.35,
+            "median_pct": 0.257,
+            "up_ratio": 0.586,
+            "strength_score": 0.521,
+            "leaders": [
+              {
+                "code": "301132",
+                "name": "满坤科技",
+                "pct": 10.3
+              },
+              {
+                "code": "001389",
+                "name": "广合科技",
+                "pct": 8.02
+              },
+              {
+                "code": "300672",
+                "name": "国科微",
+                "pct": 6.08
+              }
+            ]
+          },
+          {
+            "key": "advanced_manufacturing",
+            "name": "高端科技制造",
+            "count": 132,
+            "average_pct": 0.138,
+            "median_pct": 0.033,
+            "up_ratio": 0.5,
+            "strength_score": 0.138,
+            "leaders": [
+              {
+                "code": "301599",
+                "name": "理奇智能",
+                "pct": 6.89
+              },
+              {
+                "code": "300461",
+                "name": "田中精机",
+                "pct": 5.1
+              },
+              {
+                "code": "300395",
+                "name": "菲利华",
+                "pct": 4.76
+              }
+            ]
+          },
+          {
+            "key": "internet_media",
+            "name": "科技互联网与数字内容",
+            "count": 0,
+            "average_pct": null,
+            "median_pct": null,
+            "up_ratio": 0.0,
+            "strength_score": -1.0,
+            "leaders": []
+          },
+          {
+            "key": "glass_substrate",
+            "name": "玻璃基板与电子玻璃",
+            "count": 15,
+            "average_pct": -1.197,
+            "median_pct": -0.822,
+            "up_ratio": 0.333,
+            "strength_score": -1.53,
+            "leaders": [
+              {
+                "code": "300456",
+                "name": "赛微电子",
+                "pct": 3.79
+              },
+              {
+                "code": "002436",
+                "name": "兴森科技",
+                "pct": 2.58
+              },
+              {
+                "code": "002156",
+                "name": "通富微电",
+                "pct": 2.48
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "event_news",
+      "name": "事件新闻 Agent",
+      "team": "市场情报组",
+      "role": "检查事件数据可用性和异常价格线索",
+      "status": "完成",
+      "started_at": "2026-09-29 16:25:05",
+      "finished_at": "2026-09-29 16:25:05",
+      "duration_ms": 7,
+      "confidence": 0.7,
+      "data_quality": "本地首席观点缓存 + 实时价格异动",
+      "depends_on": [],
+      "summary": "从 768 只缓存股票中提炼 12 个近期事件主题",
+      "evidence": [
+        "观察：【天风电子】苏州天脉：龙头平台型散热解决方案公司，进入大客户进入业绩释放周期（关联 1 只）",
+        "观察：珍惜光通信小光中东田微回调机会 光模块光学从元件向下游组件延伸（关联 1 只）",
+        "风险：【西南电子-AI散热】鸿富诚上市，AI散热值得重点关注（关联 2 只）",
+        "观察：慧博云通：推荐逻辑（关联 1 只）",
+        "风险：DeepSeek V4.1 Pro 有望国庆发布 私有数据AI落地迎来加速（关联 1 只）"
+      ],
+      "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\event_news.json",
+      "process": [
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "开始",
+          "detail": "读取真实输入"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "完成",
+          "detail": "从 768 只缓存股票中提炼 12 个近期事件主题"
+        }
+      ],
+      "output": {
+        "news_provider": "chief-opinions local cache",
+        "event_signals": [
+          {
+            "title": "【天风电子】苏州天脉：龙头平台型散热解决方案公司，进入大客户进入业绩释放周期",
+            "publish_time": "2026-09-29 15:33:45",
+            "stocks": [
+              {
+                "code": "301626",
+                "name": "苏州天脉"
+              }
+            ],
+            "risk": false
+          },
+          {
+            "title": "珍惜光通信小光中东田微回调机会 光模块光学从元件向下游组件延伸",
+            "publish_time": "2026-09-29 14:53:40",
+            "stocks": [
+              {
+                "code": "301183",
+                "name": "东田微"
+              }
+            ],
+            "risk": false
+          },
+          {
+            "title": "【西南电子-AI散热】鸿富诚上市，AI散热值得重点关注",
+            "publish_time": "2026-09-29 14:53:40",
+            "stocks": [
+              {
+                "code": "300684",
+                "name": "中石科技"
+              },
+              {
+                "code": "301326",
+                "name": "捷邦科技"
+              }
+            ],
+            "risk": true
+          },
+          {
+            "title": "慧博云通：推荐逻辑",
+            "publish_time": "2026-09-29 14:53:40",
+            "stocks": [
+              {
+                "code": "301316",
+                "name": "慧博云通"
+              }
+            ],
+            "risk": false
+          },
+          {
+            "title": "DeepSeek V4.1 Pro 有望国庆发布 私有数据AI落地迎来加速",
+            "publish_time": "2026-09-29 14:53:40",
+            "stocks": [
+              {
+                "code": "300766",
+                "name": "每日互动"
+              }
+            ],
+            "risk": true
+          },
+          {
+            "title": "富满微Q3业绩单季1.5亿环比增长超250% 功率半导体板块高景气延续 Q4还将提价",
+            "publish_time": "2026-09-29 14:30:54",
+            "stocks": [
+              {
+                "code": "300671",
+                "name": "富满微"
+              }
+            ],
+            "risk": false
+          },
+          {
+            "title": "花旗——中国通信基础设施：美国光模块法案直接敞口有限 政策阴云犹存",
+            "publish_time": "2026-09-29 14:23:43",
+            "stocks": [
+              {
+                "code": "300502",
+                "name": "新易盛"
+              },
+              {
+                "code": "300308",
+                "name": "中际旭创"
+              }
+            ],
+            "risk": true
+          },
+          {
+            "title": "【中金机械】从鸿富诚上市看TIM材料",
+            "publish_time": "2026-09-29 13:39:10",
+            "stocks": [
+              {
+                "code": "301419",
+                "name": "阿莱德"
+              },
+              {
+                "code": "300602",
+                "name": "飞荣达"
+              }
+            ],
+            "risk": false
+          },
+          {
+            "title": "特朗普携手马斯克黄仁勋办发布会推AI驱动新网站America.gov",
+            "publish_time": "2026-09-29 13:33:38",
+            "stocks": [
+              {
+                "code": "002474",
+                "name": "榕基软件"
+              },
+              {
+                "code": "300075",
+                "name": "数字政通"
+              },
+              {
+                "code": "600756",
+                "name": "浪潮软件"
+              }
+            ],
+            "risk": false
+          },
+          {
+            "title": "传媒互联网周观察：MetaMuse登上AppStore榜首，阿里云栖大会顺利落幕",
+            "publish_time": "2026-09-29 12:44:00",
+            "stocks": [
+              {
+                "code": "301391",
+                "name": "卡莱特"
+              }
+            ],
+            "risk": true
+          },
+          {
+            "title": "大跌之后看10月：寻找具备弹性和确定性的方向",
+            "publish_time": "2026-09-29 12:23:38",
+            "stocks": [
+              {
+                "code": "002815",
+                "name": "崇达技术"
+              },
+              {
+                "code": "300852",
+                "name": "四会富仕"
+              },
+              {
+                "code": "002436",
+                "name": "兴森科技"
+              },
+              {
+                "code": "000725",
+                "name": "京东方Ａ"
+              },
+              {
+                "code": "600183",
+                "name": "生益科技"
+              },
+              {
+                "code": "002484",
+                "name": "江海股份"
+              }
+            ],
+            "risk": false
+          },
+          {
+            "title": "华是科技收购傲星科技点评",
+            "publish_time": "2026-09-29 12:23:38",
+            "stocks": [
+              {
+                "code": "301218",
+                "name": "华是科技"
+              }
+            ],
+            "risk": false
+          }
+        ],
+        "price_anomaly_watchlist": [
+          {
+            "code": "301282",
+            "name": "金禄电子",
+            "pct": 13.639770172370724
+          },
+          {
+            "code": "301218",
+            "name": "华是科技",
+            "pct": 13.176691729323304
+          },
+          {
+            "code": "301041",
+            "name": "金百泽",
+            "pct": 12.123793299261793
+          },
+          {
+            "code": "300852",
+            "name": "四会富仕",
+            "pct": 11.456339272566634
+          },
+          {
+            "code": "301314",
+            "name": "科瑞思",
+            "pct": 11.314584695879672
+          },
+          {
+            "code": "301628",
+            "name": "强达电路",
+            "pct": 10.678320349610484
+          },
+          {
+            "code": "300211",
+            "name": "亿通科技",
+            "pct": 10.601719197707727
+          },
+          {
+            "code": "301132",
+            "name": "满坤科技",
+            "pct": 10.301158301158305
+          },
+          {
+            "code": "603636",
+            "name": "南威软件",
+            "pct": 10.069930069930066
+          },
+          {
+            "code": "603602",
+            "name": "纵横通信",
+            "pct": 10.043290043290044
+          }
+        ],
+        "risk_event_count": 4,
+        "trade_veto": false
+      }
+    },
+    {
+      "id": "experiment_design",
+      "name": "实验设计 Agent",
+      "team": "实验验证组",
+      "role": "固定时间切分、成本和样本外规则",
+      "status": "完成",
+      "started_at": "2026-09-29 16:25:05",
+      "finished_at": "2026-09-29 16:25:05",
+      "duration_ms": 5,
+      "confidence": 0.55,
+      "data_quality": "规则已定义，等待引擎强制执行",
+      "depends_on": [],
+      "summary": "采用时间顺序切分和滚动样本外复核；禁止随机打散时间序列",
+      "evidence": [
+        "历史区间 2024-01-02 至 2026-09-29",
+        "15bp × 换手率",
+        "信号T日，T+1建仓，T+2退出"
+      ],
+      "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\experiment_design.json",
+      "process": [
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "开始",
+          "detail": "读取真实输入"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "完成",
+          "detail": "采用时间顺序切分和滚动样本外复核；禁止随机打散时间序列"
+        }
+      ],
+      "output": {
+        "split": {
+          "train": "前60%",
+          "validation": "中20%",
+          "test": "后20%"
+        },
+        "walk_forward": true,
+        "cost_bps": 15,
+        "leakage_policy": "测试集不得用于选择因子",
+        "enforced_by_current_backtest": false
+      }
+    },
+    {
+      "id": "backtest",
+      "name": "回测 Agent",
+      "team": "实验验证组",
+      "role": "确定性执行单、双、三因子回测",
+      "status": "完成",
+      "started_at": "2026-09-29 16:25:05",
+      "finished_at": "2026-09-29 16:25:05",
+      "duration_ms": 15,
+      "confidence": 0.65,
+      "data_quality": "年化样本可用",
+      "depends_on": [
+        "factor_developer",
+        "model_research",
+        "experiment_design"
+      ],
+      "summary": "完成 14 组确定性回测；最佳成本后 Sharpe 1.32",
+      "evidence": [
+        "可回测 885 只",
+        "累计 +127.94%",
+        "最大回撤 -30.37%"
+      ],
+      "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\backtest.json",
+      "process": [
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "开始",
+          "detail": "读取真实输入"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "缓存命中",
+          "detail": "复用同一股池和交易日的回测结果"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "完成",
+          "detail": "完成 14 组确定性回测；最佳成本后 Sharpe 1.32"
+        }
+      ],
+      "output": {
+        "top_strategy": {
+          "kind": "3 因子组合",
+          "factor_count": 3,
+          "factors": [
+            "ma_3_120",
+            "momentum_40",
+            "volatility_10"
+          ],
+          "names": [
+            "3/120 日均线差",
+            "40 日动量",
+            "10 日收益波动"
+          ],
+          "directions": [
+            "反向",
+            "反向",
+            "反向"
+          ],
+          "result": {
+            "status": "完成",
+            "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+            "universe": 885,
+            "holding_count": 3,
+            "latest_holdings": [
+              {
+                "code": "600089",
+                "name": "特变电工"
+              },
+              {
+                "code": "300444",
+                "name": "双杰电气"
+              },
+              {
+                "code": "601179",
+                "name": "中国西电"
+              }
+            ],
+            "days": 529,
+            "cost_bps": 15,
+            "mean_daily": 0.001795,
+            "cumulative_return": 1.2794,
+            "annual_return": 0.4807,
+            "sharpe": 1.321,
+            "max_drawdown": 0.3037,
+            "win_rate": 0.539,
+            "equity": 2.2794,
+            "audited": true,
+            "annualization_reliable": true,
+            "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+            "trade_delay_days": 1
+          },
+          "rank": 1,
+          "rank_metric": "成本后 Sharpe"
+        },
+        "engine_version": "tech-top3-v8-liquidity-screen",
+        "selection_rule": "T 日收盘计算因子，先剔除近 20 日成交额最低 30%，再做截面排名并取最高 3 只等权；T+1 收盘建仓，T+2 收盘退出，扣除 15bp × 换手率。"
+      }
+    },
+    {
+      "id": "challenger",
+      "name": "Challenger Agent",
+      "team": "实验验证组",
+      "role": "寻找过拟合、回撤和可成交性问题",
+      "status": "警告",
+      "started_at": "2026-09-29 16:25:05",
+      "finished_at": "2026-09-29 16:25:05",
+      "duration_ms": 5,
+      "confidence": 0.8,
+      "data_quality": "已审查回测指标与验证缺口",
+      "depends_on": [
+        "backtest"
+      ],
+      "summary": "发现 2 项需要人工关注的问题",
+      "evidence": [
+        "当前策略选择与排名仍来自同一完整样本，尚未强制执行独立测试集",
+        "最大回撤 -30.37% 超过20%"
+      ],
+      "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\challenger.json",
+      "process": [
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "开始",
+          "detail": "读取真实输入"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "完成",
+          "detail": "发现 2 项需要人工关注的问题"
+        }
+      ],
+      "output": {
+        "approved_for_research": true,
+        "approved_for_live_trading": false,
+        "findings": [
+          "当前策略选择与排名仍来自同一完整样本，尚未强制执行独立测试集",
+          "最大回撤 -30.37% 超过20%"
+        ]
+      }
+    },
+    {
+      "id": "portfolio_manager",
+      "name": "组合经理 Agent",
+      "team": "决策执行组",
+      "role": "在通过审查的策略中选择最多三只",
+      "status": "完成",
+      "started_at": "2026-09-29 16:25:05",
+      "finished_at": "2026-09-29 16:25:05",
+      "duration_ms": 5,
+      "confidence": 0.55,
+      "data_quality": "年化样本可用",
+      "depends_on": [
+        "backtest",
+        "challenger",
+        "market_regime",
+        "industry_chain"
+      ],
+      "summary": "选择 #1 策略并输出 3 只等权研究候选",
+      "evidence": [
+        "特变电工(600089)",
+        "双杰电气(300444)",
+        "中国西电(601179)",
+        "Challenger仅批准研究用途"
+      ],
+      "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\portfolio_manager.json",
+      "process": [
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "开始",
+          "detail": "读取真实输入"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "完成",
+          "detail": "选择 #1 策略并输出 3 只等权研究候选"
+        }
+      ],
+      "output": {
+        "strategy": {
+          "factors": [
+            "ma_3_120",
+            "momentum_40",
+            "volatility_10"
+          ],
+          "names": [
+            "3/120 日均线差",
+            "40 日动量",
+            "10 日收益波动"
+          ]
+        },
+        "holdings": [
+          {
+            "code": "600089",
+            "name": "特变电工"
+          },
+          {
+            "code": "300444",
+            "name": "双杰电气"
+          },
+          {
+            "code": "601179",
+            "name": "中国西电"
+          }
+        ],
+        "weights": [
+          0.3333,
+          0.3333,
+          0.3333
+        ]
+      }
+    },
+    {
+      "id": "risk_execution",
+      "name": "风控执行 Agent",
+      "team": "决策执行组",
+      "role": "设置仓位、流动性约束和人工审批闸门",
+      "status": "完成",
+      "started_at": "2026-09-29 16:25:05",
+      "finished_at": "2026-09-29 16:25:05",
+      "duration_ms": 5,
+      "confidence": 0.9,
+      "data_quality": "硬规则已执行",
+      "depends_on": [
+        "portfolio_manager",
+        "challenger"
+      ],
+      "summary": "研究组合已完成量化与首席观点复核，未产生任何订单",
+      "evidence": [
+        "最多3只、等权",
+        "剔除近20日成交额最低30%",
+        "科创板/ST排除",
+        "15bp成本",
+        "首席观点覆盖 3/3 只候选",
+        "禁止自动下单"
+      ],
+      "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\risk_execution.json",
+      "process": [
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "开始",
+          "detail": "读取真实输入"
+        },
+        {
+          "time": "2026-09-29 16:25:05",
+          "stage": "完成",
+          "detail": "研究组合已完成量化与首席观点复核，未产生任何订单"
+        }
+      ],
+      "output": {
+        "max_positions": 3,
+        "position_weight": "1/3",
+        "human_approval_required": true,
+        "chief_opinions_reviewed": [
+          {
+            "code": "600089",
+            "name": "特变电工",
+            "latest_title": "【申万煤炭】大秦线检修在即，煤价预计整体偏强运行2026/09/27",
+            "latest_publish_time": "2026-09-28 09:38:59",
+            "opinion_count": 1
+          },
+          {
+            "code": "300444",
+            "name": "双杰电气",
+            "latest_title": "周四舆情热度：电网、算力、机器人等行业动态",
+            "latest_publish_time": "2026-07-23 22:23:43",
+            "opinion_count": 1
+          },
+          {
+            "code": "601179",
+            "name": "中国西电",
+            "latest_title": "资金配置动向与行业热点梳理",
+            "latest_publish_time": "2026-09-23 06:14:26",
+            "opinion_count": 3
+          }
+        ],
+        "orders_created": 0,
+        "live_trading_allowed": false
+      }
+    }
+  ],
+  "decision": {
+    "status": "等待人工批准",
+    "strategy": [
+      "3/120 日均线差",
+      "40 日动量",
+      "10 日收益波动"
+    ],
+    "holdings": [
+      {
+        "code": "600089",
+        "name": "特变电工"
+      },
+      {
+        "code": "300444",
+        "name": "双杰电气"
+      },
+      {
+        "code": "601179",
+        "name": "中国西电"
+      }
+    ],
+    "max_positions": 3,
+    "orders_created": 0,
+    "challenger_status": "警告",
+    "risk_status": "完成"
+  },
+  "warnings": [
+    "当前策略选择与排名仍来自同一完整样本，尚未强制执行独立测试集",
+    "最大回撤 -30.37% 超过20%"
+  ],
+  "external_sources": {
+    "chief_opinions": {
+      "provider": "chief-opinions MCP",
+      "configured": false,
+      "credential_in_artifact": false,
+      "available": true,
+      "fetched_at": "2026-09-29 16:18:54",
+      "artifact": "data\\chief_opinions\\latest.json",
+      "error": null
+    }
+  },
+  "artifact_dir": "data\\agent_runs\\20260929-162505-15fb80"
+}

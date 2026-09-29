@@ -1,0 +1,30 @@
+{
+  "code": "000561",
+  "name": "烽火电子",
+  "fetched_at": "2026-09-29 15:09:38",
+  "requested_limit": 3,
+  "opinion_count": 3,
+  "opinions": [
+    {
+      "opi_pubtime": "2026-08-30T13:37:47",
+      "publish_time_beijing": "2026-08-30 13:37:47",
+      "title": "广发纺服丨晶苑国际：重要品牌客户强劲增长，中长期公司有望持续高质量成长",
+      "content": null,
+      "opi_all": "{\"description\":\"重要品牌客户强劲增长，中长期公司有望持续高质量成长\",\"title\":\"广发纺服丨晶苑国际：重要品牌客户强劲增长，中长期公司有望持续高质量成长\",\"url\":\"https://research.gf.com.cn/h5/pages/report/report-detail?id=500056195\"}"
+    },
+    {
+      "opi_pubtime": "2026-08-28T16:37:30",
+      "publish_time_beijing": "2026-08-28 16:37:30",
+      "title": "广发计算机丨商汤：26H1利润转正，API调用和AI应用落地持续推进",
+      "content": null,
+      "opi_all": "{\"description\":\"公司披露2026年半年度报告。26年上半年，公司实现营收29.1亿元，同比增长23.4%；归母净利润6.1亿元，上年同期为-14.8亿元。\",\"title\":\"广发计算机丨商汤：26H1利润转正，API调用和AI应用落地持续推进\",\"url\":\"https://research.gf.com.cn/h5/pages/report/report-detail?id=500056167\"}"
+    },
+    {
+      "opi_pubtime": "2026-08-28T11:39:18",
+      "publish_time_beijing": "2026-08-28 11:39:18",
+      "title": "广发纺服丨富春染织：2026H1业绩高增，主营盈利修复、投资收益大幅增加",
+      "content": "",
+      "opi_all": "{\"description\":\"2026H1业绩高增，主营盈利修复、投资收益大幅增加\",\"title\":\"广发纺服丨富春染织：2026H1业绩高增，主营盈利修复、投资收益大幅增加\",\"content\":\"\",\"url\":\"https://research.gf.com.cn/h5/pages/report/report-detail?id=500056172\"}"
+    }
+  ]
+}

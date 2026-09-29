@@ -1,6 +1,5 @@
-const state = { selected: null, starred: false, dashboard: null, activeSector: '', visibleLimit: 100 };
-const titles = { overview:'市场驾驶舱', agents:'Agent 协作台', factors:'因子实验室', candidates:'候选选股', portfolio:'组合与风控', backtest:'回测实验', audit:'复盘审计' };
-const copies = { factors:'因子目录来自最近一次 Agent 真实挖掘结果，并展示组合候选。', candidates:'候选池按真实因子横截面标准化排序，所有价格和评分来自当前数据请求。', portfolio:'组合模块等待账户与持仓数据接入；当前只展示真实行情研究结果。', backtest:'回测实验读取最新因子结果，测试单因子、二因子和三因子排列组合。', audit:'审计模块等待决策日志服务接入；当前不展示任何虚构成交。' };
+const state = { selected: null, starred: false, dashboard: null, activeSector: '', visibleLimit: 100, expandedAgent: null, opinionCache: new Map(), agentRunStarting: false, agentRunError: '', agentRunMode: 'full' };
+const titles = { overview:'市场驾驶舱', agents:'Agent 协作台', factors:'因子实验室', backtest:'回测实验' };
 const toast = (message) => { document.getElementById('toastText').textContent = message; document.getElementById('toast').classList.add('show'); window.clearTimeout(window.__toast); window.__toast = window.setTimeout(() => document.getElementById('toast').classList.remove('show'), 2600); };
 const fmtPct = (value) => `${value >= 0 ? '+' : ''}${Number(value).toFixed(2)}%`;
 const fmtPrice = (value) => value ? `¥ ${Number(value).toFixed(2)}` : '—';
@@ -29,55 +28,132 @@ function renderMarket(data) {
   const quoteClock = data.quote_time ? `${data.quote_time.slice(0,4)}-${data.quote_time.slice(4,6)}-${data.quote_time.slice(6,8)} ${data.quote_time.slice(8,10)}:${data.quote_time.slice(10,12)}:${data.quote_time.slice(12,14)}` : (data.generated_at ? data.generated_at.slice(11) : '后台刷新中'); setText('breadth', `${data.breadth.up} / ${data.breadth.down}`); setText('dataSource', data.source_label || data.source); setText('dataTimestamp', `${data.latest_date || '—'} · ${quoteClock}`); setText('scanTimestamp', `${quoteClock} 更新`); setText('systemStatus', data.refreshing ? '后台刷新中' : '系统健康'); setText('systemSync', `${data.source_label || data.source} ${quoteClock}`); setText('marketClockLabel', '行情时间'); setText('marketClockTime', quoteClock);
   const avg = [hs?.pct, cyb?.pct].filter((v) => typeof v === 'number'), positive = avg.length && avg.reduce((a,b) => a+b, 0) / avg.length >= 0;
   setText('regimeText', avg.length ? (positive ? '结构性偏多' : '结构性偏弱') : '指数无数据'); setText('regimeConfidence', avg.length ? `${Math.min(99, Math.round(50 + Math.abs(avg.reduce((a,b) => a+b, 0) / avg.length) * 12))}%` : '—');
-  setText('regimeNote', `数据截止 ${data.latest_date || '—'}；来源：${data.source_label || data.source}。`); document.querySelector('.page-heading p').textContent = `${data.universe_size} 只真实科技股完成扫描，科创板 688/689 已排除。`; document.querySelector('.nav-badge').textContent = data.universe_size;
+  setText('regimeNote', `数据截止 ${data.latest_date || '—'}；来源：${data.source_label || data.source}。`); document.querySelector('#overviewView .page-heading p').textContent = `${data.universe_size} 只科技股完成扫描 · 已排除科创板 688/689`;
   document.querySelector('.market-strip-main .regime-dot').style.background = positive ? '#4ca67d' : '#be6c64';
   const counts = [data.stocks.length, data.stocks.filter((s) => s.status === '可建仓').length, data.stocks.filter((s) => s.status === '等待触发').length, data.stocks.filter((s) => s.factors.volatility20 > .8).length]; document.querySelectorAll('.filter-button span').forEach((el, i) => { el.textContent = counts[i]; });
 }
 const agentBlueprint={
-  '研究研发组':[['factor_hypothesis','因子假设 Agent'],['factor_developer','因子开发 Agent'],['model_research','模型研究 Agent']],
   '市场情报组':[['market_regime','市场状态 Agent'],['industry_chain','科技产业链 Agent'],['event_news','事件新闻 Agent']],
+  '研究研发组':[['factor_hypothesis','因子假设 Agent'],['factor_developer','因子开发 Agent'],['model_research','模型研究 Agent']],
   '实验验证组':[['experiment_design','实验设计 Agent'],['backtest','回测 Agent'],['challenger','Challenger Agent']],
   '决策执行组':[['portfolio_manager','组合经理 Agent'],['risk_execution','风控执行 Agent']]
 };
+const agentExecutionOrder=['chief','market_regime','industry_chain','event_news','factor_hypothesis','factor_developer','model_research','experiment_design','backtest','challenger','portfolio_manager','risk_execution'];
+const terminalAgentStatuses=new Set(['完成','复用','警告','降级','数据受限','失败','阻断']);
 const safe=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const concise=(value,max=38)=>{const text=String(value??'').replace(/\s+/g,' ').trim();return text.length>max?`${text.slice(0,max)}…`:text;};
+const formatDuration=(value)=>value==null?'运行中':value>=60000?`${(value/60000).toFixed(1)} 分钟`:`${(value/1000).toFixed(1)} 秒`;
+function renderAgentRunProgress(run) {
+  const panel=document.getElementById('agentRunProgress');
+  if(!panel)return;
+  const agents=run?.agents||[], byId=Object.fromEntries(agents.map(item=>[item.id,item]));
+  const completed=agents.filter(item=>terminalAgentStatuses.has(item.status)).length;
+  const active=agentExecutionOrder.map(id=>byId[id]).find(item=>item?.status==='运行中');
+  const lastStarted=[...agentExecutionOrder].reverse().map(id=>byId[id]).find(item=>item?.started_at);
+  const failed=agents.find(item=>['失败','阻断'].includes(item.status));
+  const running=state.agentRunStarting||Boolean(active)||run?.status==='运行中';
+  const isDone=Boolean(run&&['等待人工批准','阻断'].includes(run.status)&&!running);
+  const percent=state.agentRunStarting&&!agents.length?2:Math.max(running?4:0,Math.min(100,Math.round(completed/12*100)));
+  let title='等待启动十二 Agent 闭环', detail='点击“运行十二 Agent 闭环”后，这里会实时显示当前 Agent 与步骤。';
+  if(state.agentRunError){title='本轮启动失败';detail=state.agentRunError;}
+  else if(state.agentRunStarting){const full=state.agentRunMode==='full',prep=state.agentPrep;title=prep?.stage|| (full?'正在启动全量重算':'正在启动快速会签');detail=prep?.detail||(full?'先同步新增 K 线，再增量计算因子与回测…':'先同步新增 K 线；市场情报重新运行，研发与回测复用最近结果…');}
+  else if(active){const step=(active.process||[]).at(-1);title=`${active.name} · ${step?.stage||'运行中'}`;detail=step?.detail||active.summary||'正在处理真实输入';}
+  else if(isDone){title=failed?`闭环结束 · ${failed.name}${failed.status}`:`本轮 12 Agent 已完成 · ${run.execution_mode||'强制重算'}`;detail=`运行 ${run.run_id||'—'} · ${run.completed_at||run.updated_at||'时间未知'} · ${run.status}`;}
+  else if(run){title=`最近一轮：${run.status||'状态未知'}`;detail=`运行 ${run.run_id||'—'} · 更新于 ${run.updated_at||'—'}`;}
+  panel.className=`agent-run-progress ${running?'running':state.agentRunError||failed?'failed':isDone?'complete':'idle'}`;
+  setText('agentProgressCount',`${completed}/12`);setText('agentProgressTitle',title);setText('agentProgressDetail',detail);setText('agentProgressTime',running?'实时更新':run?.updated_at||'尚未运行');
+  const bar=document.getElementById('agentProgressBar');if(bar)bar.style.width=`${percent}%`;
+  const recent=document.getElementById('agentProgressRecent');
+  if(recent){const item=active||lastStarted;const steps=(item?.process||[]).slice(-3);recent.innerHTML=steps.length?steps.map(step=>`<span><b>${safe(step.stage)}</b>${safe(step.detail)}</span>`).join(''):'<span>等待本轮阶段日志</span>';}
+}
+function renderAgentDetail(item) {
+  const panel=document.getElementById('agentDetail');
+  if(!panel)return;
+  if(!item){panel.hidden=true;panel.innerHTML='';return;}
+  const process=item.process||[], evidence=item.evidence||[], chiefOpinions=item.id==='chief'?item.output?.chief_opinions:null;
+  panel.hidden=false;
+  panel.innerHTML=`<div class="agent-detail-head"><div><span class="eyebrow">AGENT STEP DETAIL</span><h3>${safe(item.name)}</h3><p>${safe(item.role||'')}</p></div><button class="agent-detail-close" type="button" title="关闭详情" aria-label="关闭详情">×</button></div><div class="agent-detail-meta"><span>状态 <b>${safe(item.status)}</b></span><span>耗时 <b>${formatDuration(item.duration_ms)}</b></span><span>数据 <b>${safe(item.data_quality||'待评估')}</b></span></div>${chiefOpinions?`<section class="agent-opinion-usage"><strong>首席观点输入</strong><p>量化候选产生后，按股票代码读取本地缓存；缓存缺失时才调用 MCP。观点用于复核与风险提示，不直接改写因子分数，也不会自动下单。</p><div>${(chiefOpinions.stocks||[]).map(stock=>`<span>${safe(stock.name||stock.code)} · ${stock.opinion_count||0} 条 · ${safe(stock.latest_publish_time||'时间未知')}</span>`).join('')||'<span>本轮未匹配到候选观点</span>'}</div></section>`:''}<div class="agent-detail-grid"><section><strong>运行过程</strong><div class="agent-process-list">${process.length?process.map((step,index)=>`<div><span>${String(index+1).padStart(2,'0')}</span><p><b>${safe(step.stage)}</b>${safe(step.detail)}</p><time>${safe(step.time||'')}</time></div>`).join(''):`<div class="agent-detail-empty">${item.status==='等待'?'等待前置任务':'本次旧记录未保存阶段日志'}</div>`}</div></section><section><strong>证据</strong><ul class="agent-evidence-compact">${evidence.length?evidence.map(text=>`<li>${safe(text)}</li>`).join(''):'<li>暂无证据输出</li>'}</ul></section></div><details class="agent-output-json"><summary>结构化单步结果</summary><pre>${safe(JSON.stringify(item.output??{status:item.status,summary:item.summary},null,2))}</pre></details>`;
+  panel.querySelector('.agent-detail-close').addEventListener('click',()=>{state.expandedAgent=null;renderAgentDetail(null);});
+}
+function opinionText(record) {
+  if(record?.content)return String(record.content);
+  try { const parsed=JSON.parse(record?.opi_all||'{}');return String(parsed.content||parsed.description||record?.opi_all||''); }
+  catch { return String(record?.opi_all||'暂无正文'); }
+}
+function cleanOpinionText(record) { return opinionText(record).replace(/^#{1,6}\s*/gm,'').replace(/^>\s?/gm,'').replace(/\*\*(.*?)\*\*/g,'$1').trim(); }
+function opinionFullTemplate(stock,payload) {
+  const opinions=payload?.opinions||[];
+  if(!opinions.length)return `<article class="agent-opinion-full missing"><header><div><strong>${safe(stock.name||stock.code)}</strong><span>${safe(stock.code)}</span></div><small>暂无匹配观点</small></header><p>本地缓存中没有该候选的观点，不影响量化排名。</p></article>`;
+  return `<article class="agent-opinion-full"><header><div><strong>${safe(stock.name||payload.name||stock.code)}</strong><span>${safe(stock.code)}</span></div><small>${opinions.length} 条观点</small></header>${opinions.map((record)=>`<details><summary><span>${safe(record.title||'无标题观点')}</span><time>${safe(record.publish_time_beijing||record.opi_pubtime||'时间未知')}</time></summary><div class="agent-opinion-body">${safe(cleanOpinionText(record))}</div></details>`).join('')}</article>`;
+}
+async function hydrateChiefOpinions(candidates) {
+  const target=document.getElementById('agentOpinionCards');
+  if(!target||!candidates.length)return;
+  const signature=candidates.map(stock=>stock.code).join(',');target.dataset.signature=signature;
+  const results=await Promise.all(candidates.map(async stock=>{
+    const code=String(stock.code||'');
+    if(!code)return [stock,null];
+    if(state.opinionCache.has(code))return [stock,state.opinionCache.get(code)];
+    try { const response=await fetch(`/api/chief-opinions?stock=${encodeURIComponent(code)}`,{cache:'no-store'});const payload=await response.json();const value=response.ok&&!payload.error?payload:null;state.opinionCache.set(code,value);return [stock,value]; }
+    catch { state.opinionCache.set(code,null);return [stock,null]; }
+  }));
+  if(target.dataset.signature!==signature)return;
+  target.innerHTML=results.map(([stock,payload])=>opinionFullTemplate(stock,payload)).join('');
+}
+function renderChiefOpinions(run, chief, holdings) {
+  const target=document.getElementById('agentOpinions');
+  if(!target)return;
+  const source=run?.external_sources?.chief_opinions||{}, opinionData=chief?.output?.chief_opinions||{}, opinions=opinionData.stocks||[], byCode=Object.fromEntries(opinions.map(item=>[String(item.code),item]));
+  const candidates=holdings.length?holdings:opinions.map(item=>({code:item.code,name:item.name}));
+  const sourceLabel=source.available?(source.cache_hit||source.error?'本地观点库':'MCP 本次获取'):'暂无可用观点';
+  target.innerHTML=`<div class="agent-opinions-head"><div><span class="eyebrow">CHIEF OPINIONS</span><h3>首席观点全文</h3></div><div class="agent-opinions-source"><b>${opinions.length}/${candidates.length||0} 覆盖</b><span>${safe(sourceLabel)}</span></div></div><p class="agent-opinions-rule">量化候选产生后按股票代码匹配最近观点，仅用于风险复核和首席结论，不修改因子分数与排名。观点默认收起，点击标题查看完整正文。</p><div class="agent-opinion-cards" id="agentOpinionCards">${candidates.length?'<div class="data-loading">正在读取完整观点…</div>':'<div class="agent-opinions-empty">本轮尚未生成候选，产生 Top 3 后自动匹配首席观点。</div>'}</div>`;
+  if(candidates.length)hydrateChiefOpinions(candidates);
+}
 function renderAgentCollaboration(data) {
   const run=data.multi_agent_run, allAgents=run?.agents||[], byId=Object.fromEntries(allAgents.map((item)=>[item.id,item])), waiting={status:'等待',summary:'等待首席研究 Agent 调度',evidence:[]};
   const chief=byId.chief||{...waiting,name:'首席研究 Agent',role:'制定任务、检查依赖并签发最终研究结论'};
   const decision=run?.decision||{}, holdings=(decision.holdings||[]).slice(0,3), completed=run&&['等待人工批准','阻断'].includes(run.status);
   setText('agentMission',run?.mission||'十二 Agent、四团队量化研究会签');
-  setText('agentMissionMeta',run?`运行 ${run.run_id} · 版本 ${run.version}`:'因子假设由 Codex 推理；数值由确定性代码计算');
+  setText('agentMissionMeta',run?`更新于 ${run.updated_at||'—'}`:'等待首次运行');
   setText('agentResearchDate',run?.data_date||data.latest_date||'—'); setText('agentUniverseCount',`${run?.universe_size||data.universe_size||0} 只`); setText('agentLoopState',run?.status||'未运行'); setText('agentRunTime',run?.updated_at||'等待运行记录');
+  renderAgentRunProgress(run);
   const chiefTone=chief.status==='失败'||chief.status==='阻断'?'risk':chief.status==='运行中'?'running':chief.status==='等待'?'idle':'complete';
-  document.getElementById('agentChief').innerHTML=`<div class="agent-chief-avatar">CIO</div><div><span>首席研究 Agent</span><strong>${safe(chief.summary)}</strong><small>${safe(chief.role||'制定任务、检查依赖并签发最终研究结论')}</small></div><b class="agent-status ${chiefTone}">${safe(chief.status)}</b>`;
-  document.getElementById('agentTeams').innerHTML=Object.entries(agentBlueprint).map(([team,members],teamIndex)=>`<section class="agent-team-column"><header><span>0${teamIndex+1}</span><div><strong>${team}</strong><small>${members.length} AGENTS</small></div></header><div class="agent-team-flow">${members.map(([id,name],index)=>{const item=byId[id]||{...waiting,name};const tone=['失败','阻断'].includes(item.status)?'risk':['警告','降级','数据受限'].includes(item.status)?'warn':item.status==='运行中'?'running':item.status==='完成'?'complete':'idle';const evidence=(item.evidence||[])[0]||item.role||'等待上游任务';return `<article class="agent-work-node ${tone}" data-agent-id="${id}"><div class="agent-work-top"><span>${String(index+1).padStart(2,'0')}</span><b>${safe(item.status)}</b></div><strong>${safe(item.name||name)}</strong><p>${safe(item.summary)}</p><small>${safe(evidence)}</small>${item.artifact?`<code>${safe(item.artifact)}</code>`:''}</article>`}).join('<i class="agent-flow-arrow">↓</i>')}</div></section>`).join('');
+  document.getElementById('agentChief').innerHTML=`<button class="agent-chief-open" type="button" data-agent-id="chief"><span class="agent-chief-avatar">CIO</span><span><small>首席结论</small><strong>${safe(concise(chief.summary,56))}</strong></span><b class="agent-status ${chiefTone}">${safe(chief.status)}</b></button>`;
+  renderChiefOpinions(run,chief,holdings);
+  document.getElementById('agentTeams').innerHTML=Object.entries(agentBlueprint).map(([team,members],teamIndex)=>`<section class="agent-team-column"><header><span>0${teamIndex+1}</span><strong>${team}</strong><small>${members.length} 席</small></header><div class="agent-team-flow">${members.map(([id,name])=>{const item=byId[id]||{...waiting,name};const tone=['失败','阻断'].includes(item.status)?'risk':['警告','降级','数据受限'].includes(item.status)?'warn':item.status==='运行中'?'running':['完成','复用'].includes(item.status)?'complete':'idle';const summary=item.status==='等待'?'等待前置结果':concise(item.summary||item.role||'暂无结论');return `<article class="agent-work-node ${tone} ${state.expandedAgent===id?'selected':''}" data-agent-id="${id}"><div class="agent-work-top"><strong>${safe((item.name||name).replace(' Agent',''))}</strong><b>${safe(item.status)}</b></div><p>${safe(summary)}</p><button class="agent-inspect" type="button" data-agent-id="${id}">${item.status==='运行中'?'查看过程':'查看结果'}</button></article>`}).join('')}</div></section>`).join('');
+  document.querySelectorAll('[data-agent-id]').forEach((button)=>button.addEventListener('click',(event)=>{event.stopPropagation();state.expandedAgent=button.dataset.agentId;renderAgentDetail(byId[state.expandedAgent]||null);document.getElementById('agentDetail')?.scrollIntoView({behavior:'smooth',block:'nearest'});}));
+  renderAgentDetail(state.expandedAgent?byId[state.expandedAgent]:null);
   const strategy=(decision.strategy||[]).join(' + ');
   setText('agentDecisionTitle',strategy?`组合经理：${strategy}`:'等待十二 Agent 会签'); setText('agentDecisionRule',holdings.length?'最多3只、等权研究组合；Challenger 未批准实盘，必须人工确认。':'没有完成全部真实验证前，组合经理不会输出股票。');
   document.getElementById('agentTop3').innerHTML=holdings.length?holdings.map((stock,index)=>`<button class="agent-pick" data-symbol="${safe(stock.code)}"><span>0${index+1}</span><div><strong>${safe(stock.name)}</strong><small>${safe(stock.code)}</small></div><b>查看 →</b></button>`).join(''):`<div class="agent-empty-decision">${run?.status==='阻断'?'会签已阻断':'等待组合经理输出'}</div>`;
   document.querySelectorAll('.agent-pick').forEach((button)=>button.addEventListener('click',()=>{document.querySelector('[data-view="overview"]').click();selectStock(button.dataset.symbol);}));
-  const artifacts=allAgents.filter((item)=>item.artifact).slice().reverse();
-  document.getElementById('agentEvidence').innerHTML=artifacts.length?artifacts.map((item,index)=>`<div class="agent-evidence-row"><span>${String(artifacts.length-index).padStart(2,'0')}</span><div><strong>${safe(item.name)}</strong><small>${safe(item.summary)}</small><code>${safe(item.artifact)}</code></div></div>`).join(''):'<div class="data-loading">运行后会为每个 Agent 写入独立 JSON 产物</div>';
   const warnings=run?.warnings||[]; setText('criticCount',`${warnings.length} 项`);
-  document.getElementById('agentCritiques').innerHTML=warnings.length?warnings.map((text,index)=>`<div class="agent-critique-row ${index===0?'risk':'warn'}"><span>${index===0?'!':'△'}</span><div><strong>${index===0?'Challenger 意见':'数据或执行限制'}</strong><small>${safe(text)}</small></div></div>`).join(''):'<div class="data-loading">尚未产生会签警告</div>';
-  const button=document.getElementById('agentRunButton'); button.disabled=Boolean(run&&!completed&&run.status==='运行中'); button.innerHTML=button.disabled?'十二 Agent 运行中…':'运行十二 Agent 闭环 <span>↗</span>';
+  document.getElementById('agentCritiques').innerHTML=warnings.length?warnings.slice(0,3).map((text,index)=>`<div class="agent-critique-row ${index===0?'risk':'warn'}"><span>!</span><div><strong>${index===0?'关键风险':'执行限制'}</strong><small>${safe(concise(text,72))}</small></div></div>`).join(''):'<div class="agent-clear-state">当前无关键风险</div>';
+  const running=Boolean(run&&!completed&&run.status==='运行中'), fullButton=document.getElementById('agentRunButton'), quickButton=document.getElementById('agentQuickRunButton');
+  fullButton.disabled=running;quickButton.disabled=running;
+  fullButton.innerHTML=running?'Agent 运行中…':'全量重算 · 含研发组 <span>↗</span>';quickButton.textContent=running?'运行中…':'快速会签 · 复用因子';
 }
-async function pollAgentCouncil() {
+async function pollAgentCouncil(previousRunId, allowSameRun=false) {
   for(let attempt=0;attempt<360;attempt++){
     const response=await fetch('/api/agents',{cache:'no-store'}), payload=await response.json();
-    if(payload.run){state.dashboard.multi_agent_run=payload.run;renderAgentCollaboration(state.dashboard);}
-    if(!payload.running)return payload.run;
-    await new Promise((resolve)=>setTimeout(resolve,1500));
+    if(!response.ok||payload.error)throw new Error(payload.error||'运行状态读取失败');
+    const isCurrent=Boolean(payload.run&&(allowSameRun||payload.run.run_id!==previousRunId));
+    if(payload.preparing){state.agentPrep=payload.preparing;state.agentRunStarting=true;renderAgentRunProgress(state.dashboard?.multi_agent_run);if(payload.preparing.error)throw new Error(`K 线同步失败：${payload.preparing.error}`);}
+    else if(payload.running||isCurrent){state.agentPrep=null;state.agentRunStarting=false;if(payload.run){state.dashboard.multi_agent_run=payload.run;renderAgentCollaboration(state.dashboard);}}
+    if(!payload.running&&isCurrent)return payload.run;
+    await new Promise((resolve)=>setTimeout(resolve,1000));
   }
   throw new Error('十二 Agent 运行超时，请刷新查看已落盘状态');
 }
-async function runAgentCollaboration() {
-  const button=document.getElementById('agentRunButton'); button.disabled=true;button.textContent='正在启动十二 Agent…';
+async function runAgentCollaboration(mode='full') {
+  const fullButton=document.getElementById('agentRunButton'), quickButton=document.getElementById('agentQuickRunButton'), previousRunId=state.dashboard?.multi_agent_run?.run_id||null;
+  state.agentRunMode=mode;state.agentRunStarting=true;state.agentRunError='';fullButton.disabled=true;quickButton.disabled=true;fullButton.textContent='正在启动…';quickButton.textContent='正在启动…';renderAgentRunProgress(state.dashboard?.multi_agent_run);
   try {
-    const response=await fetch('/api/agents/run',{method:'POST'}), payload=await response.json();if(!response.ok||payload.error)throw new Error(payload.error||'启动失败');
-    toast('十二 Agent、四团队已启动'); await pollAgentCouncil();
-    const dashboardResponse=await fetch('/api/dashboard',{cache:'no-store'}), dashboard=await dashboardResponse.json();if(!dashboardResponse.ok||dashboard.error)throw new Error(dashboard.error||'结果读取失败');
-    state.dashboard=dashboard;renderMarket(dashboard);renderCandidates(dashboard);renderFactorLab(dashboard);renderBacktest(dashboard);renderAgentCollaboration(dashboard);toast(`十二 Agent 会签完成：${dashboard.multi_agent_run?.status||'已落盘'}`);
-  } catch(error){toast(`Agent 会签未完成：${error.message}`);}
-  finally{button.disabled=false;button.innerHTML='运行十二 Agent 闭环 <span>↗</span>';}
+    const response=await fetch('/api/agents/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode})}), payload=await response.json();if(!response.ok||payload.error)throw new Error(payload.error||'启动失败');
+    toast('十二 Agent 已启动，进度正在实时更新');const run=await pollAgentCouncil(previousRunId,payload.status==='运行中');
+    state.agentRunStarting=false;state.dashboard.multi_agent_run=run;renderAgentCollaboration(state.dashboard);toast(`十二 Agent 会签完成：${run?.status||'已落盘'}`);
+  } catch(error){state.agentRunStarting=false;state.agentRunError=error.message;renderAgentRunProgress(state.dashboard?.multi_agent_run);toast(`Agent 会签未完成：${error.message}`);}
+  finally{state.agentPrep=null;fullButton.disabled=false;quickButton.disabled=false;fullButton.innerHTML='全量重算 · 含研发组 <span>↗</span>';quickButton.textContent='快速会签 · 复用因子';}
 }
 function rowTemplate(stock, index, useCombo=false) {
   const colors = ['red', 'orange', 'blue', 'purple'], f = stock.factors;
@@ -107,11 +183,24 @@ function renderFactorLab(data) {
   const catalog = data.factor_lab_agent_catalog || data.factor_catalog || [], visibleCatalog = catalog.slice(0, 8), sample = state.selected ? data.stocks.find((s) => s.code === state.selected) : data.stocks[0], agent = data.agent_factor_run;
   setText('labModelName', data.factor_model?.name || 'Technical Cross-Section'); setText('labModelNote', agent?.stale ? `${data.source_label || data.source} · 历史结果，当前股池已变化` : `${data.source_label || data.source} · 最近一次 Agent 研究结果`); setText('labFactorCount', catalog.length); setText('labLatestDate', sample?.last_date || data.latest_date || '—'); setText('labSource', data.source_label || data.source);
   document.getElementById('factorCatalog').innerHTML = visibleCatalog.map((factor, index) => { const isAgent = factor.category === 'Agent 挖掘'; const value = sample?.factors?.[factor.key]; const display = isAgent ? `${factor.status || '研究中'} · ${factor.direction || '待定'}` : factor.key === 'volume_ratio' ? `${Number(value || 0).toFixed(2)}x` : fmtPct(Number(value || 0) * 100); const extra = isAgent ? `Rank IC ${Number(factor.rank_ic || 0).toFixed(4)} · ICIR ${Number(factor.icir || 0).toFixed(3)}` : `权重 ${Math.round((factor.weight || 0)*100)}%`; return `<div class="factor-catalog-row"><div class="factor-index">${String(index+1).padStart(2,'0')}</div><div class="factor-catalog-copy"><div><strong>${factor.name}</strong><span class="factor-category">${factor.category}</span></div><p>${factor.description}</p><code>${factor.formula}</code></div><div class="factor-catalog-value"><strong>${display}</strong><small>${extra}</small></div></div>`; }).join('');
-  document.getElementById('formulaGrid').innerHTML = visibleCatalog.map((factor) => `<div class="formula-chip"><span>${factor.name}</span><code>${factor.formula}</code></div>`).join('') + (agent ? `<div class="mine-warning">展示前 8 个候选，共 ${catalog.length} 个已入库；本次 Agent 搜索空间 ${agent.search_space_size} 个公式。</div>` : '');
+  const incremental=agent?.incremental_cache, cacheText=incremental?` 历史复用 ${incremental.reused_metric_points||0} 条，本轮新增或刷新 ${incremental.computed_metric_points||0} 条。`:'';
+  document.getElementById('formulaGrid').innerHTML = visibleCatalog.map((factor) => `<div class="formula-chip"><span>${factor.name}</span><code>${factor.formula}</code></div>`).join('') + (agent ? `<div class="mine-warning">展示前 8 个候选，共 ${catalog.length} 个已入库；本次 Agent 搜索空间 ${agent.search_space_size} 个公式。${cacheText}</div>` : '');
 }
-function renderBacktest(data) { const run = data.backtest_factor_run; if (!run) return; setText('backtestInput', `${run.candidate_count} 个候选因子`); setText('backtestUniverse', `${run.universe_name||'科技股池'} · ${run.confirmation_universe||0} 只`); setText('backtestUniverseNote',(run.selected_sectors||[]).join(' / ')||'排除科创板 688/689'); setText('backtestCount', run.combination_count); setText('backtestDate', `${run.data_date || '—'} · ${run.generated_at || ''}`); setText('backtestCost', `${run.cost_bps}bp`); const groups = ['1 因子','2 因子组合','3 因子组合']; const renderItem = (item,index) => { const r=item.result||{}, holdings=(r.latest_holdings||[]).slice(0,3).map((x)=>`${x.name}(${x.code})`).join('、'), formula=item.names.map((name,i)=>`${name}（${item.directions?.[i] || '待定'}）`).join(' × '), annualLabel=r.annualization_reliable?'年化':'年化参考'; return `<div class="mine-result-row backtest-selectable" data-factors="${item.factors.join(',')}" title="点击将该策略的最新 3 只股票同步到候选池"><strong>#${item.rank || index+1} ${item.kind}</strong><span>${r.status || '—'} · ${r.holding_count || 0} 只等权持仓 · 点击选择</span><small class="backtest-factor-line">${formula}</small><small>累计 ${fmtPct(Number(r.cumulative_return||0)*100)} · ${annualLabel} ${fmtPct(Number(r.annual_return||0)*100)} · Sharpe ${Number(r.sharpe||0).toFixed(2)} · 最大回撤 ${fmtPct(-Number(r.max_drawdown||0)*100)} · 胜率 ${fmtPct(Number(r.win_rate||0)*100)} · ${r.days||0} 天<br>最新 3 只：${holdings || '—'}</small></div>`; }; document.getElementById('backtestResults').innerHTML = `<div class="mine-warning"><strong>排名依据</strong>：${run.ranking_metric || '成本后 Sharpe'}。短样本优先看累计收益和回撤，年化只作参考。<br><strong>收益口径</strong>：T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出；每只 1/3，扣除 15bp × 换手率。<br><strong>股池口径</strong>：只在所选科技细分中排名，硬排除科创板 688/689。点击结果可同步最新 3 只股票。</div>` + groups.map((group) => { const items=run.results.filter((item)=>item.kind===group); return `<section class="backtest-group"><h3>${group}<small>${items.length} 个结果</small></h3>${items.map(renderItem).join('')}</section>`; }).join('') + `<div class="mine-warning">${run.warning}</div>`; document.querySelectorAll('.backtest-selectable').forEach((row)=>row.addEventListener('click',()=>selectBacktestStrategy(row.dataset.factors.split(',')))); }
+function renderBacktest(data) {
+  const run=data.backtest_factor_run;if(!run)return;
+  setText('backtestInput',`${run.candidate_count} 个候选 · 最多 ${run.max_factors||3} 因子`);
+  setText('backtestUniverse',`${run.universe_name||'科技股池'} · ${run.confirmation_universe||0} 只`);
+  setText('backtestUniverseNote',(run.selected_sectors||[]).join(' / ')||'排除科创板 688/689');
+  setText('backtestCount',run.combination_count);setText('backtestDate',`${run.data_date||'—'} · ${run.generated_at||''}`);setText('backtestCost',`${run.cost_bps}bp`);
+  const groups=[...new Set((run.results||[]).map((item)=>item.kind))].sort((a,b)=>parseInt(a)-parseInt(b));
+  const renderItem=(item)=>{const r=item.result||{},names=(item.names||[]).map((name,i)=>`${safe(name)} · ${item.directions?.[i]||'待定'}`).join(' / '),holdings=(r.latest_holdings||[]).slice(0,3).map((x)=>safe(x.name)).join('、');return `<div class="backtest-result" data-factors="${item.factors.join(',')}" title="应用该策略到候选池"><div class="backtest-rank">#${item.rank||'—'}</div><div class="backtest-strategy"><strong>${safe(item.kind)}</strong><small>${names}</small></div><div class="backtest-metric"><span>累计收益</span><strong>${fmtPct(Number(r.cumulative_return||0)*100)}</strong></div><div class="backtest-metric"><span>Sharpe</span><strong>${Number(r.sharpe||0).toFixed(2)}</strong></div><div class="backtest-metric"><span>最大回撤</span><strong>${fmtPct(-Number(r.max_drawdown||0)*100)}</strong></div><div class="backtest-metric"><span>胜率</span><strong>${fmtPct(Number(r.win_rate||0)*100)}</strong></div><div class="backtest-holdings"><b>最新候选</b>${holdings||'—'}</div></div>`;};
+  const groupHtml=groups.map((group)=>{const items=(run.results||[]).filter((item)=>item.kind===group),visible=items.slice(0,8),rest=items.slice(8);return `<section class="backtest-group"><h3>${safe(group)}<small>${items.length} 个结果</small></h3>${visible.map(renderItem).join('')}${rest.length?`<details><summary class="backtest-more">显示其余 ${rest.length} 个结果</summary>${rest.map(renderItem).join('')}</details>`:''}</section>`;}).join('');
+  const incremental=`复用 ${run.reused_combination_count||0} 组 · 新算 ${run.computed_combination_count ?? run.combination_count ?? 0} 组`;
+  document.getElementById('backtestResults').innerHTML=`<div class="mine-warning"><strong>${safe(run.ranking_metric||'成本后 Sharpe')}</strong> · ${incremental} · T 日信号，T+1 建仓，T+2 退出 · ${run.cost_bps||15}bp × 换手率</div>${groupHtml}<div class="mine-warning">${safe(run.warning||'')}</div>`;
+  document.querySelectorAll('.backtest-result').forEach((row)=>row.addEventListener('click',()=>selectBacktestStrategy(row.dataset.factors.split(','))));
+}
 async function selectBacktestStrategy(factors) { try { const response=await fetch('/api/backtest/select',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({factors})}), data=await response.json(); if(!response.ok||data.error)throw new Error(data.error||'策略选择失败'); const selected=new Set(data.selection.top_codes); state.dashboard.agent_selection=data.selection; state.dashboard.stocks.forEach((stock)=>{const hit=data.stocks.find((item)=>item.code===stock.code);stock.agent_combo_selected=selected.has(stock.code);if(hit){stock.agent_combo_score=hit.agent_combo_score;stock.agent_combo_breakdown=hit.agent_combo_breakdown;stock.agent_combo_factors=factors;}}); renderCandidates(state.dashboard); toast(`已选择策略：${data.selection.name}，候选池同步 3 只`); } catch(error) { toast(`策略选择失败：${error.message}`); } }
-async function runBacktest() { const target=document.getElementById('backtestResults'); target.innerHTML='<div class="data-loading">正在对最新因子做单因子、二因子、三因子真实回测…</div>'; try { const response=await fetch('/api/backtest',{method:'POST'}), data=await response.json(); if(!response.ok||data.error)throw new Error(data.error||'回测失败'); state.dashboard.backtest_factor_run=data; renderBacktest(state.dashboard); toast(`组合回测完成：${data.combination_count} 个组合`); } catch(error) { target.innerHTML=`<div class="data-error">真实回测未完成：${error.message}</div>`; toast('真实组合回测未完成'); } }
+async function runBacktest() { const target=document.getElementById('backtestResults'); target.innerHTML='<div class="data-loading">正在搜索 1–5 因子组合…</div>'; try { const response=await fetch('/api/backtest',{method:'POST'}), data=await response.json(); if(!response.ok||data.error)throw new Error(data.error||'回测失败'); state.dashboard.backtest_factor_run=data; renderBacktest(state.dashboard); toast(`组合回测完成：${data.combination_count} 个组合`); } catch(error) { target.innerHTML=`<div class="data-error">真实回测未完成：${error.message}</div>`; toast('真实组合回测未完成'); } }
 async function applyTechUniverse() {
   const sectors=[...document.querySelectorAll('#techSectorSelector input:checked')].map((input)=>input.value), button=document.getElementById('applyUniverseButton');
   if(!sectors.length)return toast('至少选择一个科技细分板块');
@@ -134,7 +223,8 @@ async function runFactorMining() {
     const response = await fetch('/api/mine/agent', {method:'POST'}), data = await response.json();
     if (!response.ok || data.error) throw new Error(data.error || '挖掘接口失败');
     const validation = data.validation || {}, ranked = (validation.results || []).filter((item) => item.mean_rank_ic !== undefined).slice(0, 8);
-    target.innerHTML = `<div class="mine-result-meta">搜索空间 ${data.search_space_size || validation.candidate_count} 个公式 · ${validation.usable_stocks} 只股票 · ${validation.history_bars || 0} 个共同历史样本 · 数据截止 ${validation.data_date || '—'}</div><div class="mine-agent-stages">${(data.stages || []).map((stage) => `<span>${stage.name}：${stage.status}</span>`).join('')}</div>${ranked.map((item) => { const bt=item.backtest||{}; return `<div class="mine-result-row"><strong>${item.name}</strong><span>${item.gate || item.status} · ${item.direction || '待定'}使用</span><small>${item.hypothesis || item.formula || ''}<br>Rank IC ${Number(item.mean_rank_ic).toFixed(4)} · ICIR ${Number(item.icir).toFixed(2)} · 方向调整后多空 ${fmtPct(Number(item.effective_long_short ?? item.mean_long_short) * 100)} · 回测年化 ${fmtPct(Number(bt.annual_return || 0) * 100)} · 回测回撤 ${fmtPct(Number(bt.max_drawdown || 0) * 100)}</small></div>`; }).join('')}<div class="mine-warning">${data.feedback}</div>`;
+    const incremental=data.incremental_cache||{};
+    target.innerHTML = `<div class="mine-result-meta">${data.baseline_formula_count||data.search_space_size||validation.candidate_count} 个基线公式 + 本轮新生成 ${data.generated_formula_count||0} 个 · ${validation.usable_stocks} 只股票 · ${validation.history_bars || 0} 个共同历史样本 · 数据截止 ${data.data_date || '—'} · 历史复用 ${incremental.reused_metric_points||0} 条 / 新增或刷新 ${incremental.computed_metric_points||0} 条</div><div class="mine-agent-stages">${(data.stages || []).map((stage) => `<span>${stage.name}：${stage.status}</span>`).join('')}</div>${ranked.map((item) => { const bt=item.backtest||{}; return `<div class="mine-result-row"><strong>${item.name}</strong><span>${item.gate || item.status} · ${item.direction || '待定'}使用</span><small>${item.hypothesis || item.formula || ''}<br>Rank IC ${Number(item.mean_rank_ic).toFixed(4)} · ICIR ${Number(item.icir).toFixed(2)} · 方向调整后多空 ${fmtPct(Number(item.effective_long_short ?? item.mean_long_short) * 100)} · 回测年化 ${fmtPct(Number(bt.annual_return || 0) * 100)} · 回测回撤 ${fmtPct(Number(bt.max_drawdown || 0) * 100)}</small></div>`; }).join('')}<div class="mine-warning">${data.feedback}</div>`;
     toast(`Agent 闭环完成：${validation.candidate_count} 个公式已验证`);
   } catch (error) {
     target.innerHTML = `<div class="data-error">真实挖掘未完成：${error.message}</div>`;
@@ -142,12 +232,13 @@ async function runFactorMining() {
   }
 }
 async function loadDashboard() { setLoading('正在读取真实行情与日线 K 线…'); try { const response = await fetch('/api/dashboard',{cache:'no-store'}), data = await response.json(); if (!response.ok || data.error) throw new Error(data.error || '接口请求失败'); state.dashboard = data; renderMarket(data); renderCandidates(data); renderFactorLab(data); renderAgentCollaboration(data); toast(`已接入${data.source_label || '真实行情'} · ${data.latest_date || '无最新交易日'}`); } catch (error) { document.getElementById('candidateTable').innerHTML = `<div class="data-error">真实数据接口不可用：${error.message}<br><small>页面不会使用模拟数据。请确认通过 server.py 启动，并检查网络。</small></div>`; document.getElementById('agentList').innerHTML='<div class="data-error">无真实数据，不生成分析结论。</div>'; document.getElementById('factorMap').innerHTML='<div class="data-error">无真实数据，不计算因子。</div>'; document.getElementById('factorCatalog').innerHTML='<div class="data-error">无真实数据，不展示因子目录。</div>'; document.getElementById('formulaGrid').innerHTML='<div class="data-error">无真实数据，不展示公式。</div>'; document.getElementById('agentTeams').innerHTML='<div class="data-error">无真实数据，十二 Agent 协作已阻断。</div>'; document.getElementById('checkList').innerHTML='<div class="data-error">无真实数据，不允许进入交易确认。</div>'; setText('dataSource','未连接'); setText('systemStatus','数据阻断'); setText('systemSync','未同步'); setText('marketClockTime','未连接'); toast('真实数据连接失败，已阻断模拟内容'); } }
-document.querySelectorAll('.nav-item').forEach((button)=>button.addEventListener('click',()=>{const view=button.dataset.view;document.querySelectorAll('.nav-item').forEach((item)=>item.classList.toggle('active',item===button));setText('viewTitle',titles[view]);const overview=document.getElementById('overviewView'),agents=document.getElementById('agentCollabView'),factorLab=document.getElementById('factorLabView'),backtest=document.getElementById('backtestView'),placeholder=document.getElementById('placeholderView');overview.hidden=view!=='overview';agents.hidden=view!=='agents';factorLab.hidden=view!=='factors';backtest.hidden=view!=='backtest';placeholder.hidden=!['candidates','portfolio','audit'].includes(view);if(view==='agents'&&state.dashboard)renderAgentCollaboration(state.dashboard);if(view==='factors'&&state.dashboard)renderFactorLab(state.dashboard);if(view==='backtest'&&state.dashboard)renderBacktest(state.dashboard);if(!placeholder.hidden){setText('placeholderTitle',titles[view]);setText('placeholderCopy',copies[view]);}}));
+document.querySelectorAll('.nav-item').forEach((button)=>button.addEventListener('click',()=>{const view=button.dataset.view;document.querySelectorAll('.nav-item').forEach((item)=>item.classList.toggle('active',item===button));setText('viewTitle',titles[view]);const views={overview:document.getElementById('overviewView'),agents:document.getElementById('agentCollabView'),factors:document.getElementById('factorLabView'),backtest:document.getElementById('backtestView')};Object.entries(views).forEach(([key,element])=>{element.hidden=key!==view;});if(view==='agents'&&state.dashboard)renderAgentCollaboration(state.dashboard);if(view==='factors'&&state.dashboard)renderFactorLab(state.dashboard);if(view==='backtest'&&state.dashboard)renderBacktest(state.dashboard);}));
 document.getElementById('starButton').addEventListener('click',(event)=>{if(!state.selected)return toast('暂无真实候选可收藏');state.starred=!state.starred;event.currentTarget.textContent=state.starred?'★':'☆';event.currentTarget.classList.toggle('starred',state.starred);toast(state.starred?'已加入观察列表':'已移出观察列表');});
-document.getElementById('refreshButton').addEventListener('click',(event)=>{const icon=event.currentTarget.querySelector('.refresh-icon');icon.animate([{transform:'rotate(0)'},{transform:'rotate(360deg)'}],{duration:600});loadDashboard();}); document.getElementById('researchButton').addEventListener('click',()=>toast('当前仅启动真实数据扫描，不生成虚构 Agent 结论')); document.getElementById('analysisButton').addEventListener('click',()=>state.selected?toast('完整分析将使用当前真实数据生成'):toast('暂无真实数据')); document.getElementById('backToOverview').addEventListener('click',()=>document.querySelector('[data-view="overview"]').click());
-document.getElementById('factorRefreshButton').addEventListener('click',()=>{loadDashboard();toast('正在刷新真实因子');}); document.getElementById('mineFactorButton').addEventListener('click',runFactorMining); document.getElementById('mineRunButton').addEventListener('click',runFactorMining); document.getElementById('openMiningConfig').addEventListener('click',()=>toast('下一步配置搜索空间、评价指标和时间切分')); document.getElementById('catalogSortButton').addEventListener('click',()=>toast('当前按模型权重顺序展示真实因子'));
+document.getElementById('refreshButton').addEventListener('click',(event)=>{const icon=event.currentTarget.querySelector('.refresh-icon');icon.animate([{transform:'rotate(0)'},{transform:'rotate(360deg)'}],{duration:600});loadDashboard();});
+document.getElementById('factorRefreshButton').addEventListener('click',()=>{loadDashboard();toast('正在刷新真实因子');}); document.getElementById('mineFactorButton').addEventListener('click',runFactorMining); document.getElementById('mineRunButton').addEventListener('click',runFactorMining);
 document.getElementById('runBacktestButton').addEventListener('click',runBacktest);
-document.getElementById('agentRunButton').addEventListener('click',runAgentCollaboration);
+document.getElementById('agentRunButton').addEventListener('click',()=>runAgentCollaboration('full'));
+document.getElementById('agentQuickRunButton').addEventListener('click',()=>runAgentCollaboration('quick'));
 document.getElementById('agentRefreshButton').addEventListener('click',()=>{loadDashboard();toast('正在刷新 Agent 真实运行状态');});
 document.getElementById('applyUniverseButton').addEventListener('click',applyTechUniverse);
 document.getElementById('applyStrategyButton').addEventListener('click',()=>{const value=document.getElementById('strategySelect').value;if(!value)return toast('请先选择一个回测策略');selectBacktestStrategy(value.split(','));});

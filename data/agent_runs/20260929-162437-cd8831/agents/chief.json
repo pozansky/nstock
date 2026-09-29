@@ -1,0 +1,93 @@
+{
+  "id": "chief",
+  "name": "首席研究 Agent",
+  "team": "指挥层",
+  "role": "制定任务、检查依赖并签发最终研究结论",
+  "status": "完成",
+  "started_at": "2026-09-29 16:24:37",
+  "finished_at": "2026-09-29 16:24:38",
+  "duration_ms": 1000,
+  "confidence": 0.7,
+  "data_quality": "内部量化证据 + 外部首席观点",
+  "depends_on": [],
+  "summary": "四个团队已完成会签；输出 3 只研究候选，关联 3 只股票的首席观点，订单数 0",
+  "evidence": [
+    "研究日 2026-09-29",
+    "固定科技股池 896 只",
+    "最终持仓上限 3 只",
+    "特变电工：【申万煤炭】大秦线检修在即，煤价预计整体偏强运行2026/09/27（2026-09-28 09:38:59）",
+    "双杰电气：周四舆情热度：电网、算力、机器人等行业动态（2026-07-23 22:23:43）",
+    "中国西电：资金配置动向与行业热点梳理（2026-09-23 06:14:26）"
+  ],
+  "artifact": "data\\agent_runs\\20260929-162437-cd8831\\agents\\chief.json",
+  "process": [
+    {
+      "time": "2026-09-29 16:24:37",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-09-29 16:24:37",
+      "stage": "完成",
+      "detail": "先做市场情报，再进入因子研发、实验验证与决策执行"
+    },
+    {
+      "time": "2026-09-29 16:24:38",
+      "stage": "首席观点复核",
+      "detail": "匹配 3/3 只候选；只作复核，不改写量化分数"
+    }
+  ],
+  "output": {
+    "objective": "在固定科技股池中研究可解释因子，并输出最多3只候选；不自动下单",
+    "gates": [
+      "真实数据",
+      "可执行公式",
+      "成本后回测",
+      "Challenger审查",
+      "人工批准"
+    ],
+    "team_statuses": {
+      "factor_hypothesis": "降级",
+      "factor_developer": "完成",
+      "model_research": "完成",
+      "market_regime": "完成",
+      "industry_chain": "完成",
+      "event_news": "完成",
+      "experiment_design": "完成",
+      "backtest": "完成",
+      "challenger": "警告",
+      "portfolio_manager": "完成",
+      "risk_execution": "完成"
+    },
+    "chief_opinions": {
+      "source": "chief-opinions MCP",
+      "stocks": [
+        {
+          "code": "600089",
+          "name": "特变电工",
+          "latest_title": "【申万煤炭】大秦线检修在即，煤价预计整体偏强运行2026/09/27",
+          "latest_publish_time": "2026-09-28 09:38:59",
+          "opinion_count": 1
+        },
+        {
+          "code": "300444",
+          "name": "双杰电气",
+          "latest_title": "周四舆情热度：电网、算力、机器人等行业动态",
+          "latest_publish_time": "2026-07-23 22:23:43",
+          "opinion_count": 1
+        },
+        {
+          "code": "601179",
+          "name": "中国西电",
+          "latest_title": "资金配置动向与行业热点梳理",
+          "latest_publish_time": "2026-09-23 06:14:26",
+          "opinion_count": 3
+        }
+      ],
+      "artifact": "data\\chief_opinions\\latest.json",
+      "error": null
+    },
+    "decision_status": "等待人工批准",
+    "orders_created": 0
+  }
+}

@@ -1,0 +1,743 @@
+{
+  "generated_at": "2026-09-29 17:07:32",
+  "engine_version": "tech-top3-v8-liquidity-screen",
+  "factor_run_generated_at": "2026-09-29 17:04:25",
+  "candidate_count": 4,
+  "combination_count": 14,
+  "screen_universe": 896,
+  "confirmation_universe": 896,
+  "usable_universe": 885,
+  "universe_signature": "semiconductor,electronic_components,optical_electronics,glass_substrate,communication_compute,software_ai,robotics_auto,advanced_manufacturing|da2ebb4f7e447235",
+  "universe_name": "科技股池（不含科创板/ST）",
+  "selected_sectors": [
+    "半导体与芯片",
+    "电子元件与硬件",
+    "光学光电子",
+    "玻璃基板与电子玻璃",
+    "通信与算力",
+    "软件、信创与 AI",
+    "机器人与智能汽车",
+    "高端科技制造"
+  ],
+  "cost_bps": 15,
+  "ranking_metric": "成本后 Sharpe（同 Sharpe 时按成本后累计收益）",
+  "data_date": "2026-09-29",
+  "results": [
+    {
+      "kind": "1 因子",
+      "factor_count": 1,
+      "factors": [
+        "volume_ratio_3_120"
+      ],
+      "names": [
+        "3/120 日量比"
+      ],
+      "directions": [
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "300444",
+            "name": "双杰电气"
+          },
+          {
+            "code": "301638",
+            "name": "南网数字"
+          },
+          {
+            "code": "000062",
+            "name": "深圳华强"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.002692,
+        "cumulative_return": 2.4256,
+        "annual_return": 0.7978,
+        "sharpe": 1.586,
+        "max_drawdown": 0.3643,
+        "win_rate": 0.556,
+        "equity": 3.4256,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 1,
+      "rank_metric": "成本后 Sharpe"
+    },
+    {
+      "kind": "3 因子组合",
+      "factor_count": 3,
+      "factors": [
+        "ma_3_120",
+        "momentum_40",
+        "volatility_10"
+      ],
+      "names": [
+        "3/120 日均线差",
+        "40 日动量",
+        "10 日收益波动"
+      ],
+      "directions": [
+        "反向",
+        "反向",
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "600089",
+            "name": "特变电工"
+          },
+          {
+            "code": "300444",
+            "name": "双杰电气"
+          },
+          {
+            "code": "601179",
+            "name": "中国西电"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.001803,
+        "cumulative_return": 1.282,
+        "annual_return": 0.4814,
+        "sharpe": 1.311,
+        "max_drawdown": 0.3305,
+        "win_rate": 0.546,
+        "equity": 2.282,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 2,
+      "rank_metric": "成本后 Sharpe"
+    },
+    {
+      "kind": "3 因子组合",
+      "factor_count": 3,
+      "factors": [
+        "ma_3_120",
+        "volume_ratio_3_120",
+        "volatility_10"
+      ],
+      "names": [
+        "3/120 日均线差",
+        "3/120 日量比",
+        "10 日收益波动"
+      ],
+      "directions": [
+        "反向",
+        "反向",
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "300444",
+            "name": "双杰电气"
+          },
+          {
+            "code": "601179",
+            "name": "中国西电"
+          },
+          {
+            "code": "603191",
+            "name": "望变电气"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.001663,
+        "cumulative_return": 1.1592,
+        "annual_return": 0.4429,
+        "sharpe": 1.294,
+        "max_drawdown": 0.3168,
+        "win_rate": 0.514,
+        "equity": 2.1592,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 3,
+      "rank_metric": "成本后 Sharpe"
+    },
+    {
+      "kind": "2 因子组合",
+      "factor_count": 2,
+      "factors": [
+        "momentum_40",
+        "volatility_10"
+      ],
+      "names": [
+        "40 日动量",
+        "10 日收益波动"
+      ],
+      "directions": [
+        "反向",
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "600089",
+            "name": "特变电工"
+          },
+          {
+            "code": "300024",
+            "name": "机器人"
+          },
+          {
+            "code": "600570",
+            "name": "恒生电子"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.001423,
+        "cumulative_return": 0.9037,
+        "annual_return": 0.3589,
+        "sharpe": 1.115,
+        "max_drawdown": 0.33,
+        "win_rate": 0.544,
+        "equity": 1.9037,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 4,
+      "rank_metric": "成本后 Sharpe"
+    },
+    {
+      "kind": "3 因子组合",
+      "factor_count": 3,
+      "factors": [
+        "volume_ratio_3_120",
+        "momentum_40",
+        "volatility_10"
+      ],
+      "names": [
+        "3/120 日量比",
+        "40 日动量",
+        "10 日收益波动"
+      ],
+      "directions": [
+        "反向",
+        "反向",
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "601179",
+            "name": "中国西电"
+          },
+          {
+            "code": "300024",
+            "name": "机器人"
+          },
+          {
+            "code": "301638",
+            "name": "南网数字"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.001553,
+        "cumulative_return": 0.9965,
+        "annual_return": 0.3901,
+        "sharpe": 1.113,
+        "max_drawdown": 0.3932,
+        "win_rate": 0.526,
+        "equity": 1.9965,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 5,
+      "rank_metric": "成本后 Sharpe"
+    },
+    {
+      "kind": "2 因子组合",
+      "factor_count": 2,
+      "factors": [
+        "ma_3_120",
+        "volume_ratio_3_120"
+      ],
+      "names": [
+        "3/120 日均线差",
+        "3/120 日量比"
+      ],
+      "directions": [
+        "反向",
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "300444",
+            "name": "双杰电气"
+          },
+          {
+            "code": "600666",
+            "name": "奥瑞德"
+          },
+          {
+            "code": "300571",
+            "name": "平治信息"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.0017,
+        "cumulative_return": 1.0507,
+        "annual_return": 0.4079,
+        "sharpe": 1.032,
+        "max_drawdown": 0.3735,
+        "win_rate": 0.522,
+        "equity": 2.0507,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 6,
+      "rank_metric": "成本后 Sharpe"
+    },
+    {
+      "kind": "2 因子组合",
+      "factor_count": 2,
+      "factors": [
+        "volume_ratio_3_120",
+        "momentum_40"
+      ],
+      "names": [
+        "3/120 日量比",
+        "40 日动量"
+      ],
+      "directions": [
+        "反向",
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "300444",
+            "name": "双杰电气"
+          },
+          {
+            "code": "601179",
+            "name": "中国西电"
+          },
+          {
+            "code": "600936",
+            "name": "北投科技"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.001677,
+        "cumulative_return": 0.9932,
+        "annual_return": 0.389,
+        "sharpe": 0.976,
+        "max_drawdown": 0.3348,
+        "win_rate": 0.514,
+        "equity": 1.9932,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 7,
+      "rank_metric": "成本后 Sharpe"
+    },
+    {
+      "kind": "2 因子组合",
+      "factor_count": 2,
+      "factors": [
+        "ma_3_120",
+        "volatility_10"
+      ],
+      "names": [
+        "3/120 日均线差",
+        "10 日收益波动"
+      ],
+      "directions": [
+        "反向",
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "600089",
+            "name": "特变电工"
+          },
+          {
+            "code": "300444",
+            "name": "双杰电气"
+          },
+          {
+            "code": "002456",
+            "name": "欧菲光"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.001244,
+        "cumulative_return": 0.7295,
+        "annual_return": 0.2982,
+        "sharpe": 0.971,
+        "max_drawdown": 0.2934,
+        "win_rate": 0.507,
+        "equity": 1.7295,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 8,
+      "rank_metric": "成本后 Sharpe"
+    },
+    {
+      "kind": "2 因子组合",
+      "factor_count": 2,
+      "factors": [
+        "ma_3_120",
+        "momentum_40"
+      ],
+      "names": [
+        "3/120 日均线差",
+        "40 日动量"
+      ],
+      "directions": [
+        "反向",
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "300803",
+            "name": "指南针"
+          },
+          {
+            "code": "300444",
+            "name": "双杰电气"
+          },
+          {
+            "code": "002625",
+            "name": "光启技术"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.001734,
+        "cumulative_return": 1.0119,
+        "annual_return": 0.3952,
+        "sharpe": 0.96,
+        "max_drawdown": 0.3164,
+        "win_rate": 0.518,
+        "equity": 2.0119,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 9,
+      "rank_metric": "成本后 Sharpe"
+    },
+    {
+      "kind": "1 因子",
+      "factor_count": 1,
+      "factors": [
+        "ma_3_120"
+      ],
+      "names": [
+        "3/120 日均线差"
+      ],
+      "directions": [
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "300803",
+            "name": "指南针"
+          },
+          {
+            "code": "301338",
+            "name": "凯格精机"
+          },
+          {
+            "code": "300136",
+            "name": "信维通信"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.001731,
+        "cumulative_return": 0.9965,
+        "annual_return": 0.3901,
+        "sharpe": 0.945,
+        "max_drawdown": 0.3691,
+        "win_rate": 0.524,
+        "equity": 1.9965,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 10,
+      "rank_metric": "成本后 Sharpe"
+    },
+    {
+      "kind": "1 因子",
+      "factor_count": 1,
+      "factors": [
+        "momentum_40"
+      ],
+      "names": [
+        "40 日动量"
+      ],
+      "directions": [
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "300803",
+            "name": "指南针"
+          },
+          {
+            "code": "300996",
+            "name": "普联软件"
+          },
+          {
+            "code": "300663",
+            "name": "科蓝软件"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.001726,
+        "cumulative_return": 0.9687,
+        "annual_return": 0.3808,
+        "sharpe": 0.92,
+        "max_drawdown": 0.4925,
+        "win_rate": 0.52,
+        "equity": 1.9687,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 11,
+      "rank_metric": "成本后 Sharpe"
+    },
+    {
+      "kind": "3 因子组合",
+      "factor_count": 3,
+      "factors": [
+        "ma_3_120",
+        "volume_ratio_3_120",
+        "momentum_40"
+      ],
+      "names": [
+        "3/120 日均线差",
+        "3/120 日量比",
+        "40 日动量"
+      ],
+      "directions": [
+        "反向",
+        "反向",
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "300444",
+            "name": "双杰电气"
+          },
+          {
+            "code": "601179",
+            "name": "中国西电"
+          },
+          {
+            "code": "300571",
+            "name": "平治信息"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.001182,
+        "cumulative_return": 0.5431,
+        "annual_return": 0.2295,
+        "sharpe": 0.7,
+        "max_drawdown": 0.4293,
+        "win_rate": 0.529,
+        "equity": 1.5431,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 12,
+      "rank_metric": "成本后 Sharpe"
+    },
+    {
+      "kind": "2 因子组合",
+      "factor_count": 2,
+      "factors": [
+        "volume_ratio_3_120",
+        "volatility_10"
+      ],
+      "names": [
+        "3/120 日量比",
+        "10 日收益波动"
+      ],
+      "directions": [
+        "反向",
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "600602",
+            "name": "云赛智联"
+          },
+          {
+            "code": "601179",
+            "name": "中国西电"
+          },
+          {
+            "code": "603327",
+            "name": "福蓉科技"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": 0.000621,
+        "cumulative_return": 0.2541,
+        "annual_return": 0.1139,
+        "sharpe": 0.502,
+        "max_drawdown": 0.3569,
+        "win_rate": 0.507,
+        "equity": 1.2541,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 13,
+      "rank_metric": "成本后 Sharpe"
+    },
+    {
+      "kind": "1 因子",
+      "factor_count": 1,
+      "factors": [
+        "volatility_10"
+      ],
+      "names": [
+        "10 日收益波动"
+      ],
+      "directions": [
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "600941",
+            "name": "中国移动"
+          },
+          {
+            "code": "600050",
+            "name": "中国联通"
+          },
+          {
+            "code": "601728",
+            "name": "中国电信"
+          }
+        ],
+        "days": 529,
+        "cost_bps": 15,
+        "mean_daily": -0.000752,
+        "cumulative_return": -0.3678,
+        "annual_return": -0.1962,
+        "sharpe": -0.789,
+        "max_drawdown": 0.5146,
+        "win_rate": 0.465,
+        "equity": 0.6322,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 14,
+      "rank_metric": "成本后 Sharpe"
+    }
+  ],
+  "selection_rule": "T 日收盘计算因子，先剔除近 20 日成交额最低 30%，再做截面排名并取最高 3 只等权；T+1 收盘建仓，T+2 收盘退出，扣除 15bp × 换手率。",
+  "warning": "14 个策略均直接在完整真实科技股池回测；其中 885 只有足够历史。已排除 688/689、ST/退市风险及每日流动性后 30%。结果仍属于样本内研究，不等同成交回报。"
+}

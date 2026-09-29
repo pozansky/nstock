@@ -1,0 +1,16 @@
+{
+  "code": "300454",
+  "name": "深信服",
+  "fetched_at": "2026-09-29 15:49:20",
+  "requested_limit": 1,
+  "opinion_count": 1,
+  "opinions": [
+    {
+      "opi_pubtime": "2026-09-29T09:29:35",
+      "publish_time_beijing": "2026-09-29 09:29:35",
+      "title": "【中信证券计算机】重视AI安全 英伟达发布Agent安全平台+AI攻防加速 网安进入AI时代",
+      "content": "重视【AI安全】 英伟达发布Agent安全平台+AI攻防加速，网安进入AI时代｜中信证券计算机\n\nAI失控事件持续升级，Agent安全从“概念”走向现实 \n\n-9月18日Google确认，Gemini在网络安全测试中自主访问并入侵3家真实企业系统；此前OpenAI、Anthropic、Meta均披露类似事件。#头部模型接连出现越界行为，AI Agent自主执行带来的安全风险已具普遍性。\n\n-9月28日英伟达发布Open Agent Safety Platform，以OpenShell+Sentry构建软硬件一体的Agent安全边界，可实时监控并在毫秒级隔离异常Agent。英伟达称其有望阻止此前Hugging Face事件。\n\n大模型能力跃迁，攻防不对等加剧 \n\n-Google威胁情报显示，攻击者已开始采用Agentic AI工作流；CrowdStrike披露，过去一年AI驱动攻击同比增长89%，并在蜂蜜罐中捕获12分42秒完成全流程攻击的AI Agent。\n\n-#AI从“会回答”走向“会执行”，攻击面扩展至Agent、身份、数据、代码和基础设施，安全边界亟待重构。\n\n海外龙头业绩+产品双验证，网安成为AI核心受益方向 \n\n-PANW FY26Q4营收同比+34%、NGS ARR同比+63%；ZS FY26Q4营收及ARR均同比+25%。9月初CRWD已联合英伟达推出SafeMind，以攻防双模型持续对抗；英伟达最新安全平台又获PANW、CRWD、Anthropic、微软等产业链参与。\n\n-#AI攻击自动化→企业安全投入提升→AI反哺安全运营，网安正从AI“配套”升级为AI基础设施。\n\n国内加速布局，对标海外具备复制基础 \n\n-深信服：AI+SASE+安全运营GPT；绿盟科技：AI安全+智能渗透测试+NDR/IDS；启明星辰：AI防火墙+安全代理+安全评估；天融信：天问安全大模型TopASK+大模型安全网关。\n\n-#英伟达下场做Agent安全+海外网安业绩验证，国内AI安全有望从主题催化进入产业兑现期。\n\n建议关注：深信服、绿盟科技、启明星辰、天融信、奇安信、亚信安全、迪普科技、安恒信息\n\n欢迎联系中信证券计算机团队",
+      "opi_all": "{\"title\":\"【中信证券计算机】重视AI安全 英伟达发布Agent安全平台+AI攻防加速 网安进入AI时代\",\"content\":\"重视【AI安全】 英伟达发布Agent安全平台+AI攻防加速，网安进入AI时代｜中信证券计算机\\n\\nAI失控事件持续升级，Agent安全从“概念”走向现实 \\n\\n-9月18日Google确认，Gemini在网络安全测试中自主访问并入侵3家真实企业系统；此前OpenAI、Anthropic、Meta均披露类似事件。#头部模型接连出现越界行为，AI Agent自主执行带来的安全风险已具普遍性。\\n\\n-9月28日英伟达发布Open Agent Safety Platform，以OpenShell+Sentry构建软硬件一体的Agent安全边界，可实时监控并在毫秒级隔离异常Agent。英伟达称其有望阻止此前Hugging Face事件。\\n\\n大模型能力跃迁，攻防不对等加剧 \\n\\n-Google威胁情报显示，攻击者已开始采用Agentic AI工作流；CrowdStrike披露，过去一年AI驱动攻击同比增长89%，并在蜂蜜罐中捕获12分42秒完成全流程攻击的AI Agent。\\n\\n-#AI从“会回答”走向“会执行”，攻击面扩展至Agent、身份、数据、代码和基础设施，安全边界亟待重构。\\n\\n海外龙头业绩+产品双验证，网安成为AI核心受益方向 \\n\\n-PANW FY26Q4营收同比+34%、NGS ARR同比+63%；ZS FY26Q4营收及ARR均同比+25%。9月初CRWD已联合英伟达推出SafeMind，以攻防双模型持续对抗；英伟达最新安全平台又获PANW、CRWD、Anthropic、微软等产业链参与。\\n\\n-#AI攻击自动化→企业安全投入提升→AI反哺安全运营，网安正从AI“配套”升级为AI基础设施。\\n\\n国内加速布局，对标海外具备复制基础 \\n\\n-深信服：AI+SASE+安全运营GPT；绿盟科技：AI安全+智能渗透测试+NDR/IDS；启明星辰：AI防火墙+安全代理+安全评估；天融信：天问安全大模型TopASK+大模型安全网关。\\n\\n-#英伟达下场做Agent安全+海外网安业绩验证，国内AI安全有望从主题催化进入产业兑现期。\\n\\n建议关注：深信服、绿盟科技、启明星辰、天融信、奇安信、亚信安全、迪普科技、安恒信息\\n\\n欢迎联系中信证券计算机团队\"}"
+    }
+  ]
+}

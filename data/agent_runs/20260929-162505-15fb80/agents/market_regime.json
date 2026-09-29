@@ -1,0 +1,48 @@
+{
+  "id": "market_regime",
+  "name": "市场状态 Agent",
+  "team": "市场情报组",
+  "role": "识别指数、市场广度和波动状态",
+  "status": "完成",
+  "started_at": "2026-09-29 16:25:05",
+  "finished_at": "2026-09-29 16:25:05",
+  "duration_ms": 5,
+  "confidence": 0.8,
+  "data_quality": "行情与市场广度可用",
+  "depends_on": [],
+  "summary": "市场偏多：上涨占比 67%，个股涨跌中位数 +0.78%",
+  "evidence": [
+    "指数平均涨跌 +0.09%",
+    "科技股上涨/下跌 599/297",
+    "高波动股票 48 只",
+    "类涨停/类跌停 21/0",
+    "数据截止 2026-09-29"
+  ],
+  "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\market_regime.json",
+  "process": [
+    {
+      "time": "2026-09-29 16:25:05",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-09-29 16:25:05",
+      "stage": "完成",
+      "detail": "市场偏多：上涨占比 67%，个股涨跌中位数 +0.78%"
+    }
+  ],
+  "output": {
+    "regime": "偏多",
+    "regime_score": 2,
+    "average_index_pct": 0.095,
+    "breadth": {
+      "up": 599,
+      "down": 297,
+      "up_ratio": 0.669
+    },
+    "median_stock_pct": 0.779,
+    "high_volatility_count": 48,
+    "limit_up_like": 21,
+    "limit_down_like": 0
+  }
+}

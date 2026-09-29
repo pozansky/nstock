@@ -1,0 +1,39 @@
+{
+  "id": "model_research",
+  "name": "模型研究 Agent",
+  "team": "研究研发组",
+  "role": "设计因子组合与排名模型",
+  "status": "完成",
+  "started_at": "2026-09-29 16:16:58",
+  "finished_at": "2026-09-29 16:16:58",
+  "duration_ms": 15,
+  "confidence": 0.65,
+  "data_quality": "历史样本偏短",
+  "depends_on": [
+    "factor_developer"
+  ],
+  "summary": "采用方向调整后的截面百分位等权模型，并限制组合最多3个异质因子",
+  "evidence": [
+    "单因子、双因子、三因子分别比较",
+    "按成本后 Sharpe 排名",
+    "因子家族去重，降低共线性"
+  ],
+  "artifact": "data\\agent_runs\\20260929-161657-cc9205\\agents\\model_research.json",
+  "process": [
+    {
+      "time": "2026-09-29 16:16:58",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-09-29 16:16:58",
+      "stage": "完成",
+      "detail": "采用方向调整后的截面百分位等权模型，并限制组合最多3个异质因子"
+    }
+  ],
+  "output": {
+    "model": "direction-adjusted cross-sectional rank ensemble",
+    "max_factors": 3,
+    "max_positions": 3
+  }
+}

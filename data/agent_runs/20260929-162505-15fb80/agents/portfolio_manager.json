@@ -1,0 +1,71 @@
+{
+  "id": "portfolio_manager",
+  "name": "组合经理 Agent",
+  "team": "决策执行组",
+  "role": "在通过审查的策略中选择最多三只",
+  "status": "完成",
+  "started_at": "2026-09-29 16:25:05",
+  "finished_at": "2026-09-29 16:25:05",
+  "duration_ms": 5,
+  "confidence": 0.55,
+  "data_quality": "年化样本可用",
+  "depends_on": [
+    "backtest",
+    "challenger",
+    "market_regime",
+    "industry_chain"
+  ],
+  "summary": "选择 #1 策略并输出 3 只等权研究候选",
+  "evidence": [
+    "特变电工(600089)",
+    "双杰电气(300444)",
+    "中国西电(601179)",
+    "Challenger仅批准研究用途"
+  ],
+  "artifact": "data\\agent_runs\\20260929-162505-15fb80\\agents\\portfolio_manager.json",
+  "process": [
+    {
+      "time": "2026-09-29 16:25:05",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-09-29 16:25:05",
+      "stage": "完成",
+      "detail": "选择 #1 策略并输出 3 只等权研究候选"
+    }
+  ],
+  "output": {
+    "strategy": {
+      "factors": [
+        "ma_3_120",
+        "momentum_40",
+        "volatility_10"
+      ],
+      "names": [
+        "3/120 日均线差",
+        "40 日动量",
+        "10 日收益波动"
+      ]
+    },
+    "holdings": [
+      {
+        "code": "600089",
+        "name": "特变电工"
+      },
+      {
+        "code": "300444",
+        "name": "双杰电气"
+      },
+      {
+        "code": "601179",
+        "name": "中国西电"
+      }
+    ],
+    "weights": [
+      0.3333,
+      0.3333,
+      0.3333
+    ]
+  }
+}

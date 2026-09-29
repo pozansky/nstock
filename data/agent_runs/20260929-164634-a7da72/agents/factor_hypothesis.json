@@ -1,0 +1,64 @@
+{
+  "id": "factor_hypothesis",
+  "name": "因子假设 Agent",
+  "team": "研究研发组",
+  "role": "根据历史实验提出可证伪的因子假设",
+  "status": "降级",
+  "started_at": "2026-09-29 16:46:35",
+  "finished_at": "2026-09-29 16:46:46",
+  "duration_ms": 11521,
+  "confidence": 0.25,
+  "data_quality": "仅白名单回退",
+  "depends_on": [
+    "market_regime",
+    "industry_chain",
+    "event_news"
+  ],
+  "summary": "Codex 不可用，保留白名单候选但不冒充 LLM 假设",
+  "evidence": [
+    "DeepSeek API 失败：Expecting value: line 1 column 1 (char 0)"
+  ],
+  "artifact": "data\\agent_runs\\20260929-164634-a7da72\\agents\\factor_hypothesis.json",
+  "process": [
+    {
+      "time": "2026-09-29 16:46:35",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-09-29 16:46:46",
+      "stage": "完成",
+      "detail": "Codex 不可用，保留白名单候选但不冒充 LLM 假设"
+    }
+  ],
+  "output": {
+    "hypotheses": [
+      {
+        "candidate": "momentum5",
+        "rationale": "等待 LLM 研究解释",
+        "expectation": "仅进入代码验证"
+      },
+      {
+        "candidate": "momentum10",
+        "rationale": "等待 LLM 研究解释",
+        "expectation": "仅进入代码验证"
+      },
+      {
+        "candidate": "momentum20",
+        "rationale": "等待 LLM 研究解释",
+        "expectation": "仅进入代码验证"
+      },
+      {
+        "candidate": "momentum60",
+        "rationale": "等待 LLM 研究解释",
+        "expectation": "仅进入代码验证"
+      },
+      {
+        "candidate": "ma5_20",
+        "rationale": "等待 LLM 研究解释",
+        "expectation": "仅进入代码验证"
+      }
+    ]
+  },
+  "llm": "unavailable"
+}

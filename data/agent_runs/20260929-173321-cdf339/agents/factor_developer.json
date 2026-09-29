@@ -1,0 +1,155 @@
+{
+  "id": "factor_developer",
+  "name": "因子开发 Agent",
+  "team": "研究研发组",
+  "role": "把新假设编译为受控公式并执行真实验证",
+  "status": "复用",
+  "started_at": "2026-09-29 17:33:22",
+  "finished_at": "2026-09-29 17:33:22",
+  "duration_ms": 11,
+  "confidence": 0.5,
+  "data_quality": "历史样本偏短",
+  "depends_on": [
+    "factor_hypothesis"
+  ],
+  "summary": "复用最近一次因子验证：44 个因子通过门槛",
+  "evidence": [
+    "全量确认股池 896 只",
+    "历史日线 35 根",
+    "引擎 tech-factor-v6-generated-formulas"
+  ],
+  "artifact": "data\\agent_runs\\20260929-173321-cdf339\\agents\\factor_developer.json",
+  "process": [
+    {
+      "time": "2026-09-29 17:33:22",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-09-29 17:33:22",
+      "stage": "直接复用",
+      "detail": "读取最近一次 100 个公式的验证结果，不重新计算"
+    },
+    {
+      "time": "2026-09-29 17:33:22",
+      "stage": "完成",
+      "detail": "复用最近一次因子验证：44 个因子通过门槛"
+    }
+  ],
+  "output": {
+    "passed_count": 44,
+    "top_factors": [
+      {
+        "key": "ma_3_120",
+        "name": "3/120 日均线差",
+        "formula": "Mean(close, 3) / Mean(close, 120) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0733,
+        "icir": -0.3,
+        "gate": "通过"
+      },
+      {
+        "key": "ma_5_60",
+        "name": "5/60 日均线差",
+        "formula": "Mean(close, 5) / Mean(close, 60) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0707,
+        "icir": -0.258,
+        "gate": "通过"
+      },
+      {
+        "key": "ma_5_120",
+        "name": "5/120 日均线差",
+        "formula": "Mean(close, 5) / Mean(close, 120) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0706,
+        "icir": -0.282,
+        "gate": "通过"
+      },
+      {
+        "key": "ma_3_60",
+        "name": "3/60 日均线差",
+        "formula": "Mean(close, 3) / Mean(close, 60) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0702,
+        "icir": -0.259,
+        "gate": "通过"
+      },
+      {
+        "key": "ma_10_60",
+        "name": "10/60 日均线差",
+        "formula": "Mean(close, 10) / Mean(close, 60) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0698,
+        "icir": -0.246,
+        "gate": "通过"
+      },
+      {
+        "key": "volume_ratio_3_120",
+        "name": "3/120 日量比",
+        "formula": "Mean(volume, 3) / Mean(volume, 120)",
+        "direction": "反向",
+        "mean_rank_ic": -0.0695,
+        "icir": -0.434,
+        "gate": "通过"
+      },
+      {
+        "key": "volume_ratio_5_120",
+        "name": "5/120 日量比",
+        "formula": "Mean(volume, 5) / Mean(volume, 120)",
+        "direction": "反向",
+        "mean_rank_ic": -0.0681,
+        "icir": -0.417,
+        "gate": "通过"
+      },
+      {
+        "key": "momentum_40",
+        "name": "40 日动量",
+        "formula": "close / Ref(close, 40) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0651,
+        "icir": -0.24,
+        "gate": "通过"
+      },
+      {
+        "key": "reversal_40",
+        "name": "40 日反转",
+        "formula": "-(close / Ref(close, 40) - 1)",
+        "direction": "正向",
+        "mean_rank_ic": 0.0651,
+        "icir": 0.24,
+        "gate": "通过"
+      },
+      {
+        "key": "volatility_10",
+        "name": "10 日收益波动",
+        "formula": "Std(Return(close), 10)",
+        "direction": "反向",
+        "mean_rank_ic": -0.06,
+        "icir": -0.188,
+        "gate": "通过"
+      },
+      {
+        "key": "reversal_60",
+        "name": "60 日反转",
+        "formula": "-(close / Ref(close, 60) - 1)",
+        "direction": "正向",
+        "mean_rank_ic": 0.0584,
+        "icir": 0.222,
+        "gate": "通过"
+      },
+      {
+        "key": "ma_10_40",
+        "name": "10/40 日均线差",
+        "formula": "Mean(close, 10) / Mean(close, 40) - 1",
+        "direction": "反向",
+        "mean_rank_ic": -0.0554,
+        "icir": -0.197,
+        "gate": "通过"
+      }
+    ],
+    "hypothesis_input": {
+      "reused": true
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "factor_hypothesis",
+  "name": "因子假设 Agent",
+  "team": "研究研发组",
+  "role": "根据历史实验提出可证伪的因子假设",
+  "status": "复用",
+  "started_at": "2026-09-29 16:26:20",
+  "finished_at": "2026-09-29 16:26:20",
+  "duration_ms": 5,
+  "confidence": 0.6,
+  "data_quality": "沿用最近一次研究记录",
+  "depends_on": [
+    "market_regime",
+    "industry_chain",
+    "event_news"
+  ],
+  "summary": "快速会签：复用最近一次因子假设，不重新调用推理引擎",
+  "evidence": [
+    "本轮由用户选择跳过研究研发组"
+  ],
+  "artifact": "data\\agent_runs\\20260929-162620-f3d85c\\agents\\factor_hypothesis.json",
+  "process": [
+    {
+      "time": "2026-09-29 16:26:20",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-09-29 16:26:20",
+      "stage": "完成",
+      "detail": "快速会签：复用最近一次因子假设，不重新调用推理引擎"
+    }
+  ],
+  "output": {
+    "reused": true
+  }
+}

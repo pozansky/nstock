@@ -8,7 +8,7 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from itertools import combinations
 import json, math, statistics, time, subprocess, re, threading, os, gzip, hashlib
-from multi_agent import load_latest as read_multi_agent_run, run_research_council
+from multi_agent import load_chief_opinion_cache, load_latest as read_multi_agent_run, run_research_council
 
 HOST, PORT = "127.0.0.1", 4173
 GUPIAO_UNIVERSE_FILE = Path("/Users/pozansky/Documents/gupiao/fixed_universe_codes.json")
@@ -19,6 +19,7 @@ KLINE_CACHE_DIR = CACHE_DIR / "klines"
 KLINE_MANIFEST_FILE = CACHE_DIR / "historical_data_manifest.json"
 FACTOR_AGENT_RUN_FILE = CACHE_DIR / "factor_agent_last_run.json"
 BACKTEST_RUN_FILE = CACHE_DIR / "backtest_factor_last_run.json"
+FACTOR_DAILY_METRICS_FILE = CACHE_DIR / "factor_daily_metrics.json"
 TECH_UNIVERSE_FILE = Path(__file__).with_name("tech_universe.json")
 TECH_CONFIG_FILE = CACHE_DIR / "tech_universe_config.json"
 DATA_DIR = Path(__file__).with_name("data")
@@ -29,11 +30,13 @@ CACHE_LOCK = threading.Lock()
 REFRESH_THREAD = None
 MULTI_AGENT_THREAD = None
 MULTI_AGENT_LOCK = threading.Lock()
+MULTI_AGENT_PREP_STATUS = None
 # A complete 930-name refresh is expensive; stale-while-revalidate on a
 # 15-minute cadence prevents permanent refresh loops during market hours.
 REFRESH_TTL_SECONDS = 15 * 60
-FACTOR_ENGINE_VERSION = "tech-factor-v4-shared-top4-backtests"
-BACKTEST_ENGINE_VERSION = "tech-top3-v8-liquidity-screen"
+FACTOR_ENGINE_VERSION = "tech-factor-v6-generated-formulas"
+BACKTEST_ENGINE_VERSION = "tech-top3-v9-beam-five-factors"
+FACTOR_DAILY_METRICS_VERSION = "rank-ic-t1-t2-v2-source-fingerprints"
 
 TECH_SECTOR_DEFINITIONS = {
     "semiconductor": {
@@ -139,6 +142,14 @@ MINING_CANDIDATES = [
     ("volume_trend5_60", "5/60 日量能趋势", "Mean(volume, 5) / Mean(volume, 60)"),
     ("range_expansion20", "波动扩张", "TrueRange / Mean(TrueRange, 20)"),
     ("price_volume5", "量价协同", "Return(close, 5) * Mean(volume, 5) / Mean(volume, 20)"),
+    ("body_strength", "K线实体强度", "(close - open) / (high - low)"),
+    ("upper_shadow_ratio", "上影线压力", "(high - Max(open, close)) / (high - low)"),
+    ("lower_shadow_ratio", "下影线支撑", "(Min(open, close) - low) / (high - low)"),
+    ("engulfing_volume", "放量吞没", "Engulfing(open, high, low, close) * volume / Mean(Ref(volume, 1), 20)"),
+    ("breakout_volume_confirm", "放量突破确认", "(close / Max(Ref(high, 1), 20) - 1) * volume / Mean(Ref(volume, 1), 20)"),
+    ("close_volume_pressure", "收盘量能压力", "(2 * CloseLocation - 1) * volume / Mean(Ref(volume, 1), 20)"),
+    ("contraction_breakout", "缩量整理后放量突破", "Breakout20 * VolumeSurprise20 / ATRContraction5_20"),
+    ("cup_handle_breakout", "杯柄放量突破", "CupHandle(close, 80) * Breakout(pivot) * volume / Mean(Ref(volume, 1), 20)"),
 ]
 
 # Research Agent output: hypotheses are explicit, auditable and persisted with
@@ -152,6 +163,14 @@ FACTOR_RESEARCH_PROPOSALS = [
     {"id":"R05", "name":"量能趋势", "hypothesis":"短期成交量持续高于中期均值可能确认价格信号，但也可能代表拥挤。", "formula":"Mean(volume, 5) / Mean(volume, 60)", "candidate":"volume_trend5_60"},
     {"id":"R06", "name":"波动扩张", "hypothesis":"当前真实波幅相对历史波幅的扩张可能捕捉状态切换。", "formula":"TrueRange / Mean(TrueRange, 20)", "candidate":"range_expansion20"},
     {"id":"R07", "name":"量价协同", "hypothesis":"短期收益与成交量放大结合，可能区分有效突破与无量上涨。", "formula":"Return(close, 5) * Mean(volume, 5) / Mean(volume, 20)", "candidate":"price_volume5"},
+    {"id":"R08", "name":"K线实体强度", "hypothesis":"实体方向和实体占日内振幅的比例可度量当日买卖力量。", "formula":"(close - open) / (high - low)", "candidate":"body_strength"},
+    {"id":"R09", "name":"上影线压力", "hypothesis":"较长上影线可能代表高位抛压，后续收益方向需要样本外验证。", "formula":"(high - Max(open, close)) / (high - low)", "candidate":"upper_shadow_ratio"},
+    {"id":"R10", "name":"下影线支撑", "hypothesis":"较长下影线可能代表低位承接，但也可能只是高波动噪声。", "formula":"(Min(open, close) - low) / (high - low)", "candidate":"lower_shadow_ratio"},
+    {"id":"R11", "name":"放量吞没", "hypothesis":"吞没形态获得异常成交量确认时，反转信号可能更可靠。", "formula":"Engulfing(open, high, low, close) * volume / Mean(Ref(volume, 1), 20)", "candidate":"engulfing_volume"},
+    {"id":"R12", "name":"放量突破确认", "hypothesis":"突破前高同时放量可能比无量突破具有更强的延续性。", "formula":"(close / Max(Ref(high, 1), 20) - 1) * volume / Mean(Ref(volume, 1), 20)", "candidate":"breakout_volume_confirm"},
+    {"id":"R13", "name":"收盘量能压力", "hypothesis":"收盘在日内区间的位置与异常成交量结合，可区分真实买卖压力。", "formula":"(2 * CloseLocation - 1) * volume / Mean(Ref(volume, 1), 20)", "candidate":"close_volume_pressure"},
+    {"id":"R14", "name":"缩量整理后放量突破", "hypothesis":"波幅收敛后的放量突破可能代表新趋势启动。", "formula":"Breakout20 * VolumeSurprise20 / ATRContraction5_20", "candidate":"contraction_breakout"},
+    {"id":"R15", "name":"杯柄放量突破", "hypothesis":"杯底充分整理、右沿修复、浅柄回撤后放量越过枢轴位，可能对应欧奈尔式主升浪启动。", "formula":"CupHandle(close, 80) * Breakout(pivot) * volume / Mean(Ref(volume, 1), 20)", "candidate":"cup_handle_breakout"},
 ]
 
 def build_factor_search_space():
@@ -187,16 +206,63 @@ def build_factor_search_space():
             unique.append(candidate); seen.add(candidate[0])
     return unique[:100]
 
+def build_generated_factor_candidates(specs, base_candidates):
+    """Compile model proposals into a small, deterministic factor DSL."""
+    allowed = {key for key, _, _ in base_candidates}
+    operators = {
+        "multiply": lambda left, right: left * right,
+        "difference": lambda left, right: left - right,
+        "ratio": lambda left, right: max(-100.0, min(100.0, left / (abs(right) + 1e-9))),
+        "confirm": lambda left, right: left * max(right, 0.0),
+    }
+    candidates, proposals, seen = [], [], set()
+    for index, item in enumerate((specs or [])[:8], 1):
+        left, right = str(item.get("left", "")), str(item.get("right", ""))
+        operator = str(item.get("operator", ""))
+        if left not in allowed or right not in allowed or operator not in operators:
+            continue
+        identity = (left, operator, right)
+        if identity in seen:
+            continue
+        seen.add(identity)
+        key = f"gen__{operator}__{left}__{right}"
+        name = str(item.get("name") or f"生成因子 {index}")[:24]
+        formula = f"{operator}({left}, {right})"
+        candidates.append((key, name, formula))
+        proposals.append({
+            "id": f"G{index:02d}", "name": name,
+            "hypothesis": str(item.get("rationale") or "模型生成的可证伪组合假设"),
+            "expectation": str(item.get("expectation") or "由真实样本确定方向"),
+            "formula": formula, "candidate": key, "generated": True,
+            "components": {"left": left, "operator": operator, "right": right},
+        })
+    return candidates, proposals
+
 def _factor_value(rows, index, key):
     # No factor in the audited library needs more than 120 lookback bars.
     # Bounding the slice avoids repeatedly scanning a stock's full 1000-bar history.
     factor_rows = rows[max(0, index - 120):index + 1]
     closes = [float(row["close"]) for row in factor_rows]
+    opens = [float(row.get("open", row["close"])) for row in factor_rows]
     highs = [float(row["high"]) for row in factor_rows]
     lows = [float(row["low"]) for row in factor_rows]
     volumes = [float(row.get("volume", 0) or 0) for row in factor_rows]
     def avg(values): return mean(values)
     def ret(window): return closes[-1] / closes[-window-1] - 1 if len(closes) > window and closes[-window-1] else None
+    if key.startswith("gen__"):
+        parts = key.split("__")
+        if len(parts) != 4:
+            return None
+        _, operator, left_key, right_key = parts
+        left = _factor_value(rows, index, left_key)
+        right = _factor_value(rows, index, right_key)
+        if left is None or right is None or not math.isfinite(left) or not math.isfinite(right):
+            return None
+        if operator == "multiply": return left * right
+        if operator == "difference": return left - right
+        if operator == "ratio": return max(-100.0, min(100.0, left / (abs(right) + 1e-9)))
+        if operator == "confirm": return left * max(right, 0.0)
+        return None
     if re.match(r"^(momentum|reversal|breakout|drawdown|volatility|downside_vol|up_ratio)_\d+$", key):
         prefix, window_text = key.rsplit("_", 1); window = int(window_text)
         if prefix == "momentum": return ret(window)
@@ -271,6 +337,80 @@ def _factor_value(rows, index, key):
     if key == "price_volume5":
         ratio = avg(volumes[-5:]) / avg(volumes[-20:]) if len(volumes) >= 20 and avg(volumes[-20:]) else None
         return ret(5) * ratio if ratio is not None else None
+    if key in {"body_strength", "upper_shadow_ratio", "lower_shadow_ratio"}:
+        span = highs[-1] - lows[-1]
+        if not span:
+            return 0.0
+        if key == "body_strength":
+            return (closes[-1] - opens[-1]) / span
+        if key == "upper_shadow_ratio":
+            return (highs[-1] - max(opens[-1], closes[-1])) / span
+        return (min(opens[-1], closes[-1]) - lows[-1]) / span
+    if key in {"engulfing_volume", "breakout_volume_confirm", "close_volume_pressure", "contraction_breakout"}:
+        if len(closes) < 21:
+            return None
+        prior_volume = avg(volumes[-21:-1])
+        if not prior_volume:
+            return None
+        volume_surprise = volumes[-1] / prior_volume
+        if key == "engulfing_volume":
+            bullish = closes[-2] < opens[-2] and closes[-1] > opens[-1] and opens[-1] <= closes[-2] and closes[-1] >= opens[-2]
+            bearish = closes[-2] > opens[-2] and closes[-1] < opens[-1] and opens[-1] >= closes[-2] and closes[-1] <= opens[-2]
+            return volume_surprise if bullish else (-volume_surprise if bearish else 0.0)
+        if key == "close_volume_pressure":
+            span = highs[-1] - lows[-1]
+            return ((2 * (closes[-1] - lows[-1]) / span) - 1) * volume_surprise if span else 0.0
+        prior_high = max(highs[-21:-1])
+        breakout = closes[-1] / prior_high - 1 if prior_high else None
+        if breakout is None:
+            return None
+        if key == "breakout_volume_confirm":
+            return breakout * volume_surprise
+        true_ranges = [max(highs[pos] - lows[pos], abs(highs[pos] - closes[pos - 1]), abs(lows[pos] - closes[pos - 1])) for pos in range(1, len(closes))]
+        prior_atr = avg(true_ranges[-25:-5]) if len(true_ranges) >= 25 else None
+        recent_atr = avg(true_ranges[-5:]) if len(true_ranges) >= 5 else None
+        if not prior_atr or not recent_atr or recent_atr >= prior_atr or breakout <= 0:
+            return 0.0
+        return breakout * volume_surprise * (prior_atr / recent_atr)
+    if key == "cup_handle_breakout":
+        if len(closes) < 80:
+            return None
+        pattern = closes[-80:]
+        left_zone = pattern[:30]
+        left_rim = max(left_zone)
+        left_index = left_zone.index(left_rim)
+        bottom_zone = pattern[left_index + 1:55]
+        if not bottom_zone or not left_rim:
+            return 0.0
+        cup_bottom = min(bottom_zone)
+        bottom_index = left_index + 1 + bottom_zone.index(cup_bottom)
+        right_zone = pattern[max(50, bottom_index + 1):70]
+        handle = pattern[70:79]
+        if not right_zone or not handle:
+            return 0.0
+        right_rim = max(right_zone)
+        pivot = max(left_rim, right_rim)
+        cup_depth = (left_rim - cup_bottom) / left_rim
+        rim_gap = abs(right_rim / left_rim - 1)
+        handle_drawdown = (right_rim - min(handle)) / right_rim if right_rim else 1
+        cup_midpoint = cup_bottom + (left_rim - cup_bottom) * 0.5
+        prior_volume = avg(volumes[-21:-1])
+        if not prior_volume:
+            return None
+        volume_surprise = volumes[-1] / prior_volume
+        valid_shape = (
+            0.12 <= cup_depth <= 0.40
+            and rim_gap <= 0.08
+            and 0 <= handle_drawdown <= 0.12
+            and min(handle) >= cup_midpoint
+            and pattern[-1] > pivot
+            and pattern[-1] / pivot - 1 <= 0.15
+            and volume_surprise >= 1.20
+        )
+        if not valid_shape:
+            return 0.0
+        shape_quality = max(0.25, 1 - rim_gap / 0.08)
+        return (pattern[-1] / pivot - 1) * volume_surprise * shape_quality
     return None
 
 def latest_mined_factor_values(rows):
@@ -333,20 +473,74 @@ def _correlation(left, right):
     denominator = math.sqrt(sum((a - left_mean) ** 2 for a in left) * sum((b - right_mean) ** 2 for b in right))
     return numerator / denominator if denominator else 0.0
 
-def mine_factor_candidates(stocks, candidates=None):
+def read_factor_daily_metrics():
+    try:
+        payload = json.loads(FACTOR_DAILY_METRICS_FILE.read_text(encoding="utf-8"))
+        if payload.get("version") == FACTOR_DAILY_METRICS_VERSION:
+            return payload
+    except (FileNotFoundError, OSError, json.JSONDecodeError):
+        pass
+    return {"version": FACTOR_DAILY_METRICS_VERSION, "entries": {}}
+
+def write_factor_daily_metrics(payload):
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    temporary = FACTOR_DAILY_METRICS_FILE.with_suffix(".tmp")
+    temporary.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    os.replace(temporary, FACTOR_DAILY_METRICS_FILE)
+
+def mine_factor_candidates(stocks, candidates=None, metrics_cache=None, cache_namespace=""):
     usable = []
     for stock in stocks:
         history = completed_daily_rows(read_kline_cache(stock.get("code", "")) or stock.get("klines", []))
         if len(history) >= 30:
             usable.append({"stock": stock, "rows": history, "indexes": {row.get("date"): index for index, row in enumerate(history)}})
     results = []
+    cache_entries = metrics_cache.setdefault("entries", {}) if metrics_cache is not None else {}
+    stock_signature = hashlib.sha256(",".join(sorted(item["stock"].get("code", "") for item in usable)).encode("utf-8")).hexdigest()[:16]
+    total_cache_hits, total_computed_points = 0, 0
     available_dates = sorted(set().union(*(set(item["indexes"]) for item in usable))) if usable else []
     sample_dates = available_dates[-83:-2]
+    # Fingerprint raw bars once per trading date. A changed bar can affect the
+    # two preceding return labels and up to 120 subsequent rolling signals.
+    raw_digests = {date: hashlib.sha256() for date in available_dates}
+    for item in sorted(usable, key=lambda value: value["stock"].get("code", "")):
+        code = item["stock"].get("code", "")
+        for row in item["rows"]:
+            date = row.get("date")
+            if date not in raw_digests:
+                continue
+            raw_digests[date].update(code.encode("utf-8"))
+            raw_digests[date].update("|".join(str(row.get(field, "")) for field in ("open", "high", "low", "close", "volume")).encode("utf-8"))
+    current_sources = {date: digest.hexdigest()[:16] for date, digest in raw_digests.items()}
+    source_key = f"{cache_namespace}|{stock_signature}"
+    source_cache = metrics_cache.setdefault("sources", {}) if metrics_cache is not None else {}
+    previous_sources = source_cache.get(source_key, {})
+    changed_source_dates = {date for date in set(previous_sources) | set(current_sources) if previous_sources.get(date) != current_sources.get(date)}
+    source_cache[source_key] = current_sources
+    timeline = sorted(set(previous_sources) | set(current_sources))
+    affected_dates = set()
+    for changed_date in changed_source_dates:
+        changed_index = timeline.index(changed_date)
+        affected_dates.update(timeline[max(0, changed_index - 2):changed_index + 121])
+    refreshed_dates = set()
     for key, name, formula in candidates or MINING_CANDIDATES:
-        daily_ic, long_short, factor_series = [], [], []
+        daily_ic, long_short = [], []
+        definition_hash = hashlib.sha256(formula.encode("utf-8")).hexdigest()[:12]
+        cache_key = f"{cache_namespace}|{stock_signature}|{key}|{definition_hash}"
+        cached_dates = cache_entries.setdefault(cache_key, {})
         # Use actual trading dates, never positional row alignment. Signal is
         # known at T close and evaluated on the tradable T+1 -> T+2 close return.
         for date in sample_dates:
+            cached_metric = cached_dates.get(date)
+            if cached_metric is not None and date not in affected_dates:
+                total_cache_hits += 1
+                cached_ic = cached_metric.get("ic") if isinstance(cached_metric, dict) else cached_metric[0]
+                cached_spread = cached_metric.get("spread") if isinstance(cached_metric, dict) else cached_metric[1]
+                if cached_ic is not None:
+                    daily_ic.append(float(cached_ic)); long_short.append(float(cached_spread))
+                continue
+            if cached_metric is not None:
+                refreshed_dates.add(date)
             cross_section = []
             for item in usable:
                 rows = item["rows"]
@@ -357,14 +551,21 @@ def mine_factor_candidates(stocks, candidates=None):
                 next_return = rows[index + 2]["close"] / entry_close - 1 if entry_close else None
                 if value is not None and next_return is not None and math.isfinite(value) and math.isfinite(next_return):
                     cross_section.append((value, next_return))
-            if len(cross_section) < 20: continue
+            total_computed_points += 1
+            if len(cross_section) < 20:
+                cached_dates[date] = {"ic": None, "spread": None}
+                continue
             factors, targets = zip(*cross_section)
             ic = _correlation(_rank(list(factors)), _rank(list(targets)))
             ordered = sorted(cross_section, key=lambda pair: pair[0])
             bucket = max(1, len(ordered) // 5)
-            long_short.append(mean([x[1] for x in ordered[-bucket:]]) - mean([x[1] for x in ordered[:bucket]]))
+            spread = mean([x[1] for x in ordered[-bucket:]]) - mean([x[1] for x in ordered[:bucket]])
+            long_short.append(spread)
             daily_ic.append(ic)
-            factor_series.extend(factors)
+            cached_dates[date] = {"ic": round(ic, 8), "spread": round(spread, 8)}
+        if len(cached_dates) > 120:
+            keep_dates = set(sorted(cached_dates)[-120:])
+            cache_entries[cache_key] = {date: value for date, value in cached_dates.items() if date in keep_dates}
         if len(daily_ic) < 10:
             results.append({"key": key, "name": name, "formula": formula, "status": "数据不足", "sample_days": len(daily_ic)})
             continue
@@ -380,7 +581,7 @@ def mine_factor_candidates(stocks, candidates=None):
         item["effective_rank_ic"] = round(abs(item["mean_rank_ic"]), 4)
         item["effective_long_short"] = round(item["mean_long_short"] if item["mean_rank_ic"] >= 0 else -item["mean_long_short"], 5)
         item["status"] = "候选" if abs(item["mean_rank_ic"]) >= 0.03 and item.get("sample_days", 0) >= 20 else "弱信号"
-    return {"universe": len(stocks), "usable_stocks": len(usable), "history_bars": min((len(item["rows"]) for item in usable), default=0), "sample_days": len(sample_dates), "candidate_count": len(results), "results": results,
+    return {"universe": len(stocks), "usable_stocks": len(usable), "history_bars": min((len(item["rows"]) for item in usable), default=0), "sample_days": len(sample_dates), "candidate_count": len(results), "cache_hits": total_cache_hits, "computed_points": total_computed_points, "changed_source_dates": sorted(changed_source_dates), "refreshed_dates": sorted(refreshed_dates), "results": results,
             "warning": "按真实交易日对齐；T 日收盘计算因子，评价 T+1 收盘至 T+2 收盘收益。当前 81 日窗口用于交互筛选，正式生产仍需滚动样本外验证。"}
 
 def backtest_factor(stocks, factor_key, direction):
@@ -457,7 +658,8 @@ def backtest_factor_combo(stocks, factors, prepared=None):
     annualization_reliable = len(daily) >= 126
     return {"status":"完成" if annualization_reliable else "短样本，仅供参考", "portfolio":"Top 3 等权组合，每只 1/3，不是单只股票", "universe":len(usable), "holding_count":len(latest_holdings), "latest_holdings":latest_holdings, "days":len(daily), "cost_bps":15, "mean_daily":round(avg, 6), "cumulative_return":round(cumulative, 4), "annual_return":round(annual, 4), "sharpe":round(avg / sd * math.sqrt(252), 3) if sd else 0, "max_drawdown":round(max_drawdown, 4), "win_rate":round(sum(value > 0 for value in daily) / len(daily), 3), "equity":round(equity, 4), "audited":True, "annualization_reliable":annualization_reliable, "return_definition":"T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出", "trade_delay_days":1}
 
-def run_backtest_experiment(stocks):
+def run_backtest_experiment(stocks, progress=None, force=False):
+    progress = progress or (lambda stage, detail: None)
     latest = read_factor_agent_run()
     universe_signature = universe_signature_for_stocks(stocks)
     # Refresh factor validation when the fixed universe changes instead of
@@ -466,7 +668,8 @@ def run_backtest_experiment(stocks):
         latest = run_factor_agent_loop(stocks)
     dashboard_date = latest_completed_data_date(stocks)
     cached = read_backtest_run()
-    if cached and cached.get("engine_version") == BACKTEST_ENGINE_VERSION and cached.get("universe_signature") == universe_signature and cached.get("data_date") == dashboard_date and cached.get("factor_run_generated_at") == latest.get("generated_at"):
+    if not force and cached and cached.get("engine_version") == BACKTEST_ENGINE_VERSION and cached.get("universe_signature") == universe_signature and cached.get("data_date") == dashboard_date and cached.get("factor_run_generated_at") == latest.get("generated_at"):
+        progress("缓存命中", "复用同一股池和交易日的回测结果")
         return {**cached, "cache_hit": True}
     pool = [item for item in latest.get("validation", {}).get("results", []) if item.get("gate") == "通过"]
     if len(pool) < 4:
@@ -476,56 +679,128 @@ def run_backtest_experiment(stocks):
         if key.startswith("ma"): return "均线结构"
         if key.startswith(("momentum", "reversal")): return "动量反转"
         if key.startswith(("volume", "price_volume")): return "成交量"
+        if key in {"body_strength", "upper_shadow_ratio", "lower_shadow_ratio", "engulfing_volume", "breakout_volume_confirm", "close_volume_pressure", "contraction_breakout", "cup_handle_breakout"}: return "K线量价"
         if key.startswith(("range_position", "breakout", "drawdown", "close_location")): return "价格位置"
         if key.startswith(("volatility", "downside_vol", "atr", "range_expansion")): return "波动风险"
         return key.split("_")[0]
-    candidates, seen_families = [], set()
+    candidates, family_counts = [], {}
     for item in pool:
         group = family(item)
-        if group in seen_families:
+        if family_counts.get(group, 0) >= 2:
             continue
-        candidates.append(item); seen_families.add(group)
-        if len(candidates) == 4:
+        candidates.append(item); family_counts[group] = family_counts.get(group, 0) + 1
+        if len(candidates) == 7:
             break
     if len(candidates) < 2:
         raise RuntimeError("去重后可用因子不足 2 个，请重新运行因子挖掘")
     factors = [(item["key"], 1 if item.get("direction") == "正向" else -1) for item in candidates]
-    prepared = prepare_backtest_dataset(stocks, [key for key, _ in factors])
-    runs = []
-    for size in [1, 2, 3]:
-        for combo in combinations(factors, size):
+    reusable_runs = {}
+    compatible_previous = bool(
+        cached
+        and cached.get("engine_version") == BACKTEST_ENGINE_VERSION
+        and cached.get("universe_signature") == universe_signature
+        and cached.get("data_date") == dashboard_date
+    )
+    if compatible_previous:
+        for previous_run in cached.get("results", []):
+            keys = previous_run.get("factors", [])
+            directions = previous_run.get("directions", [])
+            if len(keys) != len(directions):
+                continue
+            identity = tuple(zip(keys, (1 if value == "正向" else -1 for value in directions)))
+            reusable_runs[identity] = previous_run
+    prepared = None
+    reused_combination_count = 0
+    computed_combination_count = 0
+    runs, evaluated = [], set()
+    factor_order = {key: index for index, (key, _) in enumerate(factors)}
+    def evaluate(combo):
+        nonlocal prepared, reused_combination_count, computed_combination_count
+        combo = tuple(sorted(combo, key=lambda item: factor_order[item[0]]))
+        factor_identity = tuple(key for key, _ in combo)
+        if factor_identity in evaluated:
+            return None
+        evaluated.add(factor_identity)
+        combo_items = [next(item for item in candidates if item["key"] == key) for key, _ in combo]
+        previous_run = reusable_runs.get(combo)
+        if previous_run is not None:
+            result = previous_run.get("result", {})
+            reused_combination_count += 1
+        else:
+            if prepared is None:
+                progress("准备数据", f"发现新组合，正在准备 {len(stocks)} 只股票、{len(factors)} 个候选因子的回测矩阵")
+                prepared = prepare_backtest_dataset(stocks, [key for key, _ in factors])
             result = backtest_factor_combo(stocks, combo, prepared=prepared)
-            combo_items = [next(item for item in candidates if item["key"] == key) for key, _ in combo]
-            runs.append({"kind":f"{size} 因子" if size == 1 else f"{size} 因子组合", "factor_count":size, "factors":[key for key, _ in combo], "names":[item["name"] for item in combo_items], "directions":[item.get("direction", "待定") for item in combo_items], "result":result})
+            computed_combination_count += 1
+        run = {"kind":f"{len(combo)} 因子" if len(combo) == 1 else f"{len(combo)} 因子组合", "factor_count":len(combo),
+               "factors":[key for key, _ in combo], "names":[item["name"] for item in combo_items],
+               "directions":[item.get("direction", "待定") for item in combo_items], "result":result}
+        runs.append(run)
+        return run
+    def run_score(item):
+        result = item.get("result", {})
+        return (result.get("audited", False), result.get("sharpe", -999), result.get("cumulative_return", -999))
+    frontier = [evaluate((factor,)) for factor in factors]
+    frontier = sorted([item for item in frontier if item], key=run_score, reverse=True)[:3]
+    for size in range(2, min(5, len(factors)) + 1):
+        proposals = []
+        proposal_keys = set()
+        for prior in frontier:
+            prior_keys = set(prior["factors"])
+            for factor in factors:
+                if factor[0] in prior_keys:
+                    continue
+                combo = tuple(sorted([next(value for value in factors if value[0] == key) for key in prior["factors"]] + [factor], key=lambda item: factor_order[item[0]]))
+                identity = tuple(key for key, _ in combo)
+                if identity not in proposal_keys:
+                    proposal_keys.add(identity); proposals.append(combo)
+        progress("组合回测", f"正在用束搜索计算 {size} 因子组合（候选 {min(12, len(proposals))} 组）")
+        level = [evaluate(combo) for combo in proposals[:12]]
+        frontier = sorted([item for item in level if item], key=run_score, reverse=True)[:3]
+        if not frontier:
+            break
     runs.sort(key=lambda item: (item["result"].get("audited", False), item["result"].get("sharpe", -999), item["result"].get("cumulative_return", -999)), reverse=True)
     for index, item in enumerate(runs, 1):
         item["rank"] = index
         item["rank_metric"] = "成本后 Sharpe"
     selected_names = [TECH_SECTOR_DEFINITIONS[key]["name"] for key in read_tech_config()]
-    usable_count = len(prepared["usable"])
-    payload = {"generated_at":time.strftime("%Y-%m-%d %H:%M:%S"), "engine_version":BACKTEST_ENGINE_VERSION, "factor_run_generated_at":latest.get("generated_at"), "candidate_count":len(candidates), "combination_count":len(runs), "screen_universe":len(stocks), "confirmation_universe":len(stocks), "usable_universe":usable_count, "universe_signature":universe_signature, "universe_name":"科技股池（不含科创板/ST）", "selected_sectors":selected_names, "cost_bps":15, "ranking_metric":"成本后 Sharpe（同 Sharpe 时按成本后累计收益）", "data_date":dashboard_date, "results":runs, "selection_rule":"T 日收盘计算因子，先剔除近 20 日成交额最低 30%，再做截面排名并取最高 3 只等权；T+1 收盘建仓，T+2 收盘退出，扣除 15bp × 换手率。", "warning":f"{len(runs)} 个策略均直接在完整真实科技股池回测；其中 {usable_count} 只有足够历史。已排除 688/689、ST/退市风险及每日流动性后 30%。结果仍属于样本内研究，不等同成交回报。"}
+    usable_count = len(prepared["usable"]) if prepared is not None else int(cached.get("usable_universe", 0) if compatible_previous else 0)
+    progress("结果排名", f"已完成 {len(runs)} 组回测：复用 {reused_combination_count} 组，新算 {computed_combination_count} 组")
+    payload = {"generated_at":time.strftime("%Y-%m-%d %H:%M:%S"), "engine_version":BACKTEST_ENGINE_VERSION, "factor_run_generated_at":latest.get("generated_at"), "candidate_count":len(candidates), "combination_count":len(runs), "reused_combination_count":reused_combination_count, "computed_combination_count":computed_combination_count, "max_factors":5, "search_strategy":"beam search, width=3, max 12 expansions per level", "screen_universe":len(stocks), "confirmation_universe":len(stocks), "usable_universe":usable_count, "universe_signature":universe_signature, "universe_name":"科技股池（不含科创板/ST）", "selected_sectors":selected_names, "cost_bps":15, "ranking_metric":"成本后 Sharpe（同 Sharpe 时按成本后累计收益）", "data_date":dashboard_date, "results":runs, "selection_rule":"T 日收盘计算因子，先剔除近 20 日成交额最低 30%，再做截面排名并取最高 3 只等权；T+1 收盘建仓，T+2 收盘退出，扣除 15bp × 换手率。", "warning":f"{len(runs)} 个策略均直接在完整真实科技股池回测；其中 {usable_count} 只有足够历史。已排除 688/689、ST/退市风险及每日流动性后 30%。结果仍属于样本内研究，不等同成交回报。"}
     CACHE_DIR.mkdir(parents=True, exist_ok=True); temporary = BACKTEST_RUN_FILE.with_suffix(".tmp")
     temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"); os.replace(temporary, BACKTEST_RUN_FILE)
     return payload
 
-def run_factor_agent_loop(stocks):
+def run_factor_agent_loop(stocks, progress=None, force=False, generated_specs=None):
     """Research hypotheses -> executable candidates -> local validation -> feedback."""
+    progress = progress or (lambda stage, detail: None)
     universe_signature = universe_signature_for_stocks(stocks)
     dashboard_date = latest_completed_data_date(stocks)
     cached = read_factor_agent_run()
-    if cached and cached.get("engine_version") == FACTOR_ENGINE_VERSION and cached.get("universe_signature") == universe_signature and cached.get("data_date") == dashboard_date:
+    if not force and cached and cached.get("engine_version") == FACTOR_ENGINE_VERSION and cached.get("universe_signature") == universe_signature and cached.get("data_date") == dashboard_date:
+        progress("缓存命中", "复用同一股池和交易日的因子验证结果")
         return {**cached, "cache_hit": True}
-    proposal_map = {item["candidate"]: item for item in FACTOR_RESEARCH_PROPOSALS}
-    search_space = build_factor_search_space()
+    base_search_space = build_factor_search_space()
+    generated_candidates, generated_proposals = build_generated_factor_candidates(generated_specs, base_search_space)
+    proposals = FACTOR_RESEARCH_PROPOSALS + generated_proposals
+    proposal_map = {item["candidate"]: item for item in proposals}
+    search_space = base_search_space + generated_candidates
     # Stage 1: deterministic stratified slice for broad search. Stage 2 below
     # confirms the strongest candidates on the complete real universe.
     ordered_stocks = sorted(stocks, key=lambda item: item.get("code", ""))
     search_stocks = ordered_stocks[::4]
-    validation = mine_factor_candidates(search_stocks, search_space)
+    progress("抽样初筛", f"正在用 {len(search_stocks)} 只股票筛选 {len(base_search_space)} 个基线公式 + {len(generated_candidates)} 个本轮新公式")
+    metrics_cache = read_factor_daily_metrics()
+    validation = mine_factor_candidates(search_stocks, search_space, metrics_cache=metrics_cache, cache_namespace="screen")
     broad_top = sorted([item for item in validation["results"] if item.get("mean_rank_ic") is not None], key=lambda item: abs(item["mean_rank_ic"]), reverse=True)[:12]
     broad_keys = {item["key"] for item in broad_top}
     confirmation_candidates = [item for item in search_space if item[0] in broad_keys]
-    confirmation = mine_factor_candidates(stocks, confirmation_candidates)
+    progress("全量确认", f"正在用 {len(stocks)} 只股票确认前 {len(confirmation_candidates)} 个因子")
+    confirmation = mine_factor_candidates(stocks, confirmation_candidates, metrics_cache=metrics_cache, cache_namespace="confirmation")
+    write_factor_daily_metrics(metrics_cache)
+    reused_metric_points = validation.get("cache_hits", 0) + confirmation.get("cache_hits", 0)
+    computed_metric_points = validation.get("computed_points", 0) + confirmation.get("computed_points", 0)
+    progress("增量统计", f"历史指标复用 {reused_metric_points} 条，本轮新增或刷新 {computed_metric_points} 条")
     confirmation_by_key = {item["key"]: item for item in confirmation["results"]}
     results = []
     for result in validation["results"]:
@@ -547,6 +822,7 @@ def run_factor_agent_loop(stocks):
     results.sort(key=lambda item: abs(item.get("mean_rank_ic", 0)), reverse=True)
     backtest_items = [item for item in results[:4] if item.get("mean_rank_ic") is not None]
     if backtest_items:
+        progress("单因子回测", f"正在复核排名最高的 {len(backtest_items)} 个因子")
         prepared_backtests = prepare_backtest_dataset(stocks, [item["key"] for item in backtest_items])
         for item in backtest_items:
             direction = 1 if item.get("direction") == "正向" else -1
@@ -554,12 +830,13 @@ def run_factor_agent_loop(stocks):
     passed = [item for item in results if item.get("gate") == "通过"]
     feedback = (f"本轮 {len(results)} 个公式中 {len(passed)} 个通过验证门槛。" if passed else
                 "本轮没有因子通过生产门槛；下一轮应扩展财务/行业数据或调整搜索空间，不能把弱信号直接用于交易。")
+    progress("汇总结果", feedback)
     payload = {"stages": [
-        {"name":"研究 Agent", "status":"完成", "detail":f"提出 {len(FACTOR_RESEARCH_PROPOSALS)} 个带假设候选"},
-        {"name":"开发 Agent", "status":"完成", "detail":f"映射为 {len(search_space)} 个白名单可执行公式"},
+        {"name":"研究 Agent", "status":"完成", "detail":f"提出 {len(generated_candidates)} 个本轮新公式"},
+        {"name":"开发 Agent", "status":"完成", "detail":f"执行 {len(base_search_space)} 个基线 + {len(generated_candidates)} 个生成公式"},
         {"name":"验证 Agent", "status":"完成", "detail":f"先筛 {len(search_stocks)} 只，再用全量 {len(stocks)} 只确认前 {len(confirmation_candidates)} 个"},
         {"name":"反馈迭代", "status":"完成", "detail":feedback},
-    ], "engine_version": FACTOR_ENGINE_VERSION, "data_date": dashboard_date, "search_space_size": len(search_space), "search_universe": len(search_stocks), "confirmation_universe": len(stocks), "universe_signature": universe_signature, "universe_name": "科技股池（不含科创板/ST）", "selected_sectors": [TECH_SECTOR_DEFINITIONS[key]["name"] for key in read_tech_config()], "proposals": FACTOR_RESEARCH_PROPOSALS, "validation": {**validation, "universe": len(stocks), "usable_stocks": validation.get("usable_stocks", 0), "history_bars": confirmation.get("history_bars", 0), "results": results}, "feedback": feedback,
+    ], "engine_version": FACTOR_ENGINE_VERSION, "data_date": dashboard_date, "search_space_size": len(search_space), "baseline_formula_count": len(base_search_space), "generated_formula_count": len(generated_candidates), "generated_formulas": generated_proposals, "search_universe": len(search_stocks), "confirmation_universe": len(stocks), "universe_signature": universe_signature, "universe_name": "科技股池（不含科创板/ST）", "selected_sectors": [TECH_SECTOR_DEFINITIONS[key]["name"] for key in read_tech_config()], "proposals": proposals, "incremental_cache": {"reused_metric_points": reused_metric_points, "computed_metric_points": computed_metric_points, "refreshed_dates": sorted(set(validation.get("refreshed_dates", [])) | set(confirmation.get("refreshed_dates", [])))}, "validation": {**validation, "universe": len(stocks), "usable_stocks": validation.get("usable_stocks", 0), "history_bars": confirmation.get("history_bars", 0), "results": results}, "feedback": feedback,
         "generated_at": time.strftime("%Y-%m-%d %H:%M:%S")}
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     temporary = FACTOR_AGENT_RUN_FILE.with_suffix(".tmp")
@@ -855,7 +1132,9 @@ def fetch_stock_tencent(item):
     quote_pct, quote_change = float(parts[32] or 0), float(parts[31] or 0)
     quote_time = parts[30]
     quote_name = parts[1] or item["name"]
-    kline_text = http_text(f"http://ifzq.gtimg.cn/appstock/app/fqkline/get?param={symbol},day,,,1000,qfq")
+    existing_klines = read_kline_cache(code)
+    fetch_bars = 30 if existing_klines else 1000
+    kline_text = http_text(f"http://ifzq.gtimg.cn/appstock/app/fqkline/get?param={symbol},day,,,{fetch_bars},qfq")
     kline_json = json.loads(kline_text)
     rows = (kline_json.get("data", {}).get(symbol, {}).get("qfqday") or
             kline_json.get("data", {}).get(symbol, {}).get("day") or [])
@@ -883,8 +1162,11 @@ def fetch_stock_tencent(item):
 def fetch_stock(item):
     fields = "f43,f44,f45,f46,f47,f48,f57,f58,f60,f169,f170,f162,f163"
     quote_url = f"https://push2.eastmoney.com/api/qt/stock/get?secid={item['secid']}&fields={fields}"
+    existing_klines = read_kline_cache(item["code"])
+    begin_date = ((existing_klines[-10] if len(existing_klines) >= 10 else existing_klines[0]).get("date", "2024-01-01").replace("-", "")
+                  if existing_klines else "20240101")
     kline_url = (f"https://push2his.eastmoney.com/api/qt/stock/kline/get?secid={item['secid']}"
-                 "&klt=101&fqt=1&beg=20240101&end=20991231"
+                 f"&klt=101&fqt=1&beg={begin_date}&end=20991231"
                  "&fields1=f1,f2,f3,f4&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61")
     quote = eastmoney_json(quote_url).get("data") or {}
     raw_klines = (eastmoney_json(kline_url).get("data") or {}).get("klines") or []
@@ -925,8 +1207,9 @@ def fetch_stock_sina(item):
     """Real daily OHLCV fallback using Sina's public JSONP endpoint."""
     market, code = item["secid"].split(".")
     symbol = ("sh" if market == "1" else "sz") + code
+    fetch_bars = 30 if read_kline_cache(code) else 240
     url = ("https://quotes.sina.cn/cn/api/jsonp_v2.php/var%20x/"
-           f"CN_MarketData.getKLineData?symbol={symbol}&scale=240&ma=no&datalen=240")
+           f"CN_MarketData.getKLineData?symbol={symbol}&scale=240&ma=no&datalen={fetch_bars}")
     raw = eastmoney_json(url, jsonp=True)
     klines = []
     for row in raw:
@@ -988,7 +1271,7 @@ def build_dashboard_fresh():
                 except Exception as sina_exc:
                     return None, f"{item['code']}: Tencent={tencent_exc}; Eastmoney={east_exc}; Sina={sina_exc}"
     # Bounded concurrency keeps refreshes fast without opening an unbounded number of sockets.
-    with ThreadPoolExecutor(max_workers=12, thread_name_prefix="quote-refresh") as pool:
+    with ThreadPoolExecutor(max_workers=16, thread_name_prefix="quote-refresh") as pool:
         futures = [pool.submit(fetch_one, item) for item in research_universe]
         for future in as_completed(futures):
             stock, error = future.result()
@@ -1145,12 +1428,46 @@ def build_multi_agent_context(dashboard):
             "sectors": dashboard.get("tech_universe", {}).get("sectors", []), "history": history,
             "factor_candidates": candidates, "previous_top": previous_top}
 
-def run_multi_agent_background(dashboard):
-    global MULTI_AGENT_THREAD
+def run_multi_agent_background(dashboard, mode="full"):
+    global MULTI_AGENT_THREAD, MULTI_AGENT_PREP_STATUS
     try:
+        previous_date = latest_completed_data_date(dashboard.get("stocks", []))
+        MULTI_AGENT_PREP_STATUS = {"stage": "同步K线", "detail": "正在增量拉取全部科技股的最新日线", "error": None}
+        try:
+            with CACHE_LOCK:
+                dashboard = build_dashboard_fresh()
+                write_dashboard_cache(dashboard)
+        except Exception as exc:
+            MULTI_AGENT_PREP_STATUS = {"stage": "K线同步失败", "detail": str(exc), "error": str(exc)}
+            return
+        current_date = latest_completed_data_date(dashboard.get("stocks", []))
+        date_detail = f"已从 {previous_date or '无历史'} 更新至 {current_date or '无已收盘数据'}"
+        if previous_date == current_date:
+            date_detail = f"已检查最新数据，已收盘交易日仍为 {current_date or '未知'}"
+        MULTI_AGENT_PREP_STATUS = {"stage": "同步完成", "detail": date_detail, "error": None}
         stocks = dashboard.get("stocks", [])
         context = build_multi_agent_context(dashboard)
-        run_research_council(context, lambda: run_factor_agent_loop(stocks), lambda: run_backtest_experiment(stocks))
+        force = mode == "full"
+        context["execution_mode"] = "全量重算（含研究研发组）" if force else "快速会签（复用因子）"
+        context["reuse_research"] = not force
+        if force:
+            factor_runner = lambda report, generated=None: run_factor_agent_loop(stocks, report, force=True, generated_specs=generated)
+            backtest_runner = lambda report: run_backtest_experiment(stocks, report, force=True)
+        else:
+            def factor_runner(report, generated=None):
+                cached = read_factor_agent_run()
+                if not cached:
+                    raise RuntimeError("没有可复用的因子研发结果，请先运行一次全量重算")
+                report("直接复用", f"读取最近一次 {cached.get('search_space_size', 0)} 个公式的验证结果，不重新计算")
+                return {**cached, "cache_hit": True, "strict_reuse": True}
+            def backtest_runner(report):
+                cached = read_backtest_run()
+                if not cached:
+                    raise RuntimeError("没有可复用的回测结果，请先运行一次全量重算")
+                report("直接复用", f"读取最近一次 {cached.get('combination_count', 0)} 组回测，不重建矩阵")
+                return {**cached, "cache_hit": True, "strict_reuse": True}
+        MULTI_AGENT_PREP_STATUS = None
+        run_research_council(context, factor_runner, backtest_runner)
     finally:
         with MULTI_AGENT_LOCK:
             MULTI_AGENT_THREAD = None
@@ -1309,7 +1626,7 @@ def build_dashboard():
 
 class Handler(SimpleHTTPRequestHandler):
     def do_POST(self):
-        global MULTI_AGENT_THREAD
+        global MULTI_AGENT_THREAD, MULTI_AGENT_PREP_STATUS
         parsed = urlparse(self.path)
         request_body = {}
         try:
@@ -1327,9 +1644,14 @@ class Handler(SimpleHTTPRequestHandler):
                     if MULTI_AGENT_THREAD and MULTI_AGENT_THREAD.is_alive():
                         payload = {"status": "运行中", "run": read_multi_agent_run()}
                     else:
-                        MULTI_AGENT_THREAD = threading.Thread(target=run_multi_agent_background, args=(dashboard,), name="nstock-12-agent-council", daemon=True)
+                        mode = request_body.get("mode", "full")
+                        if mode not in {"full", "quick"}:
+                            raise RuntimeError("运行模式必须是 full 或 quick")
+                        MULTI_AGENT_THREAD = threading.Thread(target=run_multi_agent_background, args=(dashboard, mode), name="nstock-12-agent-council", daemon=True)
+                        MULTI_AGENT_PREP_STATUS = {"stage": "准备同步", "detail": "即将增量检查全部股票的最新 K 线", "error": None}
                         MULTI_AGENT_THREAD.start()
-                        payload = {"status": "已启动", "agent_count": 12, "team_count": 4}
+                        payload = {"status": "已启动", "agent_count": 12, "team_count": 4,
+                                   "execution_mode": "全量重算（含研究研发组）" if mode == "full" else "快速会签（复用因子）"}
                 body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
                 self.send_response(202); self.send_header("Content-Type", "application/json; charset=utf-8"); self.send_header("Cache-Control", "no-store"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
             except Exception as exc:
@@ -1413,9 +1735,22 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
+        if parsed.path == "/api/chief-opinions":
+            code = (parse_qs(parsed.query).get("stock") or [""])[0].strip()
+            if not re.fullmatch(r"\d{6}", code):
+                payload = json.dumps({"error": "stock 必须是 6 位股票代码"}, ensure_ascii=False).encode("utf-8")
+                self.send_response(400)
+            else:
+                cached = load_chief_opinion_cache(code)
+                payload = json.dumps(cached or {"error": "该股票的首席观点尚未缓存", "code": code}, ensure_ascii=False).encode("utf-8")
+                self.send_response(200 if cached else 404)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Cache-Control", "no-store"); self.send_header("Content-Length", str(len(payload)))
+            self.end_headers(); self.wfile.write(payload)
+            return
         if parsed.path == "/api/agents":
             running = bool(MULTI_AGENT_THREAD and MULTI_AGENT_THREAD.is_alive())
-            payload = json.dumps({"running": running, "run": read_multi_agent_run(), "agent_count": 12, "team_count": 4}, ensure_ascii=False).encode("utf-8")
+            payload = json.dumps({"running": running, "preparing": MULTI_AGENT_PREP_STATUS, "run": read_multi_agent_run(), "agent_count": 12, "team_count": 4}, ensure_ascii=False).encode("utf-8")
             self.send_response(200); self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Cache-Control", "no-store"); self.send_header("Content-Length", str(len(payload))); self.end_headers(); self.wfile.write(payload)
             return

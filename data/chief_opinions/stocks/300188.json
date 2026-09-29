@@ -1,0 +1,16 @@
+{
+  "code": "300188",
+  "name": "国投智能",
+  "fetched_at": "2026-09-29 15:41:00",
+  "requested_limit": 1,
+  "opinion_count": 1,
+  "opinions": [
+    {
+      "opi_pubtime": "2026-09-21T11:32:49",
+      "publish_time_beijing": "2026-09-21 11:32:49",
+      "title": "国家网络安全宣传周开幕，关注AI Native网安防御体系.pdf",
+      "content": null,
+      "opi_all": "{\"extension\":\".pdf\",\"size\":254297,\"resource_id\":16868198,\"title\":\"国家网络安全宣传周开幕，关注AI Native网安防御体系.pdf\",\"url\":\"gdp/wxrobot/chat/file/2026-09-21/国家网络安全宣传周开幕，关注AI Native网安防御体系.pdf\",\"md5\":\"7d4024e67ccfb3aa654c08d54c51d245\"}"
+    }
+  ]
+}

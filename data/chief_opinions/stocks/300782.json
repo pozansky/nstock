@@ -1,0 +1,16 @@
+{
+  "code": "300782",
+  "name": "卓胜微",
+  "fetched_at": "2026-09-29 16:01:26",
+  "requested_limit": 1,
+  "opinion_count": 1,
+  "opinions": [
+    {
+      "opi_pubtime": "2026-09-23T13:23:38",
+      "publish_time_beijing": "2026-09-23 13:23:38",
+      "title": "AI光互联瓶颈上移：TIA/Driver需求爆发，12寸SiGe进入全球紧缺周期",
+      "content": "⚡️ AI光互联瓶颈上移：TIA/Driver需求爆发，12寸SiGe进入全球紧缺周期\n \n AI光互联的产业瓶颈，正从传统光模块进一步向高速TIA/Driver及上游SiGe制造产能转移。GFS最新Q2电话会明确表示：\n \n“Demand for SiGe remains strong, and we are oversubscribed throughout 2027.”\n \n意味着SiGe需求持续强劲，2027年全年产能对应需求已处于超额预订状态。同时GFS披露，其当前SiGe业务规模已经超过硅光业务，反映高速模拟电芯片正伴随AI光互联升级加速放量。\n \n 800G→1.6T→3.2T，TIA/Driver进入新一轮性能升级。随着Lane速率从100G迈向200G甚至更高，TIA/Driver对带宽、线性度、低噪声、功耗及高速模拟性能要求显著提升，高性能SiGe BiCMOS的重要性同步上升。\n尤其进入NPO/CPO及更高速率阶段后，链路更加紧凑，对高速模拟前端的要求进一步提高，产业稀缺环节有望从光模块延伸至TIA/Driver设计能力与SiGe晶圆制造能力。\n \n 卓胜微已布局12寸SiGe、SOI及硅光相关工艺平台，12寸SiGe平台本身具备较强稀缺性。随着国内1.6T、NPO/CPO以及200G/Lane高速电芯片逐步进入验证和放量阶段，TIA/Driver国产化+上游SiGe制造平台的重要性有望持续提升。若全球SiGe供需继续偏紧，同时国内高速TIA/Driver进入规模化导入，卓胜微的逻辑有望从传统射频进一步延伸至AI光互联底层特色工艺平台。\n \n 核心逻辑：TIA/Driver需求爆发 × 200G/Lane升级 × 全球SiGe产能趋紧 × 国产12寸SiGe平台稀缺。",
+      "opi_all": "{\"content\":\"⚡️ AI光互联瓶颈上移：TIA/Driver需求爆发，12寸SiGe进入全球紧缺周期\\n \\n AI光互联的产业瓶颈，正从传统光模块进一步向高速TIA/Driver及上游SiGe制造产能转移。GFS最新Q2电话会明确表示：\\n \\n“Demand for SiGe remains strong, and we are oversubscribed throughout 2027.”\\n \\n意味着SiGe需求持续强劲，2027年全年产能对应需求已处于超额预订状态。同时GFS披露，其当前SiGe业务规模已经超过硅光业务，反映高速模拟电芯片正伴随AI光互联升级加速放量。\\n \\n 800G→1.6T→3.2T，TIA/Driver进入新一轮性能升级。随着Lane速率从100G迈向200G甚至更高，TIA/Driver对带宽、线性度、低噪声、功耗及高速模拟性能要求显著提升，高性能SiGe BiCMOS的重要性同步上升。\\n尤其进入NPO/CPO及更高速率阶段后，链路更加紧凑，对高速模拟前端的要求进一步提高，产业稀缺环节有望从光模块延伸至TIA/Driver设计能力与SiGe晶圆制造能力。\\n \\n 卓胜微已布局12寸SiGe、SOI及硅光相关工艺平台，12寸SiGe平台本身具备较强稀缺性。随着国内1.6T、NPO/CPO以及200G/Lane高速电芯片逐步进入验证和放量阶段，TIA/Driver国产化+上游SiGe制造平台的重要性有望持续提升。若全球SiGe供需继续偏紧，同时国内高速TIA/Driver进入规模化导入，卓胜微的逻辑有望从传统射频进一步延伸至AI光互联底层特色工艺平台。\\n \\n 核心逻辑：TIA/Driver需求爆发 × 200G/Lane升级 × 全球SiGe产能趋紧 × 国产12寸SiGe平台稀缺。\",\"title\":\"AI光互联瓶颈上移：TIA/Driver需求爆发，12寸SiGe进入全球紧缺周期\"}"
+    }
+  ]
+}

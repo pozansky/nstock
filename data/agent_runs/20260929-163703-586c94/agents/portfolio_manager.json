@@ -1,0 +1,29 @@
+{
+  "id": "portfolio_manager",
+  "name": "组合经理 Agent",
+  "team": "决策执行组",
+  "role": "在通过审查的策略中选择最多三只",
+  "status": "阻断",
+  "started_at": "2026-09-29 16:44:52",
+  "finished_at": "2026-09-29 16:44:52",
+  "duration_ms": 0,
+  "confidence": 0,
+  "data_quality": "不可用",
+  "depends_on": [
+    "backtest",
+    "challenger",
+    "market_regime",
+    "industry_chain"
+  ],
+  "summary": "上游依赖失败：challenger",
+  "evidence": [
+    "challenger: 发现 3 项需要人工关注的问题"
+  ],
+  "artifact": "data\\agent_runs\\20260929-163703-586c94\\agents\\portfolio_manager.json",
+  "process": [],
+  "output": {
+    "blocked_by": [
+      "challenger"
+    ]
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "id": "industry_chain",
+  "name": "科技产业链 Agent",
+  "team": "市场情报组",
+  "role": "比较科技细分板块强弱和覆盖",
+  "status": "完成",
+  "started_at": "2026-09-29 15:46:40",
+  "finished_at": "2026-09-29 15:46:40",
+  "duration_ms": 6,
+  "confidence": 0.7,
+  "data_quality": "板块覆盖可用",
+  "depends_on": [],
+  "summary": "已比较 9 个科技细分，当前相对强势：软件、信创与 AI",
+  "evidence": [
+    "软件、信创与 AI 177只 / 均值 +1.58%",
+    "电子元件与硬件 258只 / 均值 +1.39%",
+    "通信与算力 461只 / 均值 +1.28%",
+    "机器人与智能汽车 52只 / 均值 +0.68%"
+  ],
+  "artifact": "data\\agent_runs\\20260929-154136-b84ed2\\agents\\industry_chain.json",
+  "output": {
+    "sector_ranking": [
+      {
+        "key": "software_ai",
+        "name": "软件、信创与 AI",
+        "count": 177,
+        "average_pct": 1.578
+      },
+      {
+        "key": "electronic_components",
+        "name": "电子元件与硬件",
+        "count": 258,
+        "average_pct": 1.385
+      },
+      {
+        "key": "communication_compute",
+        "name": "通信与算力",
+        "count": 461,
+        "average_pct": 1.277
+      },
+      {
+        "key": "robotics_auto",
+        "name": "机器人与智能汽车",
+        "count": 52,
+        "average_pct": 0.676
+      },
+      {
+        "key": "optical_electronics",
+        "name": "光学光电子",
+        "count": 135,
+        "average_pct": 0.585
+      },
+      {
+        "key": "semiconductor",
+        "name": "半导体与芯片",
+        "count": 152,
+        "average_pct": 0.35
+      },
+      {
+        "key": "advanced_manufacturing",
+        "name": "高端科技制造",
+        "count": 132,
+        "average_pct": 0.14
+      },
+      {
+        "key": "glass_substrate",
+        "name": "玻璃基板与电子玻璃",
+        "count": 15,
+        "average_pct": -1.196
+      },
+      {
+        "key": "internet_media",
+        "name": "科技互联网与数字内容",
+        "count": 0,
+        "average_pct": null
+      }
+    ]
+  }
+}
