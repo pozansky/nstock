@@ -47,6 +47,11 @@
 
           <div class="strategy-strip animate-in delay-1"><div><span class="eyebrow">ACTIVE SELECTION STRATEGY</span><strong id="activeStrategyName">等待回测策略</strong><small id="activeStrategyRule">请从回测实验或下方菜单选择策略</small></div><select id="strategySelect"><option value="">选择一个回测策略</option></select><button class="button primary" id="applyStrategyButton">应用到候选池</button></div>
 
+          <section class="tech-universe-strip animate-in delay-1">
+            <div class="tech-universe-head"><div><span class="eyebrow">TECH UNIVERSE</span><strong>科技股池</strong><small id="universeMeta">东方财富行业与概念分类 · 排除科创板 688/689</small></div><button class="button primary" id="applyUniverseButton">更新股池</button></div>
+            <div class="tech-sector-selector" id="techSectorSelector"><span class="data-loading">读取科技细分分类…</span></div>
+          </section>
+
           <div class="market-strip animate-in delay-1" id="marketStrip">
             <div class="market-strip-main"><div class="eyebrow">MARKET REGIME</div><div class="regime-row"><span class="regime-dot"></span><strong id="regimeText">等待东财数据</strong><span class="confidence" id="regimeConfidence">—</span></div><p id="regimeNote">正在读取真实行情与日线 K 线。</p></div>
             <div class="market-mini"><span>沪深 300</span><strong id="hs300Pct">—</strong><small id="hs300Price">—</small></div>
@@ -90,7 +95,7 @@
 
         <section class="backtest-view" id="backtestView" hidden>
           <div class="page-heading animate-in"><div><div class="eyebrow">FACTOR PORTFOLIO BACKTEST</div><h1>回测实验</h1><p>使用 Agent 因子实验室最近一次真实验证结果，自动测试单因子、二因子和三因子排列组合。</p></div><div class="heading-actions"><button class="button primary" id="runBacktestButton">运行组合回测 <span>↗</span></button></div></div>
-          <div class="factor-lab-summary"><div><span class="eyebrow">BACKTEST INPUT</span><strong id="backtestInput">等待 Agent 因子</strong><small>只读取最新因子实验结果</small></div><div><span class="eyebrow">COMBINATIONS</span><strong id="backtestCount">—</strong><small>单因子 / 二因子 / 三因子</small></div><div><span class="eyebrow">COST</span><strong id="backtestCost">15bp</strong><small>研究估算，非成交回报</small></div></div>
+          <div class="factor-lab-summary"><div><span class="eyebrow">BACKTEST INPUT</span><strong id="backtestInput">等待 Agent 因子</strong><small>只读取最新因子实验结果</small></div><div><span class="eyebrow">UNIVERSE</span><strong id="backtestUniverse">科技股池</strong><small id="backtestUniverseNote">排除科创板 688/689</small></div><div><span class="eyebrow">COMBINATIONS</span><strong id="backtestCount">—</strong><small>单因子 / 二因子 / 三因子</small></div><div><span class="eyebrow">COST</span><strong id="backtestCost">15bp</strong><small>15bp × 换手率</small></div></div>
           <section class="factor-catalog-panel"><div class="panel-toolbar"><div class="toolbar-title"><span class="live-bar"></span><strong>组合回测排名</strong></div><span class="timestamp" id="backtestDate">等待真实计算</span></div><div id="backtestResults" class="mine-results"><div class="data-loading">请先运行组合回测</div></div></section>
         </section>
 

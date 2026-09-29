@@ -6,7 +6,7 @@ from urllib.error import URLError, HTTPError
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from itertools import combinations
-import json, math, statistics, time, subprocess, re, threading, os
+import json, math, statistics, time, subprocess, re, threading, os, gzip, hashlib
 
 HOST, PORT = "127.0.0.1", 4173
 GUPIAO_UNIVERSE_FILE = Path("/Users/pozansky/Documents/gupiao/fixed_universe_codes.json")
@@ -17,9 +17,73 @@ KLINE_CACHE_DIR = CACHE_DIR / "klines"
 KLINE_MANIFEST_FILE = CACHE_DIR / "historical_data_manifest.json"
 FACTOR_AGENT_RUN_FILE = CACHE_DIR / "factor_agent_last_run.json"
 BACKTEST_RUN_FILE = CACHE_DIR / "backtest_factor_last_run.json"
+TECH_UNIVERSE_FILE = Path(__file__).with_name("tech_universe.json")
+TECH_CONFIG_FILE = CACHE_DIR / "tech_universe_config.json"
+DATA_DIR = Path(__file__).with_name("data")
+TECH_HISTORY_FILE = DATA_DIR / "tech_history.json.gz"
+TECH_HISTORY_MANIFEST_FILE = DATA_DIR / "tech_history_manifest.json"
 CACHE_LOCK = threading.Lock()
 REFRESH_THREAD = None
 REFRESH_TTL_SECONDS = 30
+FACTOR_ENGINE_VERSION = "tech-factor-v2-date-aligned-t1"
+BACKTEST_ENGINE_VERSION = "tech-top3-v4-common-latest-date"
+
+TECH_SECTOR_DEFINITIONS = {
+    "semiconductor": {
+        "name": "半导体与芯片",
+        "industries": {"半导体"},
+        "concepts": {"芯片概念", "先进封装", "第三代半导体", "汽车芯片", "存储芯片"},
+    },
+    "electronic_components": {
+        "name": "电子元件与硬件",
+        "industries": {"元件", "消费电子", "电子化学品Ⅱ", "电子化学品II", "其他电子Ⅱ", "其他电子II"},
+        "concepts": {"PCB", "被动元件", "先进封装", "苹果概念"},
+    },
+    "optical_electronics": {
+        "name": "光学光电子",
+        "industries": {"光学光电子"},
+        "concepts": {"MiniLED", "MicroLED", "OLED", "激光雷达"},
+    },
+    "communication_compute": {
+        "name": "通信与算力",
+        "industries": {"通信设备", "通信服务", "计算机设备"},
+        "concepts": {"CPO概念", "光通信模块", "算力概念", "数据中心", "液冷概念", "6G概念", "5G概念"},
+    },
+    "software_ai": {
+        "name": "软件、信创与 AI",
+        "industries": {"软件开发", "IT服务"},
+        "concepts": {"人工智能", "AIGC概念", "ChatGPT概念", "多模态AI", "AI智能体", "DeepSeek概念", "信创"},
+    },
+    "robotics_auto": {
+        "name": "机器人与智能汽车",
+        "industries": {"自动化设备"},
+        "concepts": {"机器人概念", "人形机器人", "减速器", "机器视觉", "自动驾驶", "激光雷达", "汽车芯片"},
+    },
+    "advanced_manufacturing": {
+        "name": "高端科技制造",
+        "industries": {"自动化设备", "航空装备Ⅱ", "航空装备II", "航天装备Ⅱ", "航天装备II", "军工电子Ⅱ", "军工电子II", "仪器仪表"},
+        "concepts": {"工业母机", "3D打印", "商业航天", "卫星互联网", "工业互联网"},
+    },
+    "internet_media": {
+        "name": "科技互联网与数字内容",
+        "industries": {"游戏Ⅱ", "游戏II", "数字媒体", "互联网电商"},
+        "concepts": {"云游戏", "网络游戏", "数字经济", "数据要素", "区块链"},
+    },
+}
+DEFAULT_TECH_SECTORS = [key for key in TECH_SECTOR_DEFINITIONS if key != "internet_media"]
+
+DIGITAL_TECH_INDUSTRIES = {"半导体", "元件", "消费电子", "光学光电子", "电子化学品", "其他电子", "通信设备", "通信服务", "计算机设备", "软件开发", "IT服务", "游戏", "数字媒体", "互联网电商", "影视院线", "出版", "广告营销"}
+TECH_MANUFACTURING_INDUSTRIES = {"自动化设备", "通用设备", "专用设备", "仪器仪表", "航空装备", "航天装备", "军工电子", "地面兵装", "汽车零部件", "乘用车", "工程机械", "电机", "电网设备"}
+TECH_CONCEPT_ALLOWED_INDUSTRIES = {
+    "semiconductor": DIGITAL_TECH_INDUSTRIES | {"专用设备", "自动化设备", "非金属材料", "化学制品"},
+    "electronic_components": DIGITAL_TECH_INDUSTRIES | {"专用设备", "自动化设备"},
+    "optical_electronics": DIGITAL_TECH_INDUSTRIES | {"汽车零部件", "仪器仪表"},
+    "communication_compute": DIGITAL_TECH_INDUSTRIES | {"自动化设备", "专用设备", "电网设备"},
+    "software_ai": DIGITAL_TECH_INDUSTRIES | {"自动化设备", "仪器仪表"},
+    "robotics_auto": DIGITAL_TECH_INDUSTRIES | TECH_MANUFACTURING_INDUSTRIES,
+    "advanced_manufacturing": TECH_MANUFACTURING_INDUSTRIES | {"半导体", "元件", "消费电子"},
+    "internet_media": DIGITAL_TECH_INDUSTRIES,
+}
 
 MINING_CANDIDATES = [
     ("momentum5", "5 日动量", "close / Ref(close, 5) - 1"),
@@ -95,10 +159,13 @@ def build_factor_search_space():
     return unique[:100]
 
 def _factor_value(rows, index, key):
-    closes = [float(row["close"]) for row in rows[:index + 1]]
-    highs = [float(row["high"]) for row in rows[:index + 1]]
-    lows = [float(row["low"]) for row in rows[:index + 1]]
-    volumes = [float(row.get("volume", 0) or 0) for row in rows[:index + 1]]
+    # No factor in the audited library needs more than 120 lookback bars.
+    # Bounding the slice avoids repeatedly scanning a stock's full 1000-bar history.
+    factor_rows = rows[max(0, index - 120):index + 1]
+    closes = [float(row["close"]) for row in factor_rows]
+    highs = [float(row["high"]) for row in factor_rows]
+    lows = [float(row["low"]) for row in factor_rows]
+    volumes = [float(row.get("volume", 0) or 0) for row in factor_rows]
     def avg(values): return mean(values)
     def ret(window): return closes[-1] / closes[-window-1] - 1 if len(closes) > window and closes[-window-1] else None
     if re.match(r"^(momentum|reversal|breakout|drawdown|volatility|downside_vol|up_ratio)_\d+$", key):
@@ -124,7 +191,9 @@ def _factor_value(rows, index, key):
     if key.startswith("range_position_") or key.startswith("atr_"):
         window = int(key.rsplit("_", 1)[1])
         if key.startswith("range_position_"):
-            high, low = max(highs[-window:]), min(lows[-window:]) if len(lows) >= window else (None, None)
+            if len(lows) < window:
+                return None
+            high, low = max(highs[-window:]), min(lows[-window:])
             return (closes[-1] - low) / (high - low) if low is not None and high != low else None
         if len(closes) < window + 1: return None
         ranges = [max(highs[pos] - lows[pos], abs(highs[pos] - closes[pos - 1]), abs(lows[pos] - closes[pos - 1])) for pos in range(1, len(closes))]
@@ -140,7 +209,9 @@ def _factor_value(rows, index, key):
         high = max(closes[-20:]) if len(closes) >= 20 else None
         return closes[-1] / high - 1 if high else None
     if key == "range_position20":
-        high, low = max(highs[-20:]), min(lows[-20:]) if len(lows) >= 20 else (None, None)
+        if len(lows) < 20:
+            return None
+        high, low = max(highs[-20:]), min(lows[-20:])
         return (closes[-1] - low) / (high - low) if low is not None and high != low else None
     if key == "volume_ratio5_20": return avg(volumes[-5:]) / avg(volumes[-20:]) if len(volumes) >= 20 and avg(volumes[-20:]) else None
     if key == "volume_surprise20": return volumes[-1] / avg(volumes[-20:]) if len(volumes) >= 20 and avg(volumes[-20:]) else None
@@ -189,22 +260,23 @@ def mine_factor_candidates(stocks, candidates=None):
     for stock in stocks:
         history = read_kline_cache(stock.get("code", "")) or stock.get("klines", [])
         if len(history) >= 30:
-            usable.append({"stock": stock, "rows": history})
+            usable.append({"stock": stock, "rows": history, "indexes": {row.get("date"): index for index, row in enumerate(history)}})
     results = []
+    available_dates = sorted(set().union(*(set(item["indexes"]) for item in usable))) if usable else []
+    sample_dates = available_dates[-83:-2]
     for key, name, formula in candidates or MINING_CANDIDATES:
         daily_ic, long_short, factor_series = [], [], []
-        max_len = min((len(item["rows"]) for item in usable), default=0)
-        # Search uses a bounded recent window for interactive latency; the
-        # complete per-stock history remains on disk and the final gate must
-        # be rerun in the offline research job with the full window.
-        sample_start = max(20, max_len - 81)
-        for index in range(sample_start, max_len - 1):
+        # Use actual trading dates, never positional row alignment. Signal is
+        # known at T close and evaluated on the tradable T+1 -> T+2 close return.
+        for date in sample_dates:
             cross_section = []
             for item in usable:
                 rows = item["rows"]
-                if index + 1 >= len(rows): continue
+                index = item["indexes"].get(date)
+                if index is None or index + 2 >= len(rows): continue
                 value = _factor_value(rows, index, key)
-                next_return = rows[index + 1]["close"] / rows[index]["close"] - 1 if rows[index]["close"] else None
+                entry_close = rows[index + 1].get("close")
+                next_return = rows[index + 2]["close"] / entry_close - 1 if entry_close else None
                 if value is not None and next_return is not None and math.isfinite(value) and math.isfinite(next_return):
                     cross_section.append((value, next_return))
             if len(cross_section) < 20: continue
@@ -230,28 +302,31 @@ def mine_factor_candidates(stocks, candidates=None):
         item["effective_rank_ic"] = round(abs(item["mean_rank_ic"]), 4)
         item["effective_long_short"] = round(item["mean_long_short"] if item["mean_rank_ic"] >= 0 else -item["mean_long_short"], 5)
         item["status"] = "候选" if abs(item["mean_rank_ic"]) >= 0.03 and item.get("sample_days", 0) >= 20 else "弱信号"
-    return {"universe": len(stocks), "usable_stocks": len(usable), "history_bars": min((len(item["rows"]) for item in usable), default=0), "candidate_count": len(results), "results": results,
-            "warning": "当前使用接口返回的历史窗口；正式入模前仍需补齐 3-5 年历史并做样本外验证。"}
+    return {"universe": len(stocks), "usable_stocks": len(usable), "history_bars": min((len(item["rows"]) for item in usable), default=0), "sample_days": len(sample_dates), "candidate_count": len(results), "results": results,
+            "warning": "按真实交易日对齐；T 日收盘计算因子，评价 T+1 收盘至 T+2 收盘收益。当前 81 日窗口用于交互筛选，正式生产仍需滚动样本外验证。"}
 
 def backtest_factor(stocks, factor_key, direction):
     """Single-factor backtest delegates to the canonical combo engine."""
     return backtest_factor_combo(stocks, [(factor_key, 1 if direction == "正向" else -1)])
 
 def backtest_factor_combo(stocks, factors):
-    """Equal-weight composite of cross-sectional ranks, with next-day close return."""
+    """Rank at T close, enter at T+1 close, exit at T+2 close; Top 3 equal weight."""
     usable = []
     for stock in stocks:
         rows = read_kline_cache(stock.get("code", "")) or stock.get("klines", [])
         if len(rows) >= 122: usable.append((stock.get("code", ""), rows, {row.get("date"): index for index, row in enumerate(rows)}))
-    common_dates = sorted(set.intersection(*(set(indexes) for _, _, indexes in usable))) if usable else []
+    available_dates = sorted(set().union(*(set(indexes) for _, _, indexes in usable))) if usable else []
     daily = []; previous = set(); latest_selected = []; cost_rate = 0.0015
-    for date in common_dates:
+    for date in available_dates:
         cross = []
         for code, rows, indexes in usable:
+            if date not in indexes:
+                continue
             index = indexes[date]
-            if index < 120 or index + 1 >= len(rows): continue
+            if index < 120 or index + 2 >= len(rows): continue
             values = [_factor_value(rows, index, key) for key, _ in factors]
-            target = rows[index + 1]["close"] / rows[index]["close"] - 1 if rows[index].get("close") else None
+            entry_close = rows[index + 1].get("close")
+            target = rows[index + 2]["close"] / entry_close - 1 if entry_close else None
             if target is None or not math.isfinite(target) or any(value is None or not math.isfinite(value) for value in values): continue
             cross.append((code, values, target))
         if len(cross) < 20: continue
@@ -267,18 +342,55 @@ def backtest_factor_combo(stocks, factors):
         equity *= 1 + value; peak = max(peak, equity); max_drawdown = max(max_drawdown, 1 - equity / peak)
     avg, sd = mean(daily), statistics.pstdev(daily)
     names = {stock.get("code", ""): stock.get("name", stock.get("code", "")) for stock in stocks}
+    latest_cross = []
+    latest_data_date = max((rows[-1].get("date") or "" for _, rows, _ in usable if rows), default="")
+    for code, rows, _ in usable:
+        if not rows or rows[-1].get("date") != latest_data_date:
+            continue
+        index = len(rows) - 1
+        values = [_factor_value(rows, index, key) for key, _ in factors]
+        if all(value is not None and math.isfinite(value) for value in values):
+            latest_cross.append((code, values))
+    if latest_cross:
+        latest_ranks = [_rank([row[1][col] for row in latest_cross]) for col in range(len(factors))]
+        latest_selected = sorted([(latest_cross[pos][0], mean([latest_ranks[col][pos] * direction for col, (_, direction) in enumerate(factors)])) for pos in range(len(latest_cross))], key=lambda row: row[1], reverse=True)[:3]
     latest_holdings = [{"code": row[0], "name": names.get(row[0], row[0])} for row in latest_selected]
     cumulative = equity - 1
     annual = equity ** (252 / len(daily)) - 1
-    audited = abs(cumulative) <= 1 and abs(annual) <= 2
-    return {"status":"完成" if audited else "异常收益，待审计", "portfolio":"Top 3 等权组合，每只 1/3，不是单只股票", "universe":len(usable), "holding_count":len(latest_holdings), "latest_holdings":latest_holdings, "days":len(daily), "cost_bps":15, "mean_daily":round(avg, 6), "cumulative_return":round(cumulative, 4), "annual_return":round(annual, 4), "sharpe":round(avg / sd * math.sqrt(252), 3) if sd else 0, "max_drawdown":round(max_drawdown, 4), "win_rate":round(sum(value > 0 for value in daily) / len(daily), 3), "equity":round(equity, 4), "audited":audited}
+    annualization_reliable = len(daily) >= 126
+    return {"status":"完成" if annualization_reliable else "短样本，仅供参考", "portfolio":"Top 3 等权组合，每只 1/3，不是单只股票", "universe":len(usable), "holding_count":len(latest_holdings), "latest_holdings":latest_holdings, "days":len(daily), "cost_bps":15, "mean_daily":round(avg, 6), "cumulative_return":round(cumulative, 4), "annual_return":round(annual, 4), "sharpe":round(avg / sd * math.sqrt(252), 3) if sd else 0, "max_drawdown":round(max_drawdown, 4), "win_rate":round(sum(value > 0 for value in daily) / len(daily), 3), "equity":round(equity, 4), "audited":True, "annualization_reliable":annualization_reliable, "return_definition":"T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出", "trade_delay_days":1}
 
 def run_backtest_experiment(stocks):
     latest = read_factor_agent_run()
     if not latest: raise RuntimeError("请先运行 Agent 因子闭环")
-    candidates = [item for item in latest.get("validation", {}).get("results", []) if item.get("gate") == "通过"][:4]
+    universe_signature = universe_signature_for_stocks(stocks)
+    if latest.get("universe_signature") != universe_signature:
+        raise RuntimeError("科技股池已变化，请先重新运行因子挖掘")
+    dashboard_date = (read_dashboard_cache() or {}).get("latest_date")
+    cached = read_backtest_run()
+    if cached and cached.get("engine_version") == BACKTEST_ENGINE_VERSION and cached.get("universe_signature") == universe_signature and cached.get("data_date") == dashboard_date and cached.get("factor_run_generated_at") == latest.get("generated_at"):
+        return {**cached, "cache_hit": True}
+    pool = [item for item in latest.get("validation", {}).get("results", []) if item.get("gate") == "通过"]
+    if len(pool) < 4:
+        pool = [item for item in latest.get("validation", {}).get("results", []) if item.get("mean_rank_ic") is not None]
+    def family(item):
+        key = item.get("key", "")
+        if key.startswith("ma"): return "均线结构"
+        if key.startswith(("momentum", "reversal")): return "动量反转"
+        if key.startswith(("volume", "price_volume")): return "成交量"
+        if key.startswith(("range_position", "breakout", "drawdown", "close_location")): return "价格位置"
+        if key.startswith(("volatility", "downside_vol", "atr", "range_expansion")): return "波动风险"
+        return key.split("_")[0]
+    candidates, seen_families = [], set()
+    for item in pool:
+        group = family(item)
+        if group in seen_families:
+            continue
+        candidates.append(item); seen_families.add(group)
+        if len(candidates) == 4:
+            break
     if len(candidates) < 2:
-        candidates = [item for item in latest.get("validation", {}).get("results", []) if item.get("mean_rank_ic") is not None][:4]
+        raise RuntimeError("去重后可用因子不足 2 个，请重新运行因子挖掘")
     factors = [(item["key"], 1 if item.get("direction") == "正向" else -1) for item in candidates]
     ordered_stocks = sorted(stocks, key=lambda item: item.get("code", "")); search_stocks = ordered_stocks[::4]
     runs = []
@@ -298,13 +410,19 @@ def run_backtest_experiment(stocks):
     for index, item in enumerate(runs, 1):
         item["rank"] = index
         item["rank_metric"] = "成本后 Sharpe"
-    payload = {"generated_at":time.strftime("%Y-%m-%d %H:%M:%S"), "candidate_count":len(candidates), "combination_count":len(runs), "screen_universe":len(search_stocks), "confirmation_universe":len(stocks), "cost_bps":15, "ranking_metric":"成本后 Sharpe（同 Sharpe 时按成本后年化收益）", "data_date":read_dashboard_cache().get("latest_date"), "results":runs, "selection_rule":"最新交易日对全量股票计算组合因子方向调整后的截面排名均值，只取分数最高的 3 只等权持有；随后应用停牌、涨跌停、流动性和风控过滤。", "warning":"所有 14 个策略均已用全量真实股票复核；收益为下一交易日收盘到收盘，当前共同历史窗口仍需扩展后才能作为生产结论。"}
+    selected_names = [TECH_SECTOR_DEFINITIONS[key]["name"] for key in read_tech_config()]
+    payload = {"generated_at":time.strftime("%Y-%m-%d %H:%M:%S"), "engine_version":BACKTEST_ENGINE_VERSION, "factor_run_generated_at":latest.get("generated_at"), "candidate_count":len(candidates), "combination_count":len(runs), "screen_universe":len(search_stocks), "confirmation_universe":len(stocks), "universe_signature":universe_signature, "universe_name":"科技股池（不含科创板）", "selected_sectors":selected_names, "cost_bps":15, "ranking_metric":"成本后 Sharpe（同 Sharpe 时按成本后累计收益）", "data_date":dashboard_date, "results":runs, "selection_rule":"T 日收盘计算因子并做科技股池截面排名，取最高 3 只等权；T+1 收盘建仓，T+2 收盘退出，扣除 15bp × 换手率。", "warning":f"{len(runs)} 个策略均在同一真实科技股池复核；已硬排除 688/689 科创板。短于 126 个交易日时，年化仅作参考，以累计收益、回撤和样本天数为主。"}
     CACHE_DIR.mkdir(parents=True, exist_ok=True); temporary = BACKTEST_RUN_FILE.with_suffix(".tmp")
     temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"); os.replace(temporary, BACKTEST_RUN_FILE)
     return payload
 
 def run_factor_agent_loop(stocks):
     """Research hypotheses -> executable candidates -> local validation -> feedback."""
+    universe_signature = universe_signature_for_stocks(stocks)
+    dashboard_date = (read_dashboard_cache() or {}).get("latest_date")
+    cached = read_factor_agent_run()
+    if cached and cached.get("engine_version") == FACTOR_ENGINE_VERSION and cached.get("universe_signature") == universe_signature and cached.get("data_date") == dashboard_date:
+        return {**cached, "cache_hit": True}
     proposal_map = {item["candidate"]: item for item in FACTOR_RESEARCH_PROPOSALS}
     search_space = build_factor_search_space()
     # Stage 1: deterministic stratified slice for broad search. Stage 2 below
@@ -346,7 +464,7 @@ def run_factor_agent_loop(stocks):
         {"name":"开发 Agent", "status":"完成", "detail":f"映射为 {len(search_space)} 个白名单可执行公式"},
         {"name":"验证 Agent", "status":"完成", "detail":f"先筛 {len(search_stocks)} 只，再用全量 {len(stocks)} 只确认前 {len(confirmation_candidates)} 个"},
         {"name":"反馈迭代", "status":"完成", "detail":feedback},
-    ], "search_space_size": len(search_space), "search_universe": len(search_stocks), "confirmation_universe": len(stocks), "proposals": FACTOR_RESEARCH_PROPOSALS, "validation": {**validation, "universe": len(stocks), "usable_stocks": validation.get("usable_stocks", 0), "history_bars": confirmation.get("history_bars", 0), "results": results}, "feedback": feedback,
+    ], "engine_version": FACTOR_ENGINE_VERSION, "data_date": dashboard_date, "search_space_size": len(search_space), "search_universe": len(search_stocks), "confirmation_universe": len(stocks), "universe_signature": universe_signature, "universe_name": "科技股池（不含科创板）", "selected_sectors": [TECH_SECTOR_DEFINITIONS[key]["name"] for key in read_tech_config()], "proposals": FACTOR_RESEARCH_PROPOSALS, "validation": {**validation, "universe": len(stocks), "usable_stocks": validation.get("usable_stocks", 0), "history_bars": confirmation.get("history_bars", 0), "results": results}, "feedback": feedback,
         "generated_at": time.strftime("%Y-%m-%d %H:%M:%S")}
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     temporary = FACTOR_AGENT_RUN_FILE.with_suffix(".tmp")
@@ -377,6 +495,11 @@ UNIVERSE = load_universe()
 def mean(values):
     return sum(values) / len(values) if values else 0.0
 
+def universe_signature_for_stocks(stocks):
+    sectors = ",".join(read_tech_config())
+    codes = ",".join(sorted(stock.get("code", "") for stock in stocks))
+    return f"{sectors}|{hashlib.sha256(codes.encode('utf-8')).hexdigest()[:16]}"
+
 def eastmoney_json(url, jsonp=False):
     last_error = None
     for attempt in range(3):
@@ -404,6 +527,176 @@ def http_text(url):
             last_error = exc
             time.sleep(0.35 * (attempt + 1))
     raise last_error
+
+def _atomic_json_write(path, payload):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    os.replace(temporary, path)
+
+def _eastmoney_clist_page(fs, fields, page):
+    url = ("https://push2.eastmoney.com/api/qt/clist/get"
+           f"?pn={page}&pz=100&po=1&np=1&fltt=2&invt=2&fid=f12&fs={fs}&fields={fields}")
+    return (eastmoney_json(url).get("data") or {})
+
+def fetch_eastmoney_clist(fs, fields):
+    """Read a complete Eastmoney list despite its effective 100-row page cap."""
+    first = _eastmoney_clist_page(fs, fields, 1)
+    rows = list(first.get("diff") or [])
+    total = int(first.get("total") or len(rows))
+    page_count = max(1, math.ceil(total / 100))
+    if page_count == 1:
+        return rows
+    with ThreadPoolExecutor(max_workers=8, thread_name_prefix="eastmoney-list") as pool:
+        futures = {pool.submit(_eastmoney_clist_page, fs, fields, page): page for page in range(2, page_count + 1)}
+        pages = {}
+        for future in as_completed(futures):
+            pages[futures[future]] = list(future.result().get("diff") or [])
+    for page in range(2, page_count + 1):
+        rows.extend(pages.get(page, []))
+    return rows
+
+def normalize_industry(name):
+    return re.sub(r"(?:Ⅰ|Ⅱ|Ⅲ|IV|III|II)$", "", str(name or "").strip())
+
+def build_tech_universe_snapshot():
+    """Build a real A-share technology taxonomy from Eastmoney industries/concept boards."""
+    market_rows = fetch_eastmoney_clist("m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23", "f12,f14,f100")
+    market = {}
+    for row in market_rows:
+        code = str(row.get("f12") or "")
+        if len(code) != 6 or not code.isdigit() or code.startswith(("688", "689")):
+            continue
+        market[code] = {"code": code, "name": row.get("f14") or code, "industry": row.get("f100") or "未分类"}
+
+    concept_members = {key: set() for key in TECH_SECTOR_DEFINITIONS}
+    matched_boards = {key: [] for key in TECH_SECTOR_DEFINITIONS}
+    try:
+        boards = fetch_eastmoney_clist("m:90+t:3", "f12,f14")
+        jobs = []
+        for board in boards:
+            board_code, board_name = str(board.get("f12") or ""), str(board.get("f14") or "")
+            for key, definition in TECH_SECTOR_DEFINITIONS.items():
+                if board_name in definition["concepts"]:
+                    matched_boards[key].append({"code": board_code, "name": board_name})
+                    jobs.append((key, board_code, board_name))
+        with ThreadPoolExecutor(max_workers=8, thread_name_prefix="concept-members") as pool:
+            futures = {pool.submit(fetch_eastmoney_clist, f"b:{board_code}", "f12,f14"): (key, board_name) for key, board_code, board_name in jobs}
+            for future in as_completed(futures):
+                key, _ = futures[future]
+                for row in future.result():
+                    code = str(row.get("f12") or "")
+                    if len(code) == 6 and code.isdigit() and not code.startswith(("688", "689")):
+                        concept_members[key].add(code)
+    except Exception:
+        # Industry classification remains usable if concept-board service is temporarily unavailable.
+        pass
+
+    stocks = {}
+    counts = {key: 0 for key in TECH_SECTOR_DEFINITIONS}
+    for code, item in market.items():
+        sectors = []
+        normalized_industry = normalize_industry(item["industry"])
+        for key, definition in TECH_SECTOR_DEFINITIONS.items():
+            direct_industries = {normalize_industry(value) for value in definition["industries"]}
+            concept_allowed = TECH_CONCEPT_ALLOWED_INDUSTRIES[key]
+            if normalized_industry in direct_industries or (code in concept_members[key] and normalized_industry in concept_allowed):
+                sectors.append(key)
+                counts[key] += 1
+        if sectors:
+            stocks[code] = {**item, "sectors": sectors}
+    payload = {
+        "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "source": "东方财富行业分类与概念板块成分",
+        "rules": "A股科技行业/概念并集；硬排除 688/689 科创板；创业板 300/301 保留",
+        "sector_definitions": [{"key": key, "name": value["name"], "count": counts[key], "boards": matched_boards[key]} for key, value in TECH_SECTOR_DEFINITIONS.items()],
+        "stock_count": len(stocks),
+        "stocks": stocks,
+    }
+    _atomic_json_write(TECH_UNIVERSE_FILE, payload)
+    return payload
+
+def sanitize_tech_universe_snapshot(payload):
+    """Re-apply the strict industry gate to cached concept memberships."""
+    cleaned = {}
+    counts = {key: 0 for key in TECH_SECTOR_DEFINITIONS}
+    for code, item in (payload.get("stocks") or {}).items():
+        if str(code).startswith(("688", "689")):
+            continue
+        industry = normalize_industry(item.get("industry"))
+        sectors = []
+        for key in item.get("sectors", []):
+            if key not in TECH_SECTOR_DEFINITIONS:
+                continue
+            direct = {normalize_industry(value) for value in TECH_SECTOR_DEFINITIONS[key]["industries"]}
+            if industry in direct or industry in TECH_CONCEPT_ALLOWED_INDUSTRIES[key]:
+                sectors.append(key)
+                counts[key] += 1
+        if sectors:
+            cleaned[code] = {**item, "sectors": sectors}
+    payload = {**payload, "rules": "A股科技行业/概念并集，概念需通过科技主营行业准入；硬排除 688/689 科创板；创业板 300/301 保留", "stock_count": len(cleaned), "stocks": cleaned}
+    definitions = {item.get("key"): item for item in payload.get("sector_definitions", [])}
+    payload["sector_definitions"] = [{**definitions.get(key, {}), "key": key, "name": value["name"], "count": counts[key]} for key, value in TECH_SECTOR_DEFINITIONS.items()]
+    return payload
+
+def read_tech_universe_snapshot(force=False):
+    if not force and TECH_UNIVERSE_FILE.exists():
+        try:
+            payload = json.loads(TECH_UNIVERSE_FILE.read_text(encoding="utf-8"))
+            generated = time.mktime(time.strptime(payload.get("generated_at", ""), "%Y-%m-%d %H:%M:%S"))
+            if time.time() - generated < 24 * 3600:
+                cleaned = sanitize_tech_universe_snapshot(payload)
+                if cleaned.get("stock_count") != payload.get("stock_count"):
+                    _atomic_json_write(TECH_UNIVERSE_FILE, cleaned)
+                return cleaned
+        except (OSError, ValueError, json.JSONDecodeError):
+            pass
+    try:
+        return sanitize_tech_universe_snapshot(build_tech_universe_snapshot())
+    except Exception:
+        if TECH_UNIVERSE_FILE.exists():
+            cleaned = sanitize_tech_universe_snapshot(json.loads(TECH_UNIVERSE_FILE.read_text(encoding="utf-8")))
+            _atomic_json_write(TECH_UNIVERSE_FILE, cleaned)
+            return cleaned
+        raise
+
+def read_tech_config():
+    try:
+        payload = json.loads(TECH_CONFIG_FILE.read_text(encoding="utf-8"))
+        selected = [key for key in payload.get("selected_sectors", []) if key in TECH_SECTOR_DEFINITIONS]
+        if selected:
+            return selected
+    except (OSError, json.JSONDecodeError):
+        pass
+    return list(DEFAULT_TECH_SECTORS)
+
+def write_tech_config(selected):
+    selected = [key for key in selected if key in TECH_SECTOR_DEFINITIONS]
+    if not selected:
+        raise ValueError("至少选择一个科技细分板块")
+    _atomic_json_write(TECH_CONFIG_FILE, {"selected_sectors": selected, "updated_at": time.strftime("%Y-%m-%d %H:%M:%S")})
+    return selected
+
+def tech_universe_items(base_items, hot_codes=None):
+    snapshot = read_tech_universe_snapshot()
+    selected = read_tech_config()
+    metadata = snapshot.get("stocks", {})
+    items_by_code = {item["code"]: dict(item) for item in base_items if not item["code"].startswith(("688", "689"))}
+    for code in hot_codes or []:
+        if code.startswith(("688", "689")) or code in items_by_code:
+            continue
+        market = "1" if code.startswith("6") else "0"
+        board = "创业板" if code.startswith(("300", "301")) else ("沪市主板" if market == "1" else "深市主板")
+        items_by_code[code] = {"code": code, "name": code, "market": board, "secid": f"{market}.{code}", "initial": code[-1], "hot_rank_added": True}
+    result = []
+    for code, item in items_by_code.items():
+        meta = metadata.get(code)
+        sectors = [key for key in (meta or {}).get("sectors", []) if key in selected]
+        if not sectors:
+            continue
+        result.append({**item, "industry": meta.get("industry", "未分类"), "tech_sectors": sectors,
+                       "tech_sector_names": [TECH_SECTOR_DEFINITIONS[key]["name"] for key in sectors]})
+    return result, snapshot, selected
 
 def fetch_hot_rank_codes():
     """Fetch the real Eastmoney current popularity Top100."""
@@ -461,7 +754,7 @@ def fetch_stock_tencent(item):
     if not klines:
         raise ValueError("Tencent K-line is empty")
     klines = klines[-1000:]
-    write_kline_cache(code, klines)
+    klines = write_kline_cache(code, klines)
     closes = [x["close"] for x in klines]; volumes = [x["volume"] for x in klines]
     returns = [(closes[i] / closes[i-1] - 1) for i in range(1, len(closes)) if closes[i-1]]
     def avg(xs): return sum(xs) / len(xs) if xs else 0.0
@@ -491,7 +784,7 @@ def fetch_stock(item):
         except ValueError:
             continue
     klines = klines[-1000:]
-    write_kline_cache(item["code"], klines)
+    klines = write_kline_cache(item["code"], klines)
     closes = [x["close"] for x in klines]
     volumes = [x["volume"] for x in klines]
     returns = [(closes[i] / closes[i-1] - 1) for i in range(1, len(closes)) if closes[i-1]]
@@ -528,7 +821,7 @@ def fetch_stock_sina(item):
         except (KeyError, TypeError, ValueError):
             continue
     klines = klines[-1000:]
-    write_kline_cache(item["code"], klines)
+    klines = write_kline_cache(item["code"], klines)
     quote_name = item["name"]
     try:
         quote_text = http_text(f"https://qt.gtimg.cn/q={symbol}")
@@ -567,13 +860,10 @@ def build_dashboard_fresh():
     except Exception:
         hot_history = []
     known_codes = {item["code"] for item in UNIVERSE}
-    research_universe = list(UNIVERSE)
-    for code in hot_codes:
-        if code in known_codes:
-            continue
-        market = "1" if code.startswith("6") else "0"
-        board = "创业板" if code.startswith(("300", "301")) else ("沪市主板" if market == "1" else "深市主板")
-        research_universe.append({"code": code, "name": code, "market": board, "secid": f"{market}.{code}", "initial": code[-1], "hot_rank_added": True})
+    hot_union_codes = list(dict.fromkeys(code for row in hot_history for code in row.get("codes", [])))
+    research_universe, tech_snapshot, selected_sectors = tech_universe_items(UNIVERSE, hot_union_codes)
+    if not research_universe:
+        raise RuntimeError("真实科技股池为空，请刷新东方财富行业分类")
     stocks, errors = [], []
     def fetch_one(item):
         try:
@@ -610,6 +900,7 @@ def build_dashboard_fresh():
         stock["status"] = "可建仓" if stock["score"] >= 70 else "等待触发" if stock["score"] >= 55 else "观察"
     stocks.sort(key=lambda x: x["score"], reverse=True)
     write_kline_manifest()
+    history_manifest = export_tech_history(stocks)
     market = {"hs300": None, "cyb": None}
     for key, item in [("hs300", {"code":"000300","name":"沪深 300","market":"指数","secid":"1.000300","initial":"沪"}), ("cyb", {"code":"399006","name":"创业板指","market":"指数","secid":"0.399006","initial":"创"})]:
         try: market[key] = fetch_stock_tencent(item)
@@ -629,11 +920,17 @@ def build_dashboard_fresh():
         {"key":"volume_ratio","name":"5/20 日量比","category":"成交确认","formula":"Mean(volume, 5) / Mean(volume, 20)","description":"近期成交量相对过去 20 日均值的放大程度，用于确认价格趋势是否有成交支持。","weight":0.15},
         {"key":"volatility20","name":"20 日年化波动","category":"风险约束","formula":"Std(Return(close), 20) × sqrt(252)","description":"过去 20 日收益波动率年化结果，用于给高波动标的施加风险扣分。","weight":0.15},
     ]
+    sector_counts = {key: sum(key in stock.get("tech_sectors", []) for stock in stocks) for key in selected_sectors}
+    selected_hot_codes = {item["code"] for item in research_universe if item.get("hot_rank_added")}
     return {"source": "+".join(sources), "source_label": " / ".join(source_names.get(s, s) for s in sources), "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"), "quote_time": max(quote_times) if quote_times else None,
-            "latest_date": latest, "errors": errors, "universe_size": len(stocks), "base_universe_size": len(UNIVERSE), "hot_union_size": len(set(hot_codes) - known_codes), "hot_history_days": len(hot_history), "stocks": stocks,
+            "latest_date": latest, "errors": errors, "universe_mode": "technology", "universe_signature": universe_signature_for_stocks(stocks),
+            "universe_size": len(stocks), "base_universe_size": len(UNIVERSE), "hot_union_size": len(selected_hot_codes - known_codes), "hot_history_days": len(hot_history), "stocks": stocks,
+            "tech_universe": {"selected_sectors": selected_sectors, "excluded_boards": ["科创板 688/689"], "source": tech_snapshot.get("source"), "generated_at": tech_snapshot.get("generated_at"),
+                              "sectors": [{"key": key, "name": TECH_SECTOR_DEFINITIONS[key]["name"], "count": sector_counts.get(key, 0)} for key in TECH_SECTOR_DEFINITIONS]},
+            "history_storage": history_manifest,
             "market": market, "breadth": {"up": up, "down": down}, "factor_catalog": factor_catalog,
             "factor_model": {"name": "Technical Cross-Section v0.1", "weights": {"momentum20": .40, "trend": .30, "volume_ratio": .15, "volatility20": .15},
-                              "note": "基于腾讯实时与前复权日线计算；基本面因子尚未接入"}}
+                              "note": "仅在所选科技细分股池内做截面标准化；硬排除科创板 688/689"}}
 
 def read_dashboard_cache():
     try:
@@ -654,13 +951,24 @@ def read_backtest_run():
         return None
 
 def attach_research_runs(payload):
+    if not payload.get("history_storage") and TECH_HISTORY_MANIFEST_FILE.exists():
+        try:
+            payload["history_storage"] = json.loads(TECH_HISTORY_MANIFEST_FILE.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            pass
     agent = read_factor_agent_run()
+    signature = payload.get("universe_signature")
+    if agent and agent.get("universe_signature") != signature:
+        agent = None
     payload["agent_factor_run"] = agent
     if agent:
         top = [item for item in agent.get("validation", {}).get("results", []) if item.get("mean_rank_ic") is not None][:20]
         payload["factor_lab_agent_catalog"] = [{"key":item["key"], "name":item["name"], "category":"Agent 挖掘", "formula":item.get("formula", ""), "description":item.get("hypothesis", "真实数据验证候选"), "status":item.get("gate", item.get("status")), "direction":item.get("direction", "待定"), "rank_ic":item.get("mean_rank_ic"), "icir":item.get("icir")} for item in top]
         payload["factor_model"] = {"name":"Agent Factor Ensemble v1", "weights":{}, "note":f"最近一次搜索 {agent.get('search_space_size', 0)} 个公式；当前展示真实验证候选"}
-    payload["backtest_factor_run"] = read_backtest_run()
+    backtest_run = read_backtest_run()
+    if backtest_run and backtest_run.get("universe_signature") != signature:
+        backtest_run = None
+    payload["backtest_factor_run"] = backtest_run
     backtest = payload.get("backtest_factor_run")
     if agent and backtest and backtest.get("results") and payload.get("stocks"):
         combo = backtest["results"][0]
@@ -668,9 +976,10 @@ def attach_research_runs(payload):
         factor_keys = combo.get("factors", [])
         factors = [(key, 1 if validation_map.get(key, {}).get("direction") == "正向" else -1) for key in factor_keys]
         rows_by_code = {}
+        latest_data_date = max((stock.get("last_date") or "" for stock in payload["stocks"]), default="")
         for stock in payload["stocks"]:
             rows = read_kline_cache(stock.get("code", "")) or stock.get("klines", [])
-            if rows:
+            if rows and rows[-1].get("date") == latest_data_date:
                 rows_by_code[stock["code"]] = (stock, rows, len(rows) - 1)
         rank_columns = []
         for key, direction in factors:
@@ -681,15 +990,15 @@ def attach_research_runs(payload):
         for code in rows_by_code:
             available = [column["scores"][code] for column in rank_columns if code in column["scores"]]
             if available: scores[code] = round(mean(available), 2)
-        top_n = min(3, len(scores))
-        cutoff = sorted(scores.values(), reverse=True)[max(0, top_n - 1)] if scores else 100
+        top_codes = set(sorted(scores, key=lambda code: (scores[code], code), reverse=True)[:3])
+        cutoff = min((scores[code] for code in top_codes), default=100)
         for stock in payload["stocks"]:
             score = scores.get(stock["code"])
             stock["agent_combo_score"] = score
-            stock["agent_combo_selected"] = score is not None and score >= cutoff
+            stock["agent_combo_selected"] = stock["code"] in top_codes
             stock["agent_combo_factors"] = factor_keys
             stock["agent_combo_breakdown"] = [{"key":column["key"], "name":validation_map.get(column["key"], {}).get("name", column["key"]), "direction":"正向" if column["direction"] == 1 else "反向", "score":round(column["scores"].get(stock["code"], 0), 1)} for column in rank_columns]
-        payload["agent_selection"] = {"name":" / ".join(combo.get("names", [])), "factors":factor_keys, "direction_adjusted":True, "max_positions":3, "cutoff":cutoff, "selected_count":sum(1 for value in scores.values() if value >= cutoff), "rule":"每日对全量股票做方向调整后的因子截面排名，等权合成，只取分数最高的 3 只；再经过停牌、涨跌停、流动性和风控过滤。"}
+        payload["agent_selection"] = {"name":" / ".join(combo.get("names", [])), "factors":factor_keys, "direction_adjusted":True, "max_positions":3, "cutoff":cutoff, "selected_count":len(top_codes), "data_date":latest_data_date, "rule":"仅在所选科技股池的最新共同交易日做方向调整后的因子截面排名，严格取分数最高的 3 只；科创板 688/689 已硬排除。"}
     return payload
 
 def select_by_factor_keys(stocks, factor_keys):
@@ -697,19 +1006,27 @@ def select_by_factor_keys(stocks, factor_keys):
     validation_map = {item["key"]: item for item in (agent or {}).get("validation", {}).get("results", [])}
     factors = [(key, 1 if validation_map.get(key, {}).get("direction") == "正向" else -1) for key in factor_keys if key in validation_map]
     rows_by_code = {}
+    latest_data_date = max((stock.get("last_date") or "" for stock in stocks), default="")
     for stock in stocks:
         rows = read_kline_cache(stock.get("code", "")) or stock.get("klines", [])
-        if rows: rows_by_code[stock["code"]] = (stock, rows, len(rows) - 1)
+        if rows and rows[-1].get("date") == latest_data_date: rows_by_code[stock["code"]] = (stock, rows, len(rows) - 1)
     columns = []
     for key, direction in factors:
-        values = [(code, (_factor_value(rows, index, key) or 0) * direction) for code, (_, rows, index) in rows_by_code.items()]
-        values = [(code, value) for code, value in values if math.isfinite(value)]
+        values = []
+        for code, (_, rows, index) in rows_by_code.items():
+            value = _factor_value(rows, index, key)
+            if value is not None and math.isfinite(value):
+                values.append((code, value * direction))
         ranks = _rank([value for _, value in values]); columns.append({"key":key, "direction":direction, "scores":{code:(rank-1)/max(1,len(ranks)-1)*100 for (code,_),rank in zip(values,ranks)}})
-    scores = {code:round(mean([column["scores"][code] for column in columns if code in column["scores"]]),2) for code in rows_by_code}
-    top_codes = sorted(scores, key=scores.get, reverse=True)[:3]
+    scores = {}
+    for code in rows_by_code:
+        available = [column["scores"][code] for column in columns if code in column["scores"]]
+        if len(available) == len(columns) and available:
+            scores[code] = round(mean(available), 2)
+    top_codes = sorted(scores, key=lambda code: (scores[code], code), reverse=True)[:3]
     names = [validation_map.get(key, {}).get("name", key) for key in factor_keys]
     breakdowns = {code:[{"key":column["key"], "name":validation_map.get(column["key"], {}).get("name", column["key"]), "direction":"正向" if column["direction"] == 1 else "反向", "score":round(column["scores"].get(code, 0), 1)} for column in columns] for code in rows_by_code}
-    return {"name":" / ".join(names), "factors":factor_keys, "max_positions":3, "selected_count":len(top_codes), "rule":"按所选因子的方向调整后截面排名等权合成，取最高 3 只。", "scores":scores, "breakdowns":breakdowns, "top_codes":top_codes}
+    return {"name":" / ".join(names), "factors":factor_keys, "max_positions":3, "selected_count":len(top_codes), "data_date":latest_data_date, "rule":"在最新共同交易日按所选因子的方向调整后截面排名等权合成，严格取最高 3 只。", "scores":scores, "breakdowns":breakdowns, "top_codes":top_codes}
 
 def write_dashboard_cache(payload):
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -720,9 +1037,20 @@ def write_dashboard_cache(payload):
 def write_kline_cache(code, klines):
     KLINE_CACHE_DIR.mkdir(parents=True, exist_ok=True)
     target = KLINE_CACHE_DIR / f"{code}.json"
+    existing = []
+    try:
+        existing = json.loads(target.read_text(encoding="utf-8")).get("klines") or []
+    except (FileNotFoundError, OSError, json.JSONDecodeError, AttributeError):
+        pass
+    # Public fallbacks return different history lengths. Merge by trading date
+    # so a short 240-bar response can update overlaps without erasing older bars.
+    merged = {row.get("date"): row for row in existing if row.get("date")}
+    merged.update({row.get("date"): row for row in klines if row.get("date")})
+    klines = [merged[date] for date in sorted(merged)]
     temporary = target.with_suffix(".tmp")
     temporary.write_text(json.dumps({"code": code, "updated_at": time.strftime("%Y-%m-%d %H:%M:%S"), "klines": klines}, ensure_ascii=False), encoding="utf-8")
     os.replace(temporary, target)
+    return klines
 
 def read_kline_cache(code):
     try:
@@ -749,6 +1077,31 @@ def write_kline_manifest():
     os.replace(temporary, KLINE_MANIFEST_FILE)
     return manifest
 
+def export_tech_history(stocks):
+    """Persist the complete locally available daily history for the active tech universe."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    exported = {}
+    total_bars = 0
+    first_dates, last_dates = [], []
+    for stock in stocks:
+        code = stock.get("code", "")
+        rows = read_kline_cache(code)
+        if not rows:
+            continue
+        total_bars += len(rows)
+        first_dates.append(rows[0].get("date")); last_dates.append(rows[-1].get("date"))
+        exported[code] = {"name": stock.get("name", code), "industry": stock.get("industry"), "tech_sectors": stock.get("tech_sectors", []), "bars": rows}
+    generated_at = time.strftime("%Y-%m-%d %H:%M:%S")
+    payload = {"generated_at": generated_at, "source": "腾讯前复权日线，东方财富/新浪备用", "adjustment": "前复权", "frequency": "日线", "excluded_boards": ["科创板 688/689"], "stock_count": len(exported), "total_bars": total_bars, "first_date": min((value for value in first_dates if value), default=None), "last_date": max((value for value in last_dates if value), default=None), "stocks": exported}
+    temporary = TECH_HISTORY_FILE.with_suffix(TECH_HISTORY_FILE.suffix + ".tmp")
+    with gzip.open(temporary, "wt", encoding="utf-8", compresslevel=6) as handle:
+        json.dump(payload, handle, ensure_ascii=False, separators=(",", ":"))
+    os.replace(temporary, TECH_HISTORY_FILE)
+    manifest = {key: value for key, value in payload.items() if key != "stocks"}
+    manifest.update({"file": str(TECH_HISTORY_FILE.relative_to(Path(__file__).parent)), "compressed_bytes": TECH_HISTORY_FILE.stat().st_size, "format": "gzip JSON；解压后 stocks.<code>.bars 为完整 OHLCV 日线数组"})
+    _atomic_json_write(TECH_HISTORY_MANIFEST_FILE, manifest)
+    return manifest
+
 def refresh_dashboard():
     global REFRESH_THREAD
     if not CACHE_LOCK.acquire(blocking=False):
@@ -764,6 +1117,9 @@ def refresh_dashboard():
 def build_dashboard():
     global REFRESH_THREAD
     cached = read_dashboard_cache()
+    selected_sectors = read_tech_config()
+    if cached and (cached.get("universe_mode") != "technology" or cached.get("tech_universe", {}).get("selected_sectors") != selected_sectors):
+        cached = None
     now = time.time()
     if cached:
         generated = cached.get("generated_at", "")
@@ -784,6 +1140,8 @@ def build_dashboard():
                 "latest_date": None, "errors": ["首次全量真实扫描正在后台执行"], "universe_size": 0,
                 "base_universe_size": len(UNIVERSE), "hot_union_size": 0, "hot_history_days": 0,
                 "stocks": [], "market": {"hs300": None, "cyb": None}, "breadth": {"up": 0, "down": 0},
+                "universe_mode": "technology", "universe_signature": None,
+                "tech_universe": {"selected_sectors": read_tech_config(), "excluded_boards": ["科创板 688/689"], "sectors": [{"key": key, "name": value["name"], "count": 0} for key, value in TECH_SECTOR_DEFINITIONS.items()]},
                 "factor_catalog": [], "factor_model": {"name": "Technical Cross-Section v0.1", "weights": {}},
                 "cache_age_seconds": None, "refreshing": True, "cache_status": "cold_start"}
     payload = build_dashboard_fresh()
@@ -803,6 +1161,18 @@ class Handler(SimpleHTTPRequestHandler):
                 request_body = json.loads(self.rfile.read(length).decode("utf-8"))
         except (ValueError, json.JSONDecodeError):
             request_body = {}
+        if parsed.path == "/api/universe":
+            try:
+                selected = write_tech_config([str(key) for key in request_body.get("sectors", [])])
+                dashboard = build_dashboard_fresh()
+                write_dashboard_cache(dashboard)
+                payload = attach_research_runs(dashboard)
+                body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+                self.send_response(200); self.send_header("Content-Type", "application/json; charset=utf-8"); self.send_header("Cache-Control", "no-store"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
+            except Exception as exc:
+                body = json.dumps({"error": str(exc)}, ensure_ascii=False).encode("utf-8")
+                self.send_response(409); self.send_header("Content-Type", "application/json; charset=utf-8"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
+            return
         if parsed.path == "/api/mine":
             try:
                 dashboard = read_dashboard_cache()
