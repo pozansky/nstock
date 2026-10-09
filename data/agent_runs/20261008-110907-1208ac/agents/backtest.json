@@ -1,0 +1,127 @@
+{
+  "id": "backtest",
+  "name": "回测 Agent",
+  "team": "实验验证组",
+  "role": "确定性执行单、双、三因子回测",
+  "status": "完成",
+  "started_at": "2026-10-08 11:15:26",
+  "finished_at": "2026-10-08 11:21:58",
+  "duration_ms": 391594,
+  "confidence": 0.65,
+  "data_quality": "年化样本可用",
+  "depends_on": [
+    "factor_developer",
+    "model_research",
+    "experiment_design"
+  ],
+  "summary": "完成 47 组确定性回测；最佳成本后 Sharpe 1.66",
+  "evidence": [
+    "可回测 885 只",
+    "累计 +218.01%",
+    "最大回撤 -31.43%"
+  ],
+  "artifact": "data\\agent_runs\\20261008-110907-1208ac\\agents\\backtest.json",
+  "process": [
+    {
+      "time": "2026-10-08 11:15:26",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-10-08 11:15:26",
+      "stage": "准备数据",
+      "detail": "发现新组合，正在准备 897 只股票、7 个候选因子的回测矩阵"
+    },
+    {
+      "time": "2026-10-08 11:20:30",
+      "stage": "组合回测",
+      "detail": "正在用束搜索计算 2 因子组合（候选 12 组）"
+    },
+    {
+      "time": "2026-10-08 11:20:50",
+      "stage": "组合回测",
+      "detail": "正在用束搜索计算 3 因子组合（候选 12 组）"
+    },
+    {
+      "time": "2026-10-08 11:21:16",
+      "stage": "组合回测",
+      "detail": "正在用束搜索计算 4 因子组合（候选 10 组）"
+    },
+    {
+      "time": "2026-10-08 11:21:40",
+      "stage": "组合回测",
+      "detail": "正在用束搜索计算 5 因子组合（候选 6 组）"
+    },
+    {
+      "time": "2026-10-08 11:21:57",
+      "stage": "结果排名",
+      "detail": "已完成 47 组回测：复用 0 组，新算 47 组"
+    },
+    {
+      "time": "2026-10-08 11:21:58",
+      "stage": "完成",
+      "detail": "完成 47 组确定性回测；最佳成本后 Sharpe 1.66"
+    }
+  ],
+  "output": {
+    "top_strategy": {
+      "kind": "4 因子组合",
+      "factor_count": 4,
+      "factors": [
+        "ma_3_120",
+        "momentum_40",
+        "volatility_10",
+        "volume_ratio_3_120"
+      ],
+      "names": [
+        "3/120 日均线差",
+        "40 日动量",
+        "10 日收益波动",
+        "3/120 日量比"
+      ],
+      "directions": [
+        "反向",
+        "反向",
+        "反向",
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 885,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "300444",
+            "name": "双杰电气"
+          },
+          {
+            "code": "600089",
+            "name": "鐗瑰彉鐢靛伐"
+          },
+          {
+            "code": "300762",
+            "name": "上海瀚讯"
+          }
+        ],
+        "days": 535,
+        "cost_bps": 15,
+        "mean_daily": 0.002436,
+        "cumulative_return": 2.1801,
+        "annual_return": 0.7245,
+        "sharpe": 1.661,
+        "max_drawdown": 0.3143,
+        "win_rate": 0.538,
+        "equity": 3.1801,
+        "audited": true,
+        "annualization_reliable": true,
+        "return_definition": "T 日收盘生成信号，T+1 收盘建仓，T+2 收盘退出",
+        "trade_delay_days": 1
+      },
+      "rank": 1,
+      "rank_metric": "成本后 Sharpe"
+    },
+    "engine_version": "tech-top3-v9-beam-five-factors",
+    "selection_rule": "T 日收盘计算因子，先剔除近 20 日成交额最低 30%，再做截面排名并取最高 3 只等权；T+1 收盘建仓，T+2 收盘退出，扣除 15bp × 换手率。"
+  }
+}

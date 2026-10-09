@@ -1,0 +1,254 @@
+{
+  "id": "industry_chain",
+  "name": "科技产业链 Agent",
+  "team": "市场情报组",
+  "role": "比较科技细分板块强弱和覆盖",
+  "status": "完成",
+  "started_at": "2026-10-09 14:51:17",
+  "finished_at": "2026-10-09 14:51:17",
+  "duration_ms": 16,
+  "confidence": 0.7,
+  "data_quality": "板块覆盖可用",
+  "depends_on": [],
+  "summary": "软件、信创与 AI领先；强度同时考虑平均涨幅与上涨广度",
+  "evidence": [
+    "软件、信创与 AI：均值 +3.26% / 上涨 92% / 领涨 绿盟科技",
+    "通信与算力：均值 +0.06% / 上涨 49% / 领涨 联特科技",
+    "机器人与智能汽车：均值 -0.78% / 上涨 38% / 领涨 雷赛智能"
+  ],
+  "artifact": "data\\agent_runs\\20261009-145117-d9767f\\agents\\industry_chain.json",
+  "process": [
+    {
+      "time": "2026-10-09 14:51:17",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-10-09 14:51:17",
+      "stage": "完成",
+      "detail": "软件、信创与 AI领先；强度同时考虑平均涨幅与上涨广度"
+    }
+  ],
+  "output": {
+    "sector_ranking": [
+      {
+        "key": "software_ai",
+        "name": "软件、信创与 AI",
+        "count": 177,
+        "average_pct": 3.263,
+        "median_pct": 3.22,
+        "up_ratio": 0.921,
+        "strength_score": 4.105,
+        "leaders": [
+          {
+            "code": "300369",
+            "name": "绿盟科技",
+            "pct": 20.02
+          },
+          {
+            "code": "300872",
+            "name": "天阳科技",
+            "pct": 12.59
+          },
+          {
+            "code": "301218",
+            "name": "华是科技",
+            "pct": 11.51
+          }
+        ]
+      },
+      {
+        "key": "communication_compute",
+        "name": "通信与算力",
+        "count": 462,
+        "average_pct": 0.059,
+        "median_pct": 0.0,
+        "up_ratio": 0.487,
+        "strength_score": 0.033,
+        "leaders": [
+          {
+            "code": "301205",
+            "name": "联特科技",
+            "pct": 12.84
+          },
+          {
+            "code": "300872",
+            "name": "天阳科技",
+            "pct": 12.59
+          },
+          {
+            "code": "300133",
+            "name": "华策影视",
+            "pct": 11.24
+          }
+        ]
+      },
+      {
+        "key": "internet_media",
+        "name": "科技互联网与数字内容",
+        "count": 0,
+        "average_pct": null,
+        "median_pct": null,
+        "up_ratio": 0.0,
+        "strength_score": -1.0,
+        "leaders": []
+      },
+      {
+        "key": "robotics_auto",
+        "name": "机器人与智能汽车",
+        "count": 52,
+        "average_pct": -0.776,
+        "median_pct": -0.425,
+        "up_ratio": 0.385,
+        "strength_score": -1.007,
+        "leaders": [
+          {
+            "code": "002979",
+            "name": "雷赛智能",
+            "pct": 9.99
+          },
+          {
+            "code": "603583",
+            "name": "捷昌驱动",
+            "pct": 3.7
+          },
+          {
+            "code": "603416",
+            "name": "信捷电气",
+            "pct": 2.13
+          }
+        ]
+      },
+      {
+        "key": "advanced_manufacturing",
+        "name": "高端科技制造",
+        "count": 132,
+        "average_pct": -0.9,
+        "median_pct": -0.735,
+        "up_ratio": 0.311,
+        "strength_score": -1.279,
+        "leaders": [
+          {
+            "code": "002979",
+            "name": "雷赛智能",
+            "pct": 9.99
+          },
+          {
+            "code": "300045",
+            "name": "华力创通",
+            "pct": 6.93
+          },
+          {
+            "code": "603583",
+            "name": "捷昌驱动",
+            "pct": 3.7
+          }
+        ]
+      },
+      {
+        "key": "optical_electronics",
+        "name": "光学光电子",
+        "count": 135,
+        "average_pct": -1.379,
+        "median_pct": -1.41,
+        "up_ratio": 0.296,
+        "strength_score": -1.787,
+        "leaders": [
+          {
+            "code": "603685",
+            "name": "晨丰科技",
+            "pct": 7.22
+          },
+          {
+            "code": "300489",
+            "name": "光智科技",
+            "pct": 5.71
+          },
+          {
+            "code": "301536",
+            "name": "星宸科技",
+            "pct": 5.13
+          }
+        ]
+      },
+      {
+        "key": "semiconductor",
+        "name": "半导体与芯片",
+        "count": 152,
+        "average_pct": -1.419,
+        "median_pct": -1.41,
+        "up_ratio": 0.243,
+        "strength_score": -1.932,
+        "leaders": [
+          {
+            "code": "603232",
+            "name": "格尔软件",
+            "pct": 9.97
+          },
+          {
+            "code": "301269",
+            "name": "华大九天",
+            "pct": 8.23
+          },
+          {
+            "code": "600206",
+            "name": "有研新材",
+            "pct": 7.06
+          }
+        ]
+      },
+      {
+        "key": "electronic_components",
+        "name": "电子元件与硬件",
+        "count": 258,
+        "average_pct": -1.99,
+        "median_pct": -2.1,
+        "up_ratio": 0.225,
+        "strength_score": -2.54,
+        "leaders": [
+          {
+            "code": "605058",
+            "name": "澳弘电子",
+            "pct": 10.0
+          },
+          {
+            "code": "300964",
+            "name": "本川智能",
+            "pct": 9.03
+          },
+          {
+            "code": "603685",
+            "name": "晨丰科技",
+            "pct": 7.22
+          }
+        ]
+      },
+      {
+        "key": "glass_substrate",
+        "name": "玻璃基板与电子玻璃",
+        "count": 15,
+        "average_pct": -2.541,
+        "median_pct": -2.63,
+        "up_ratio": 0.2,
+        "strength_score": -3.141,
+        "leaders": [
+          {
+            "code": "300296",
+            "name": "利亚德",
+            "pct": 1.08
+          },
+          {
+            "code": "300219",
+            "name": "鸿利智汇",
+            "pct": 1.07
+          },
+          {
+            "code": "000725",
+            "name": "京东方Ａ",
+            "pct": 0.18
+          }
+        ]
+      }
+    ]
+  }
+}

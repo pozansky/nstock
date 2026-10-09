@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-29 17:28:31",
+  "generated_at": "2026-10-09 14:55:48",
   "source": "腾讯前复权日线，东方财富/新浪备用",
   "adjustment": "前复权",
   "frequency": "日线",
@@ -7,10 +7,10 @@
     "科创板 688/689"
   ],
   "stock_count": 896,
-  "total_bars": 562885,
+  "total_bars": 564674,
   "first_date": "2024-01-02",
-  "last_date": "2026-09-29",
+  "last_date": "2026-10-08",
   "file": "data\\tech_history.json.gz",
-  "compressed_bytes": 11162573,
+  "compressed_bytes": 11235148,
   "format": "gzip JSON；解压后 stocks.<code>.bars 为完整 OHLCV 日线数组"
 }

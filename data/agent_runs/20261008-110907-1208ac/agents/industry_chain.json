@@ -1,0 +1,254 @@
+{
+  "id": "industry_chain",
+  "name": "科技产业链 Agent",
+  "team": "市场情报组",
+  "role": "比较科技细分板块强弱和覆盖",
+  "status": "完成",
+  "started_at": "2026-10-08 11:09:07",
+  "finished_at": "2026-10-08 11:09:07",
+  "duration_ms": 15,
+  "confidence": 0.7,
+  "data_quality": "板块覆盖可用",
+  "depends_on": [],
+  "summary": "高端科技制造领先；强度同时考虑平均涨幅与上涨广度",
+  "evidence": [
+    "高端科技制造：均值 -0.65% / 上涨 36% / 领涨 理奇智能",
+    "软件、信创与 AI：均值 -1.26% / 上涨 13% / 领涨 信息发展",
+    "通信与算力：均值 -1.52% / 上涨 21% / 领涨 金溢科技"
+  ],
+  "artifact": "data\\agent_runs\\20261008-110907-1208ac\\agents\\industry_chain.json",
+  "process": [
+    {
+      "time": "2026-10-08 11:09:07",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-10-08 11:09:07",
+      "stage": "完成",
+      "detail": "高端科技制造领先；强度同时考虑平均涨幅与上涨广度"
+    }
+  ],
+  "output": {
+    "sector_ranking": [
+      {
+        "key": "advanced_manufacturing",
+        "name": "高端科技制造",
+        "count": 132,
+        "average_pct": -0.653,
+        "median_pct": -0.371,
+        "up_ratio": 0.364,
+        "strength_score": -0.925,
+        "leaders": [
+          {
+            "code": "301599",
+            "name": "理奇智能",
+            "pct": 12.08
+          },
+          {
+            "code": "300045",
+            "name": "华力创通",
+            "pct": 8.39
+          },
+          {
+            "code": "600118",
+            "name": "中国卫星",
+            "pct": 3.62
+          }
+        ]
+      },
+      {
+        "key": "internet_media",
+        "name": "科技互联网与数字内容",
+        "count": 0,
+        "average_pct": null,
+        "median_pct": null,
+        "up_ratio": 0.0,
+        "strength_score": -1.0,
+        "leaders": []
+      },
+      {
+        "key": "software_ai",
+        "name": "软件、信创与 AI",
+        "count": 177,
+        "average_pct": -1.26,
+        "median_pct": -1.21,
+        "up_ratio": 0.13,
+        "strength_score": -2.0,
+        "leaders": [
+          {
+            "code": "300469",
+            "name": "信息发展",
+            "pct": 4.29
+          },
+          {
+            "code": "300277",
+            "name": "汽轮科技",
+            "pct": 3.22
+          },
+          {
+            "code": "000503",
+            "name": "国新健康",
+            "pct": 2.99
+          }
+        ]
+      },
+      {
+        "key": "communication_compute",
+        "name": "通信与算力",
+        "count": 462,
+        "average_pct": -1.519,
+        "median_pct": -1.35,
+        "up_ratio": 0.208,
+        "strength_score": -2.103,
+        "leaders": [
+          {
+            "code": "002869",
+            "name": "金溢科技",
+            "pct": 10.0
+          },
+          {
+            "code": "301486",
+            "name": "致尚科技",
+            "pct": 8.79
+          },
+          {
+            "code": "002927",
+            "name": "泰永长征",
+            "pct": 6.47
+          }
+        ]
+      },
+      {
+        "key": "robotics_auto",
+        "name": "机器人与智能汽车",
+        "count": 52,
+        "average_pct": -1.651,
+        "median_pct": -1.528,
+        "up_ratio": 0.192,
+        "strength_score": -2.267,
+        "leaders": [
+          {
+            "code": "301599",
+            "name": "理奇智能",
+            "pct": 12.08
+          },
+          {
+            "code": "001266",
+            "name": "宏英智能",
+            "pct": 2.98
+          },
+          {
+            "code": "603015",
+            "name": "弘讯科技",
+            "pct": 2.82
+          }
+        ]
+      },
+      {
+        "key": "electronic_components",
+        "name": "电子元件与硬件",
+        "count": 258,
+        "average_pct": -1.79,
+        "median_pct": -1.85,
+        "up_ratio": 0.171,
+        "strength_score": -2.449,
+        "leaders": [
+          {
+            "code": "002866",
+            "name": "传艺科技",
+            "pct": 10.0
+          },
+          {
+            "code": "301486",
+            "name": "致尚科技",
+            "pct": 8.79
+          },
+          {
+            "code": "301630",
+            "name": "鍚屽畤鏂版潗",
+            "pct": 8.24
+          }
+        ]
+      },
+      {
+        "key": "optical_electronics",
+        "name": "光学光电子",
+        "count": 135,
+        "average_pct": -2.465,
+        "median_pct": -2.12,
+        "up_ratio": 0.119,
+        "strength_score": -3.228,
+        "leaders": [
+          {
+            "code": "000020",
+            "name": "深华发Ａ",
+            "pct": 3.92
+          },
+          {
+            "code": "600703",
+            "name": "涓夊畨鍏夌數",
+            "pct": 3.83
+          },
+          {
+            "code": "300903",
+            "name": "绉戠繑鑲′唤",
+            "pct": 3.77
+          }
+        ]
+      },
+      {
+        "key": "semiconductor",
+        "name": "半导体与芯片",
+        "count": 152,
+        "average_pct": -2.622,
+        "median_pct": -2.46,
+        "up_ratio": 0.112,
+        "strength_score": -3.398,
+        "leaders": [
+          {
+            "code": "600183",
+            "name": "鐢熺泭绉戞妧",
+            "pct": 3.88
+          },
+          {
+            "code": "600703",
+            "name": "涓夊畨鍏夌數",
+            "pct": 3.83
+          },
+          {
+            "code": "300903",
+            "name": "绉戠繑鑲′唤",
+            "pct": 3.77
+          }
+        ]
+      },
+      {
+        "key": "glass_substrate",
+        "name": "玻璃基板与电子玻璃",
+        "count": 15,
+        "average_pct": -3.057,
+        "median_pct": -2.62,
+        "up_ratio": 0.067,
+        "strength_score": -3.923,
+        "leaders": [
+          {
+            "code": "002436",
+            "name": "兴森科技",
+            "pct": 0.54
+          },
+          {
+            "code": "002106",
+            "name": "莱宝高科",
+            "pct": 0.0
+          },
+          {
+            "code": "002156",
+            "name": "通富微电",
+            "pct": -0.18
+          }
+        ]
+      }
+    ]
+  }
+}

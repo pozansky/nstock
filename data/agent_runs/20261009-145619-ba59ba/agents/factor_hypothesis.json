@@ -1,0 +1,122 @@
+{
+  "id": "factor_hypothesis",
+  "name": "因子假设 Agent",
+  "team": "研究研发组",
+  "role": "根据历史实验提出可证伪的因子假设",
+  "status": "完成",
+  "started_at": "2026-10-09 14:56:19",
+  "finished_at": "2026-10-09 14:57:00",
+  "duration_ms": 40953,
+  "confidence": 0.6,
+  "data_quality": "白名单上下文完整",
+  "depends_on": [
+    "market_regime",
+    "industry_chain",
+    "event_news"
+  ],
+  "summary": "2026-10-08 全市场897只样本，涨跌家数422/475，宽度偏弱。前次实验Top因子以均线差与中期动量为主且rank_ic普遍为负（ma_3_120 -0.0706、momentum_40 -0.0655），对应reversal_40 +0.0655、reversal_20 +0.0629，说明当前科技板块短期反转风格占优。因此本轮从白名单候选出发，围绕reversal_5/reversal_10、volume_surprise20、volatility20、range_position20等构建量价确认与波动调整型组合，全部新因子仅由白名单key与multiply/difference/ratio/confirm算子组成，用于检验反转信号在放量、低位、低波动条件下的可证伪增益。",
+  "evidence": [
+    "推理引擎：DeepSeek V4.1 Flash（只读、结构化输出）"
+  ],
+  "artifact": "data\\agent_runs\\20261009-145619-ba59ba\\agents\\factor_hypothesis.json",
+  "process": [
+    {
+      "time": "2026-10-09 14:56:19",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-10-09 14:57:00",
+      "stage": "完成",
+      "detail": "2026-10-08 全市场897只样本，涨跌家数422/475，宽度偏弱。前次实验Top因子以均线差与中期动量为主且rank_ic普遍为负（ma_3_120 -0.0706、momentum_40 -0.0655），对应reversal_40 +0.0655、reversal_20 +0.0629，说明当前科技板块短期反转风格占优。因此本轮从白名单候选出发，围绕reversal_5/reversal_10、volume_surprise20、volatility20、range_position20等构建量价确认与波动调整型组合，全部新因子仅由白名单key与multiply/difference/ratio/confirm算子组成，用于检验反转信号在放量、低位、低波动条件下的可证伪增益。"
+    }
+  ],
+  "output": {
+    "summary": "2026-10-08 全市场897只样本，涨跌家数422/475，宽度偏弱。前次实验Top因子以均线差与中期动量为主且rank_ic普遍为负（ma_3_120 -0.0706、momentum_40 -0.0655），对应reversal_40 +0.0655、reversal_20 +0.0629，说明当前科技板块短期反转风格占优。因此本轮从白名单候选出发，围绕reversal_5/reversal_10、volume_surprise20、volatility20、range_position20等构建量价确认与波动调整型组合，全部新因子仅由白名单key与multiply/difference/ratio/confirm算子组成，用于检验反转信号在放量、低位、低波动条件下的可证伪增益。",
+    "hypotheses": [
+      {
+        "candidate": "reversal_5",
+        "rationale": "前次实验中动量类因子rank_ic普遍为负（momentum_40 -0.0655、momentum_20 -0.0629），其反向reversal_40/reversal_20分别达+0.0655/+0.0629，当前宽度偏弱（422涨/475跌），短线超跌反弹概率上升。",
+        "expectation": "reversal_5在当期切片rank_ic为正，且多头组相对中位数有正超额。"
+      },
+      {
+        "candidate": "reversal_10",
+        "rationale": "中期动量负IC更强（momentum_60、momentum_120相关均线差rank_ic约-0.068），10日反转介于短反转与中期反转之间，可作为更平滑的反转代理。",
+        "expectation": "reversal_10 rank_ic为正且波动小于reversal_5，换手更低。"
+      },
+      {
+        "candidate": "volume_surprise20",
+        "rationale": "当日量能异常能区分主动承接与被动缩量，宽度偏弱环境下放量个股的超跌反弹更可能获得资金确认。",
+        "expectation": "volume_surprise20与reversal_5交互项IC高于单一反转，作为确认变量有效。"
+      },
+      {
+        "candidate": "volatility20",
+        "rationale": "volatility_10前次rank_ic为-0.0621，高波动个股反转信号噪声大，用波动率归一化可降低噪声权重。",
+        "expectation": "反转/波动比值因子的rank_ic稳定性优于原始反转。"
+      },
+      {
+        "candidate": "range_position20",
+        "rationale": "20日区间位置直接度量超卖程度，接近区间下沿的个股在弱市中均值回复弹性更大。",
+        "expectation": "低range_position20叠加高reversal_5的组合IC高于两者单独。"
+      }
+    ],
+    "generated_factors": [
+      {
+        "name": "反转放量共振",
+        "left": "reversal_5",
+        "operator": "multiply",
+        "right": "volume_surprise20",
+        "rationale": "reversal_5代表短期超跌，volume_surprise20代表当日资金异动；两者相乘要求‘跌得多且当日放量’，对应弱市中的资金承接型反弹，逻辑可证伪（若放量未带来正超额则假设失败）。",
+        "expectation": "rank_ic高于reversal_5与volume_surprise20单独，多空分组单调性提升。"
+      },
+      {
+        "name": "波动调整反转",
+        "left": "reversal_10",
+        "operator": "ratio",
+        "right": "volatility20",
+        "rationale": "用20日波动率对10日反转做归一化，剔除高波动带来的噪声放大；volatility_10前次IC为-0.0621，说明高波动本身偏空，归一化后反转信号更纯净。",
+        "expectation": "信息比率提升，IC衰减更慢，换手率低于原始reversal_10。"
+      },
+      {
+        "name": "趋势内反转确认",
+        "left": "reversal_5",
+        "operator": "confirm",
+        "right": "momentum_20",
+        "rationale": "confirm=reversal_5*max(momentum_20,0)，仅在20日动量仍为正（中期趋势未坏）时做短线反转，规避下跌趋势中‘接飞刀’；momentum_20前次rank_ic为-0.0629，负向暴露被右侧截断控制。",
+        "expectation": "多头端收益优于纯reversal_5，空头端回撤更小。"
+      },
+      {
+        "name": "超卖区间反转",
+        "left": "reversal_5",
+        "operator": "difference",
+        "right": "range_position20",
+        "rationale": "reversal_5 - range_position20同时要求短期反转强且20日区间位置低，双重确认超卖状态，降低仅因单日跳空造成的伪反转。",
+        "expectation": "rank_ic高于reversal_5与range_position20单独，分组收益差扩大。"
+      },
+      {
+        "name": "量能异常确认",
+        "left": "volume_surprise20",
+        "operator": "ratio",
+        "right": "volume_ratio5_20",
+        "rationale": "用5/20日量比标准化当日量能异常，区分‘突发放量’与‘持续高位放量’，为反转组合提供增量量价信息。",
+        "expectation": "该比值因子与反转类因子相关性低，作为辅助确认变量可提升合成IC。"
+      },
+      {
+        "name": "上行日占比反转",
+        "left": "reversal_5",
+        "operator": "multiply",
+        "right": "up_ratio20",
+        "rationale": "up_ratio20度量近20日上涨日占比，高占比叠加短期反转意味着前期强势股出现快速回撤后的修复，属于趋势内均值回复的可证伪场景。",
+        "expectation": "在宽度偏弱区间该组合多头组收益优于单一reversal_5。"
+      }
+    ],
+    "risks": [
+      "短期反转因子在科技板块历史上易出现拥挤与快速失效，样本外IC可能转负。",
+      "量能类因子对停牌、涨跌停及集合竞价异常敏感，可能引入微观结构噪声。",
+      "当前市场宽度422/475偏弱，若风格切换至趋势延续，反转组合将系统性回撤。",
+      "组合公式仅基于白名单key线性/乘除组合，未覆盖行业与市值中性化，暴露可能失衡。",
+      "volatility20与range_position20在极端行情下分母不稳定，比值类因子需监控极值。"
+    ]
+  },
+  "llm": "DeepSeek V4.1 Flash"
+}

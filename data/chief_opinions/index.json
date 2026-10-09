@@ -1,14 +1,14 @@
 {
-  "started_at": "2026-09-29 15:25:13",
-  "completed_at": "2026-09-29 16:37:17",
+  "started_at": "2026-09-29 18:30:00",
+  "completed_at": "2026-09-29 18:30:00",
   "source": "chief-opinions MCP",
   "server_url": "https://aizg.abctougu.com:18443/chief-opinions/",
   "tool": "get_stock_chief_opinions",
   "universe_size": 898,
   "requested_limit": 1,
   "max_age_hours": 20.0,
-  "updated": 763,
-  "cached": 135,
+  "updated": 0,
+  "cached": 898,
   "failed": 0,
   "stocks": {
     "000020": {
@@ -1228,7 +1228,7 @@
     },
     "002401": {
       "name": "中远海科",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:13",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-06 10:44:00",
@@ -1237,7 +1237,7 @@
     },
     "002405": {
       "name": "四维图新",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:13",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -1246,7 +1246,7 @@
     },
     "002409": {
       "name": "雅克科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -1255,7 +1255,7 @@
     },
     "002410": {
       "name": "广联达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-27 17:14:00",
@@ -1264,7 +1264,7 @@
     },
     "002413": {
       "name": "雷科防务",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 17:08:02",
@@ -1273,7 +1273,7 @@
     },
     "002414": {
       "name": "高德红外",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-17 11:47:27",
@@ -1282,7 +1282,7 @@
     },
     "002415": {
       "name": "海康威视",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 21:06:45",
@@ -1291,7 +1291,7 @@
     },
     "002421": {
       "name": "达实智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-18 21:31:57",
@@ -1300,7 +1300,7 @@
     },
     "002426": {
       "name": "胜利精密",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 23:09:55",
@@ -1309,7 +1309,7 @@
     },
     "002436": {
       "name": "兴森科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:25",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:23:38",
@@ -1318,7 +1318,7 @@
     },
     "002439": {
       "name": "启明星辰",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:31",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:29:35",
@@ -1327,7 +1327,7 @@
     },
     "002446": {
       "name": "盛路通信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 10:33:44",
@@ -1336,7 +1336,7 @@
     },
     "002449": {
       "name": "国星光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-23 00:03:45",
@@ -1345,7 +1345,7 @@
     },
     "002451": {
       "name": "摩恩电气",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-31 16:44:00",
@@ -1354,7 +1354,7 @@
     },
     "002456": {
       "name": "欧菲光",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:25:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-16 23:03:47",
@@ -1363,7 +1363,7 @@
     },
     "002463": {
       "name": "沪电股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:26:01",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -1372,7 +1372,7 @@
     },
     "002465": {
       "name": "海格通信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:26:07",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -1381,7 +1381,7 @@
     },
     "002467": {
       "name": "二六三",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:26:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 08:34:02",
@@ -1390,7 +1390,7 @@
     },
     "002471": {
       "name": "中超控股",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:26:18",
       "opinion_count": 1,
       "latest_publish_time": "2026-04-03 22:22:23",
@@ -1399,7 +1399,7 @@
     },
     "002474": {
       "name": "榕基软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:26:24",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 13:33:38",
@@ -1408,7 +1408,7 @@
     },
     "002475": {
       "name": "立讯精密",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:26:30",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 17:23:31",
@@ -1417,7 +1417,7 @@
     },
     "002484": {
       "name": "江海股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:26:36",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:23:38",
@@ -1426,7 +1426,7 @@
     },
     "002491": {
       "name": "通鼎互联",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:26:42",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -1435,7 +1435,7 @@
     },
     "002498": {
       "name": "汉缆股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:26:48",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-10 00:04:00",
@@ -1444,7 +1444,7 @@
     },
     "002533": {
       "name": "金杯电工",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:26:53",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-03 10:23:42",
@@ -1453,7 +1453,7 @@
     },
     "002544": {
       "name": "普天科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:26:59",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-13 23:44:00",
@@ -1462,7 +1462,7 @@
     },
     "002552": {
       "name": "宝鼎科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:27:05",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 14:33:42",
@@ -1471,7 +1471,7 @@
     },
     "002577": {
       "name": "雷柏科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:27:11",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-16 20:14:00",
@@ -1480,7 +1480,7 @@
     },
     "002579": {
       "name": "中京电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:27:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 14:33:57",
@@ -1489,7 +1489,7 @@
     },
     "002583": {
       "name": "海能达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:27:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-11 13:34:11",
@@ -1498,7 +1498,7 @@
     },
     "002584": {
       "name": "西陇科学",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:27:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-18 22:53:31",
@@ -1507,7 +1507,7 @@
     },
     "002587": {
       "name": "奥拓电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:27:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:17:43",
@@ -1516,7 +1516,7 @@
     },
     "002600": {
       "name": "领益智造",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:27:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 20:20:00",
@@ -1525,7 +1525,7 @@
     },
     "002602": {
       "name": "世纪华通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:27:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 08:31:46",
@@ -1534,7 +1534,7 @@
     },
     "002609": {
       "name": "捷顺科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:27:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-24 22:44:00",
@@ -1543,7 +1543,7 @@
     },
     "002625": {
       "name": "光启技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:27:58",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-19 20:54:30",
@@ -1552,7 +1552,7 @@
     },
     "002635": {
       "name": "安洁科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:28:04",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 00:14:00",
@@ -1561,7 +1561,7 @@
     },
     "002636": {
       "name": "金安国纪",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:28:10",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -1570,7 +1570,7 @@
     },
     "002642": {
       "name": "荣联科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:28:16",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-29 09:53:44",
@@ -1579,7 +1579,7 @@
     },
     "002643": {
       "name": "万润股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:28:22",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 11:23:36",
@@ -1588,7 +1588,7 @@
     },
     "002649": {
       "name": "博彦科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:28:27",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-09 18:44:00",
@@ -1597,7 +1597,7 @@
     },
     "002651": {
       "name": "利君股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:28:33",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-19 20:54:30",
@@ -1606,7 +1606,7 @@
     },
     "002654": {
       "name": "万润科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:28:39",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-16 18:33:42",
@@ -1615,7 +1615,7 @@
     },
     "002655": {
       "name": "共达电声",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:28:45",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 10:23:48",
@@ -1624,7 +1624,7 @@
     },
     "002657": {
       "name": "中科金财",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:28:51",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-25 10:56:47",
@@ -1633,7 +1633,7 @@
     },
     "002660": {
       "name": "茂硕电源",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:28:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-06 16:44:00",
@@ -1642,7 +1642,7 @@
     },
     "002681": {
       "name": "奋达科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:29:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-03 11:23:44",
@@ -1651,7 +1651,7 @@
     },
     "002698": {
       "name": "博实股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:29:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-28 16:14:00",
@@ -1660,7 +1660,7 @@
     },
     "002706": {
       "name": "良信股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:29:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 09:23:36",
@@ -1669,7 +1669,7 @@
     },
     "002729": {
       "name": "好利科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:29:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-07 21:11:28",
@@ -1678,7 +1678,7 @@
     },
     "002730": {
       "name": "电光科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:29:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-06 21:49:46",
@@ -1687,7 +1687,7 @@
     },
     "002741": {
       "name": "光华科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:29:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:23:50",
@@ -1696,7 +1696,7 @@
     },
     "002745": {
       "name": "木林森",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:29:38",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 21:20:17",
@@ -1705,7 +1705,7 @@
     },
     "002747": {
       "name": "埃斯顿",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:29:44",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -1714,7 +1714,7 @@
     },
     "002757": {
       "name": "南兴股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:29:50",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 08:34:02",
@@ -1723,7 +1723,7 @@
     },
     "002771": {
       "name": "真视通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:29:56",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-05 09:24:02",
@@ -1732,7 +1732,7 @@
     },
     "002777": {
       "name": "久远银海",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:30:01",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-28 15:44:00",
@@ -1741,7 +1741,7 @@
     },
     "002782": {
       "name": "可立克",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:30:07",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 09:23:36",
@@ -1750,7 +1750,7 @@
     },
     "002786": {
       "name": "银宝山新",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:30:13",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-20 17:09:54",
@@ -1759,7 +1759,7 @@
     },
     "002792": {
       "name": "通宇通讯",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:30:19",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 08:44:00",
@@ -1768,7 +1768,7 @@
     },
     "002796": {
       "name": "世嘉科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:30:25",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -1777,7 +1777,7 @@
     },
     "002813": {
       "name": "路畅科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:30:31",
       "opinion_count": 1,
       "latest_publish_time": "2026-03-26 21:40:51",
@@ -1786,7 +1786,7 @@
     },
     "002815": {
       "name": "崇达技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:30:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:23:38",
@@ -1795,7 +1795,7 @@
     },
     "002829": {
       "name": "星网宇达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:30:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-11 10:29:55",
@@ -1804,7 +1804,7 @@
     },
     "002835": {
       "name": "同为股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:30:48",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-18 02:44:00",
@@ -1813,7 +1813,7 @@
     },
     "002837": {
       "name": "英维克",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:30:54",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -1822,7 +1822,7 @@
     },
     "002841": {
       "name": "视源股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:31:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 22:40:08",
@@ -1831,7 +1831,7 @@
     },
     "002845": {
       "name": "同兴达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:31:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-09 10:10:38",
@@ -1840,7 +1840,7 @@
     },
     "002855": {
       "name": "捷荣技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:31:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 00:14:00",
@@ -1849,7 +1849,7 @@
     },
     "002859": {
       "name": "洁美科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:31:18",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -1858,7 +1858,7 @@
     },
     "002861": {
       "name": "瀛通通讯",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:31:24",
       "opinion_count": 1,
       "latest_publish_time": "2026-04-14 09:10:54",
@@ -1867,7 +1867,7 @@
     },
     "002866": {
       "name": "传艺科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:31:30",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-08 17:14:00",
@@ -1876,7 +1876,7 @@
     },
     "002869": {
       "name": "金溢科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:31:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-17 13:14:00",
@@ -1885,7 +1885,7 @@
     },
     "002876": {
       "name": "三利谱",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:31:41",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 21:20:17",
@@ -1894,7 +1894,7 @@
     },
     "002881": {
       "name": "美格智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:31:47",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -1903,7 +1903,7 @@
     },
     "002885": {
       "name": "京泉华",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:31:53",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 22:16:25",
@@ -1912,7 +1912,7 @@
     },
     "002888": {
       "name": "惠威科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:31:59",
       "opinion_count": 1,
       "latest_publish_time": "2025-11-30 22:42:58",
@@ -1921,7 +1921,7 @@
     },
     "002897": {
       "name": "意华股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:32:05",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 23:09:55",
@@ -1930,7 +1930,7 @@
     },
     "002902": {
       "name": "铭普光磁",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:32:11",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-17 14:36:47",
@@ -1939,7 +1939,7 @@
     },
     "002908": {
       "name": "德生科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:32:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-10 09:24:22",
@@ -1948,7 +1948,7 @@
     },
     "002912": {
       "name": "中新赛克",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:32:22",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 22:40:08",
@@ -1957,7 +1957,7 @@
     },
     "002913": {
       "name": "奥士康",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:32:28",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:23:41",
@@ -1966,7 +1966,7 @@
     },
     "002915": {
       "name": "中欣氟材",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:32:34",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 05:40:21",
@@ -1975,7 +1975,7 @@
     },
     "002916": {
       "name": "深南电路",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:32:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -1984,7 +1984,7 @@
     },
     "002922": {
       "name": "伊戈尔",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:32:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 09:23:36",
@@ -1993,7 +1993,7 @@
     },
     "002925": {
       "name": "盈趣科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:32:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 12:01:09",
@@ -2002,7 +2002,7 @@
     },
     "002927": {
       "name": "泰永长征",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:32:58",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 08:58:05",
@@ -2011,7 +2011,7 @@
     },
     "002929": {
       "name": "润建股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:33:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 21:03:33",
@@ -2020,7 +2020,7 @@
     },
     "002933": {
       "name": "新兴装备",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:33:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 23:49:21",
@@ -2029,7 +2029,7 @@
     },
     "002935": {
       "name": "天奥电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:33:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -2038,7 +2038,7 @@
     },
     "002938": {
       "name": "鹏鼎控股",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:33:21",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -2047,7 +2047,7 @@
     },
     "002947": {
       "name": "恒铭达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:33:27",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 08:56:52",
@@ -2056,7 +2056,7 @@
     },
     "002952": {
       "name": "亚世光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:33:33",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-21 17:23:40",
@@ -2065,7 +2065,7 @@
     },
     "002953": {
       "name": "日丰股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:33:39",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-28 09:34:21",
@@ -2074,7 +2074,7 @@
     },
     "002955": {
       "name": "鸿合科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:33:45",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -2083,7 +2083,7 @@
     },
     "002957": {
       "name": "科瑞技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:33:50",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 07:53:39",
@@ -2092,7 +2092,7 @@
     },
     "002962": {
       "name": "五方光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:33:56",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-08 10:00:36",
@@ -2101,7 +2101,7 @@
     },
     "002970": {
       "name": "锐明技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:34:02",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-17 08:48:14",
@@ -2110,7 +2110,7 @@
     },
     "002975": {
       "name": "博杰股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:34:08",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 22:52:50",
@@ -2119,7 +2119,7 @@
     },
     "002979": {
       "name": "雷赛智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:34:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 08:19:39",
@@ -2128,7 +2128,7 @@
     },
     "002980": {
       "name": "华盛昌",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:34:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 12:57:32",
@@ -2137,7 +2137,7 @@
     },
     "002981": {
       "name": "朝阳科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:34:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-12 09:34:12",
@@ -2146,7 +2146,7 @@
     },
     "002983": {
       "name": "芯瑞达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:34:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-07 08:44:00",
@@ -2155,7 +2155,7 @@
     },
     "002985": {
       "name": "北摩高科",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:34:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-27 17:14:00",
@@ -2164,7 +2164,7 @@
     },
     "002987": {
       "name": "京北方",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:34:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-08 13:53:52",
@@ -2173,7 +2173,7 @@
     },
     "002990": {
       "name": "盛视科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:34:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 22:40:08",
@@ -2182,7 +2182,7 @@
     },
     "002992": {
       "name": "宝明科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:34:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-18 10:05:25",
@@ -2191,7 +2191,7 @@
     },
     "002993": {
       "name": "奥海科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:35:01",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-10 09:24:22",
@@ -2200,7 +2200,7 @@
     },
     "003004": {
       "name": "声迅股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:35:07",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-18 22:40:04",
@@ -2209,7 +2209,7 @@
     },
     "003005": {
       "name": "竞业达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:35:13",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-13 19:54:45",
@@ -2218,7 +2218,7 @@
     },
     "003007": {
       "name": "直真科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:35:19",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-01 23:53:43",
@@ -2227,7 +2227,7 @@
     },
     "003009": {
       "name": "中天火箭",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:35:24",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 00:13:42",
@@ -2236,7 +2236,7 @@
     },
     "003015": {
       "name": "日久光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:35:30",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-30 16:44:00",
@@ -2245,7 +2245,7 @@
     },
     "003019": {
       "name": "宸展光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:35:36",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:23:50",
@@ -2254,7 +2254,7 @@
     },
     "003026": {
       "name": "中晶科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:35:42",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 22:33:30",
@@ -2263,7 +2263,7 @@
     },
     "003029": {
       "name": "吉大正元",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:35:48",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 21:38:19",
@@ -2272,7 +2272,7 @@
     },
     "003031": {
       "name": "中瓷电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:35:54",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:22:12",
@@ -2281,7 +2281,7 @@
     },
     "003040": {
       "name": "楚天龙",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:36:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 20:49:35",
@@ -2290,7 +2290,7 @@
     },
     "003043": {
       "name": "华亚智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:36:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-07 17:44:00",
@@ -2299,7 +2299,7 @@
     },
     "300001": {
       "name": "特锐德",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:36:11",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 22:15:35",
@@ -2308,7 +2308,7 @@
     },
     "300002": {
       "name": "神州泰岳",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:36:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 08:03:56",
@@ -2317,7 +2317,7 @@
     },
     "300017": {
       "name": "网宿科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:36:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 09:17:48",
@@ -2326,7 +2326,7 @@
     },
     "300024": {
       "name": "机器人",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:36:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 17:44:00",
@@ -2335,7 +2335,7 @@
     },
     "300025": {
       "name": "华星创业",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:36:34",
       "opinion_count": 1,
       "latest_publish_time": "2025-12-30 16:10:23",
@@ -2344,7 +2344,7 @@
     },
     "300032": {
       "name": "金龙机电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:36:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-03 15:14:00",
@@ -2353,7 +2353,7 @@
     },
     "300033": {
       "name": "同花顺",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:36:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 15:34:36",
@@ -2362,7 +2362,7 @@
     },
     "300034": {
       "name": "钢研高纳",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:36:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-31 08:54:40",
@@ -2371,7 +2371,7 @@
     },
     "300036": {
       "name": "超图软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:36:58",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -2380,7 +2380,7 @@
     },
     "300042": {
       "name": "朗科科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:37:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-14 09:53:49",
@@ -2389,7 +2389,7 @@
     },
     "300045": {
       "name": "华力创通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:37:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -2398,7 +2398,7 @@
     },
     "300046": {
       "name": "台基股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:37:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-01-28 09:30:07",
@@ -2407,7 +2407,7 @@
     },
     "300047": {
       "name": "天源迪科",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:37:21",
       "opinion_count": 1,
       "latest_publish_time": "2026-04-29 15:44:00",
@@ -2416,7 +2416,7 @@
     },
     "300048": {
       "name": "合康新能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:37:27",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-06 22:45:29",
@@ -2425,7 +2425,7 @@
     },
     "300050": {
       "name": "世纪鼎利",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:37:32",
       "opinion_count": 1,
       "latest_publish_time": "2025-08-27 14:45:20",
@@ -2434,7 +2434,7 @@
     },
     "300052": {
       "name": "中青宝",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:37:38",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-01 09:23:55",
@@ -2443,7 +2443,7 @@
     },
     "300053": {
       "name": "航宇微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:37:44",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:01:20",
@@ -2452,7 +2452,7 @@
     },
     "300054": {
       "name": "鼎龙股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:37:50",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 20:13:24",
@@ -2461,7 +2461,7 @@
     },
     "300074": {
       "name": "华平股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:37:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-02-05 22:32:24",
@@ -2470,7 +2470,7 @@
     },
     "300075": {
       "name": "数字政通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:38:01",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 13:33:38",
@@ -2479,7 +2479,7 @@
     },
     "300077": {
       "name": "国民技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:38:07",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-15 18:19:43",
@@ -2488,7 +2488,7 @@
     },
     "300079": {
       "name": "数码视讯",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:38:13",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-11 13:34:22",
@@ -2497,7 +2497,7 @@
     },
     "300083": {
       "name": "创世纪",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:38:19",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 23:30:18",
@@ -2506,7 +2506,7 @@
     },
     "300085": {
       "name": "银之杰",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:38:24",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-06 20:09:02",
@@ -2515,7 +2515,7 @@
     },
     "300088": {
       "name": "长信科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:38:30",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 12:57:32",
@@ -2524,7 +2524,7 @@
     },
     "300096": {
       "name": "易联众",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:38:36",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-06 20:14:00",
@@ -2533,7 +2533,7 @@
     },
     "300097": {
       "name": "智云股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:38:42",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-25 20:53:40",
@@ -2542,7 +2542,7 @@
     },
     "300098": {
       "name": "高新兴",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:38:47",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-09 18:14:00",
@@ -2551,7 +2551,7 @@
     },
     "300099": {
       "name": "尤洛卡",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:38:53",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-26 09:13:39",
@@ -2560,7 +2560,7 @@
     },
     "300101": {
       "name": "振芯科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:38:59",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 09:19:14",
@@ -2569,7 +2569,7 @@
     },
     "300102": {
       "name": "乾照光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:39:05",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-17 13:44:00",
@@ -2578,7 +2578,7 @@
     },
     "300113": {
       "name": "顺网科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:39:11",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:37:30",
@@ -2587,7 +2587,7 @@
     },
     "300115": {
       "name": "长盈精密",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:39:16",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -2596,7 +2596,7 @@
     },
     "300120": {
       "name": "经纬辉开",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:39:22",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-31 22:55:49",
@@ -2605,7 +2605,7 @@
     },
     "300124": {
       "name": "汇川技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:39:28",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 20:56:02",
@@ -2614,7 +2614,7 @@
     },
     "300128": {
       "name": "锦富技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:39:34",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-04 09:24:33",
@@ -2623,7 +2623,7 @@
     },
     "300130": {
       "name": "新国都",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:39:39",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-25 08:44:00",
@@ -2632,7 +2632,7 @@
     },
     "300131": {
       "name": "英唐智控",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:39:45",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-10 15:24:21",
@@ -2641,7 +2641,7 @@
     },
     "300133": {
       "name": "华策影视",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:39:51",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:37:30",
@@ -2650,7 +2650,7 @@
     },
     "300134": {
       "name": "大富科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:39:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -2659,7 +2659,7 @@
     },
     "300136": {
       "name": "信维通信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:40:02",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 08:44:00",
@@ -2668,7 +2668,7 @@
     },
     "300151": {
       "name": "昌红科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:40:08",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 08:46:34",
@@ -2677,7 +2677,7 @@
     },
     "300155": {
       "name": "安居宝",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:40:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-04-29 09:44:00",
@@ -2686,7 +2686,7 @@
     },
     "300162": {
       "name": "雷曼光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:40:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-12 08:33:49",
@@ -2695,7 +2695,7 @@
     },
     "300166": {
       "name": "东方国信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:40:25",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -2704,7 +2704,7 @@
     },
     "300168": {
       "name": "万达信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:40:31",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 00:14:00",
@@ -2713,7 +2713,7 @@
     },
     "300170": {
       "name": "汉得信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:40:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 23:03:44",
@@ -2722,7 +2722,7 @@
     },
     "300177": {
       "name": "中海达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:40:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -2731,7 +2731,7 @@
     },
     "300183": {
       "name": "东软载波",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:40:48",
       "opinion_count": 1,
       "latest_publish_time": "2026-03-27 08:56:10",
@@ -2740,7 +2740,7 @@
     },
     "300184": {
       "name": "力源信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:40:54",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-19 21:44:00",
@@ -2749,7 +2749,7 @@
     },
     "300188": {
       "name": "国投智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:41:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 11:32:49",
@@ -2758,7 +2758,7 @@
     },
     "300195": {
       "name": "长荣股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:41:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-26 01:03:42",
@@ -2767,7 +2767,7 @@
     },
     "300209": {
       "name": "行云科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:41:11",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 23:39:16",
@@ -2776,7 +2776,7 @@
     },
     "300211": {
       "name": "亿通科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:41:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-28 11:14:00",
@@ -2785,7 +2785,7 @@
     },
     "300213": {
       "name": "佳讯飞鸿",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:41:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-21 09:14:00",
@@ -2794,7 +2794,7 @@
     },
     "300219": {
       "name": "鸿利智汇",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:41:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-28 12:57:41",
@@ -2803,7 +2803,7 @@
     },
     "300220": {
       "name": "金运激光",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:41:34",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-06 20:14:00",
@@ -2812,7 +2812,7 @@
     },
     "300222": {
       "name": "科大智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:41:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-06 13:44:00",
@@ -2821,7 +2821,7 @@
     },
     "300223": {
       "name": "君正股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:41:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 22:33:30",
@@ -2830,7 +2830,7 @@
     },
     "300226": {
       "name": "上海钢联",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:41:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-03-31 09:40:52",
@@ -2839,7 +2839,7 @@
     },
     "300227": {
       "name": "光韵达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:41:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-19 20:54:30",
@@ -2848,7 +2848,7 @@
     },
     "300229": {
       "name": "拓尔思",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:42:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 18:44:00",
@@ -2857,7 +2857,7 @@
     },
     "300231": {
       "name": "银信科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:42:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-19 21:44:00",
@@ -2866,7 +2866,7 @@
     },
     "300232": {
       "name": "洲明科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:42:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -2875,7 +2875,7 @@
     },
     "300235": {
       "name": "方直科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:42:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -2884,7 +2884,7 @@
     },
     "300236": {
       "name": "上海新阳",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:42:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 20:13:24",
@@ -2893,7 +2893,7 @@
     },
     "300241": {
       "name": "瑞丰光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:42:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-03-06 08:20:54",
@@ -2902,7 +2902,7 @@
     },
     "300248": {
       "name": "新开普",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:42:38",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-06 00:13:44",
@@ -2911,7 +2911,7 @@
     },
     "300249": {
       "name": "依米康",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:42:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -2920,7 +2920,7 @@
     },
     "300250": {
       "name": "初灵信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:42:49",
       "opinion_count": 1,
       "latest_publish_time": "2025-12-04 17:32:50",
@@ -2929,7 +2929,7 @@
     },
     "300252": {
       "name": "金信诺",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:42:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -2938,7 +2938,7 @@
     },
     "300253": {
       "name": "卫宁健康",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:43:01",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-01 09:27:14",
@@ -2947,7 +2947,7 @@
     },
     "300256": {
       "name": "星星科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:43:06",
       "opinion_count": 1,
       "latest_publish_time": "2025-02-20 20:13:46",
@@ -2956,7 +2956,7 @@
     },
     "300264": {
       "name": "佳创视讯",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:43:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-09 08:49:27",
@@ -2965,7 +2965,7 @@
     },
     "300265": {
       "name": "通光线缆",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:43:18",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-14 12:44:00",
@@ -2974,7 +2974,7 @@
     },
     "300269": {
       "name": "联建光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:43:24",
       "opinion_count": 1,
       "latest_publish_time": "2026-03-06 08:20:54",
@@ -2983,7 +2983,7 @@
     },
     "300270": {
       "name": "中威电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:43:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-09 11:28:15",
@@ -2992,7 +2992,7 @@
     },
     "300271": {
       "name": "华宇软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:43:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 14:33:42",
@@ -3001,7 +3001,7 @@
     },
     "300275": {
       "name": "梅安森",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:43:41",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-29 14:14:00",
@@ -3010,7 +3010,7 @@
     },
     "300276": {
       "name": "三丰智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:43:47",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-01 12:53:49",
@@ -3019,7 +3019,7 @@
     },
     "300277": {
       "name": "汽轮科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:43:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-17 13:23:57",
@@ -3028,7 +3028,7 @@
     },
     "300278": {
       "name": "华昌达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:43:58",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 00:37:38",
@@ -3037,7 +3037,7 @@
     },
     "300283": {
       "name": "温州宏丰",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:44:04",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-16 13:15:22",
@@ -3046,7 +3046,7 @@
     },
     "300285": {
       "name": "国瓷材料",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:44:10",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:08:50",
@@ -3055,7 +3055,7 @@
     },
     "300286": {
       "name": "安科瑞",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:44:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 21:36:27",
@@ -3064,7 +3064,7 @@
     },
     "300287": {
       "name": "飞利信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:44:21",
       "opinion_count": 1,
       "latest_publish_time": "2026-03-27 08:56:10",
@@ -3073,7 +3073,7 @@
     },
     "300288": {
       "name": "朗玛信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:44:27",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-23 10:14:00",
@@ -3082,7 +3082,7 @@
     },
     "300292": {
       "name": "吴通控股",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:44:33",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 14:14:00",
@@ -3091,7 +3091,7 @@
     },
     "300296": {
       "name": "利亚德",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:44:38",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-12 08:33:49",
@@ -3100,7 +3100,7 @@
     },
     "300299": {
       "name": "富春股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:44:44",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-31 09:53:45",
@@ -3109,7 +3109,7 @@
     },
     "300300": {
       "name": "海峡创新",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:44:50",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 21:36:26",
@@ -3118,7 +3118,7 @@
     },
     "300302": {
       "name": "同有科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:44:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-18 22:53:31",
@@ -3127,7 +3127,7 @@
     },
     "300303": {
       "name": "聚飞光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:45:01",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-06 01:14:00",
@@ -3136,7 +3136,7 @@
     },
     "300308": {
       "name": "中际旭创",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:45:07",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 14:23:43",
@@ -3145,7 +3145,7 @@
     },
     "300310": {
       "name": "宜通世纪",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:45:13",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-23 22:03:53",
@@ -3154,7 +3154,7 @@
     },
     "300311": {
       "name": "任子行",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:45:18",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-14 12:53:44",
@@ -3163,7 +3163,7 @@
     },
     "300319": {
       "name": "麦捷科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:45:24",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -3172,7 +3172,7 @@
     },
     "300322": {
       "name": "硕贝德",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:45:30",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 09:26:03",
@@ -3181,7 +3181,7 @@
     },
     "300323": {
       "name": "华灿光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:45:36",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 20:14:00",
@@ -3190,7 +3190,7 @@
     },
     "300324": {
       "name": "旋极信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:45:41",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 08:34:02",
@@ -3199,7 +3199,7 @@
     },
     "300327": {
       "name": "中颖电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:45:47",
       "opinion_count": 1,
       "latest_publish_time": "2026-04-21 08:50:47",
@@ -3208,7 +3208,7 @@
     },
     "300331": {
       "name": "苏大维格",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:45:53",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-07 11:34:01",
@@ -3217,7 +3217,7 @@
     },
     "300333": {
       "name": "兆日科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:45:59",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-04 09:54:26",
@@ -3226,7 +3226,7 @@
     },
     "300339": {
       "name": "润和软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:46:04",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 23:39:16",
@@ -3235,7 +3235,7 @@
     },
     "300346": {
       "name": "南大光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:46:10",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 22:53:31",
@@ -3244,7 +3244,7 @@
     },
     "300348": {
       "name": "长亮科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:46:16",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-08 15:44:00",
@@ -3253,7 +3253,7 @@
     },
     "300353": {
       "name": "东土科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:46:22",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 21:06:45",
@@ -3262,7 +3262,7 @@
     },
     "300365": {
       "name": "恒华科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:46:27",
       "opinion_count": 1,
       "latest_publish_time": "2026-03-06 19:04:24",
@@ -3271,7 +3271,7 @@
     },
     "300368": {
       "name": "汇金股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:46:33",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-26 16:44:00",
@@ -3280,7 +3280,7 @@
     },
     "300369": {
       "name": "绿盟科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:46:39",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:29:35",
@@ -3289,7 +3289,7 @@
     },
     "300373": {
       "name": "扬杰科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:46:45",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:35:08",
@@ -3298,7 +3298,7 @@
     },
     "300377": {
       "name": "赢时胜",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:46:50",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-19 21:23:49",
@@ -3307,7 +3307,7 @@
     },
     "300378": {
       "name": "鼎捷数智",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:46:56",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 22:40:08",
@@ -3316,7 +3316,7 @@
     },
     "300380": {
       "name": "安硕信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:47:02",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-06 20:09:02",
@@ -3325,7 +3325,7 @@
     },
     "300383": {
       "name": "光环新网",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:47:08",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 21:03:33",
@@ -3334,7 +3334,7 @@
     },
     "300386": {
       "name": "飞天诚信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:47:13",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-06 20:23:47",
@@ -3343,7 +3343,7 @@
     },
     "300389": {
       "name": "艾比森",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:47:19",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-12 08:33:49",
@@ -3352,7 +3352,7 @@
     },
     "300394": {
       "name": "天孚通信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:47:25",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:33:51",
@@ -3361,7 +3361,7 @@
     },
     "300395": {
       "name": "菲利华",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:47:31",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 10:09:29",
@@ -3370,7 +3370,7 @@
     },
     "300397": {
       "name": "天和防务",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:47:36",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-06 20:22:14",
@@ -3379,7 +3379,7 @@
     },
     "300398": {
       "name": "飞凯材料",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:47:42",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 20:13:24",
@@ -3388,7 +3388,7 @@
     },
     "300399": {
       "name": "天利科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:47:48",
       "opinion_count": 1,
       "latest_publish_time": "2026-01-06 19:53:21",
@@ -3397,7 +3397,7 @@
     },
     "300400": {
       "name": "劲拓股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:47:54",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-14 13:23:48",
@@ -3406,7 +3406,7 @@
     },
     "300408": {
       "name": "三环集团",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:47:59",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 22:16:25",
@@ -3415,7 +3415,7 @@
     },
     "300414": {
       "name": "中光防雷",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:48:05",
       "opinion_count": 1,
       "latest_publish_time": "2026-04-20 00:21:47",
@@ -3424,7 +3424,7 @@
     },
     "300415": {
       "name": "伊之密",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:48:11",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-13 18:14:00",
@@ -3433,7 +3433,7 @@
     },
     "300418": {
       "name": "昆仑万维",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:48:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 10:13:32",
@@ -3442,7 +3442,7 @@
     },
     "300424": {
       "name": "航新科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:48:22",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:44:00",
@@ -3451,7 +3451,7 @@
     },
     "300429": {
       "name": "强力新材",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:48:28",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-18 22:53:31",
@@ -3460,7 +3460,7 @@
     },
     "300433": {
       "name": "蓝思科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:48:34",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 08:49:25",
@@ -3469,7 +3469,7 @@
     },
     "300440": {
       "name": "运达科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:48:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-09 21:24:23",
@@ -3478,7 +3478,7 @@
     },
     "300442": {
       "name": "润泽科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:48:45",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:14:00",
@@ -3487,7 +3487,7 @@
     },
     "300444": {
       "name": "双杰电气",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:48:51",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-23 22:23:43",
@@ -3496,7 +3496,7 @@
     },
     "300447": {
       "name": "全信股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:48:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-27 09:23:56",
@@ -3505,7 +3505,7 @@
     },
     "300448": {
       "name": "浩云科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:49:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-21 18:44:00",
@@ -3514,7 +3514,7 @@
     },
     "300449": {
       "name": "汉邦高科",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:49:08",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-11 13:34:22",
@@ -3523,7 +3523,7 @@
     },
     "300451": {
       "name": "创业慧康",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:49:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 00:14:00",
@@ -3532,7 +3532,7 @@
     },
     "300454": {
       "name": "深信服",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:49:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:29:35",
@@ -3541,7 +3541,7 @@
     },
     "300455": {
       "name": "航天智装",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:49:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:01:20",
@@ -3550,7 +3550,7 @@
     },
     "300456": {
       "name": "赛微电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:49:31",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-08 12:55:56",
@@ -3559,7 +3559,7 @@
     },
     "300458": {
       "name": "全志科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:49:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 16:23:42",
@@ -3568,7 +3568,7 @@
     },
     "300459": {
       "name": "汤姆猫",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:49:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-07 23:53:48",
@@ -3577,7 +3577,7 @@
     },
     "300461": {
       "name": "田中精机",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:49:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 23:19:59",
@@ -3586,7 +3586,7 @@
     },
     "300464": {
       "name": "星徽股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:49:54",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 00:13:42",
@@ -3595,7 +3595,7 @@
     },
     "300465": {
       "name": "高伟达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:50:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-24 21:40:46",
@@ -3604,7 +3604,7 @@
     },
     "300468": {
       "name": "四方精创",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:50:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-08 13:53:52",
@@ -3613,7 +3613,7 @@
     },
     "300469": {
       "name": "信息发展",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:50:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 22:53:54",
@@ -3622,7 +3622,7 @@
     },
     "300474": {
       "name": "景嘉微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:50:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 23:39:16",
@@ -3631,7 +3631,7 @@
     },
     "300475": {
       "name": "香农芯创",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:50:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -3640,7 +3640,7 @@
     },
     "300476": {
       "name": "胜宏科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:50:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -3649,7 +3649,7 @@
     },
     "300479": {
       "name": "神思电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:50:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-25 18:14:00",
@@ -3658,7 +3658,7 @@
     },
     "300480": {
       "name": "光力科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:50:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-19 21:23:32",
@@ -3667,7 +3667,7 @@
     },
     "300481": {
       "name": "濮阳惠成",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:50:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-16 13:42:06",
@@ -3676,7 +3676,7 @@
     },
     "300484": {
       "name": "蓝海华腾",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:50:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-06 21:49:46",
@@ -3685,7 +3685,7 @@
     },
     "300486": {
       "name": "东杰智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:50:58",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-30 07:53:56",
@@ -3694,7 +3694,7 @@
     },
     "300489": {
       "name": "光智科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:51:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:22:19",
@@ -3703,7 +3703,7 @@
     },
     "300490": {
       "name": "华自科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:51:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-15 12:02:20",
@@ -3712,7 +3712,7 @@
     },
     "300493": {
       "name": "润欣科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:51:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-16 10:53:55",
@@ -3721,7 +3721,7 @@
     },
     "300496": {
       "name": "中科创达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:51:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:53:31",
@@ -3730,7 +3730,7 @@
     },
     "300502": {
       "name": "新易盛",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:51:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 14:23:43",
@@ -3739,7 +3739,7 @@
     },
     "300504": {
       "name": "天邑股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:51:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-26 12:33:41",
@@ -3748,7 +3748,7 @@
     },
     "300508": {
       "name": "维宏股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:51:38",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 07:33:39",
@@ -3757,7 +3757,7 @@
     },
     "300513": {
       "name": "恒实科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:51:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-10 10:23:44",
@@ -3766,7 +3766,7 @@
     },
     "300516": {
       "name": "久之洋",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:51:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-21 22:53:45",
@@ -3775,7 +3775,7 @@
     },
     "300520": {
       "name": "科大国创",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:51:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -3784,7 +3784,7 @@
     },
     "300523": {
       "name": "辰安科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:52:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-08 09:24:26",
@@ -3793,7 +3793,7 @@
     },
     "300525": {
       "name": "博思软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:52:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-31 12:43:32",
@@ -3802,7 +3802,7 @@
     },
     "300531": {
       "name": "优博讯",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:52:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-04 09:26:44",
@@ -3811,7 +3811,7 @@
     },
     "300532": {
       "name": "今天国际",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:52:18",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 02:44:00",
@@ -3820,7 +3820,7 @@
     },
     "300536": {
       "name": "农尚环境",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:52:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-30 02:44:00",
@@ -3829,7 +3829,7 @@
     },
     "300537": {
       "name": "广信材料",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:52:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-18 00:13:44",
@@ -3838,7 +3838,7 @@
     },
     "300541": {
       "name": "先进数通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:52:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-12 17:44:00",
@@ -3847,7 +3847,7 @@
     },
     "300542": {
       "name": "新晨科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:52:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-25 20:04:11",
@@ -3856,7 +3856,7 @@
     },
     "300545": {
       "name": "联得装备",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:52:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 22:23:35",
@@ -3865,7 +3865,7 @@
     },
     "300546": {
       "name": "雄帝科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:52:52",
       "opinion_count": 1,
       "latest_publish_time": "2025-10-29 13:45:08",
@@ -3874,7 +3874,7 @@
     },
     "300548": {
       "name": "长芯博创",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:52:58",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 08:34:01",
@@ -3883,7 +3883,7 @@
     },
     "300550": {
       "name": "和仁科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:53:03",
       "opinion_count": 1,
       "latest_publish_time": "2025-04-07 20:56:20",
@@ -3892,7 +3892,7 @@
     },
     "300551": {
       "name": "古鳌科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:53:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-04-07 08:53:30",
@@ -3901,7 +3901,7 @@
     },
     "300552": {
       "name": "万集科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:53:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-25 20:04:11",
@@ -3910,7 +3910,7 @@
     },
     "300556": {
       "name": "丝路视觉",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:53:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-09 22:23:53",
@@ -3919,7 +3919,7 @@
     },
     "300559": {
       "name": "佳发教育",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:53:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -3928,7 +3928,7 @@
     },
     "300560": {
       "name": "中富通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:53:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:44:00",
@@ -3937,7 +3937,7 @@
     },
     "300561": {
       "name": "汇金科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:53:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-02-03 17:15:07",
@@ -3946,7 +3946,7 @@
     },
     "300563": {
       "name": "神宇股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:53:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -3955,7 +3955,7 @@
     },
     "300565": {
       "name": "科信技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:53:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-17 22:33:37",
@@ -3964,7 +3964,7 @@
     },
     "300566": {
       "name": "激智科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:53:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 12:56:21",
@@ -3973,7 +3973,7 @@
     },
     "300570": {
       "name": "太辰光",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:54:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 09:17:48",
@@ -3982,7 +3982,7 @@
     },
     "300571": {
       "name": "平治信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:54:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 22:15:33",
@@ -3991,7 +3991,7 @@
     },
     "300576": {
       "name": "容大感光",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:54:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-18 22:53:31",
@@ -4000,7 +4000,7 @@
     },
     "300578": {
       "name": "会畅科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:54:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 18:44:00",
@@ -4009,7 +4009,7 @@
     },
     "300579": {
       "name": "数字认证",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:54:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-25 20:04:11",
@@ -4018,7 +4018,7 @@
     },
     "300581": {
       "name": "晨曦航空",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:54:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:44:00",
@@ -4027,7 +4027,7 @@
     },
     "300582": {
       "name": "英飞特",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:54:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-14 11:44:00",
@@ -4036,7 +4036,7 @@
     },
     "300588": {
       "name": "熙菱信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:54:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 22:15:33",
@@ -4045,7 +4045,7 @@
     },
     "300590": {
       "name": "移为通信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:54:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-29 13:14:00",
@@ -4054,7 +4054,7 @@
     },
     "300597": {
       "name": "吉大通信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:54:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-27 10:44:00",
@@ -4063,7 +4063,7 @@
     },
     "300598": {
       "name": "诚迈科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:54:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-26 22:23:32",
@@ -4072,7 +4072,7 @@
     },
     "300602": {
       "name": "飞荣达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:55:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 13:39:10",
@@ -4081,7 +4081,7 @@
     },
     "300603": {
       "name": "立昂技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:55:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-01 00:03:48",
@@ -4090,7 +4090,7 @@
     },
     "300604": {
       "name": "长川科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:55:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:00:17",
@@ -4099,7 +4099,7 @@
     },
     "300605": {
       "name": "恒锋信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:55:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-30 22:33:35",
@@ -4108,7 +4108,7 @@
     },
     "300607": {
       "name": "拓斯达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:55:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 08:44:00",
@@ -4117,7 +4117,7 @@
     },
     "300608": {
       "name": "思特奇",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:55:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-04 09:04:43",
@@ -4126,7 +4126,7 @@
     },
     "300609": {
       "name": "汇纳科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:55:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -4135,7 +4135,7 @@
     },
     "300613": {
       "name": "富瀚微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:55:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 21:20:17",
@@ -4144,7 +4144,7 @@
     },
     "300615": {
       "name": "欣天科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:55:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-12 08:33:49",
@@ -4153,7 +4153,7 @@
     },
     "300617": {
       "name": "安靠智电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:55:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:23:50",
@@ -4162,7 +4162,7 @@
     },
     "300620": {
       "name": "光库科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:56:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 22:52:50",
@@ -4171,7 +4171,7 @@
     },
     "300623": {
       "name": "捷捷微电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:56:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 07:02:36",
@@ -4180,7 +4180,7 @@
     },
     "300624": {
       "name": "万兴科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:56:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 14:03:58",
@@ -4189,7 +4189,7 @@
     },
     "300627": {
       "name": "华测导航",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:56:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -4198,7 +4198,7 @@
     },
     "300628": {
       "name": "亿联网络",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:56:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 19:28:48",
@@ -4207,7 +4207,7 @@
     },
     "300629": {
       "name": "新劲刚",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:56:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-20 22:53:34",
@@ -4216,7 +4216,7 @@
     },
     "300632": {
       "name": "光莆股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:56:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-24 23:10:04",
@@ -4225,7 +4225,7 @@
     },
     "300634": {
       "name": "彩讯股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:56:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 11:44:00",
@@ -4234,7 +4234,7 @@
     },
     "300638": {
       "name": "广和通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:56:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:44:00",
@@ -4243,7 +4243,7 @@
     },
     "300645": {
       "name": "正元智慧",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:56:52",
       "opinion_count": 1,
       "latest_publish_time": "2025-07-31 13:04:02",
@@ -4252,7 +4252,7 @@
     },
     "300647": {
       "name": "超频三",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:56:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-04-12 16:24:13",
@@ -4261,7 +4261,7 @@
     },
     "300650": {
       "name": "太龙股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:57:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-25 20:33:45",
@@ -4270,7 +4270,7 @@
     },
     "300655": {
       "name": "晶瑞电材",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:57:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 20:13:24",
@@ -4279,7 +4279,7 @@
     },
     "300656": {
       "name": "民德电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:57:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-16 18:33:42",
@@ -4288,7 +4288,7 @@
     },
     "300657": {
       "name": "弘信电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:57:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -4297,7 +4297,7 @@
     },
     "300659": {
       "name": "中孚信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:57:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 22:40:08",
@@ -4306,7 +4306,7 @@
     },
     "300661": {
       "name": "圣邦股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:57:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 21:20:17",
@@ -4315,7 +4315,7 @@
     },
     "300663": {
       "name": "科蓝软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:57:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-09 16:41:20",
@@ -4324,7 +4324,7 @@
     },
     "300666": {
       "name": "江丰电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:57:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 20:13:24",
@@ -4333,7 +4333,7 @@
     },
     "300671": {
       "name": "富满微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:57:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 14:30:54",
@@ -4342,7 +4342,7 @@
     },
     "300672": {
       "name": "国科微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:57:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 21:20:17",
@@ -4351,7 +4351,7 @@
     },
     "300674": {
       "name": "宇信科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:58:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-30 14:48:43",
@@ -4360,7 +4360,7 @@
     },
     "300678": {
       "name": "中科信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:58:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -4369,7 +4369,7 @@
     },
     "300679": {
       "name": "电连技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:58:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 12:48:59",
@@ -4378,7 +4378,7 @@
     },
     "300682": {
       "name": "朗新科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:58:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 12:57:41",
@@ -4387,7 +4387,7 @@
     },
     "300684": {
       "name": "中石科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:58:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 14:53:40",
@@ -4396,7 +4396,7 @@
     },
     "300686": {
       "name": "智动力",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:58:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-26 18:44:00",
@@ -4405,7 +4405,7 @@
     },
     "300687": {
       "name": "赛意信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:58:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 09:47:37",
@@ -4414,7 +4414,7 @@
     },
     "300689": {
       "name": "澄天伟业",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:58:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 08:34:01",
@@ -4423,7 +4423,7 @@
     },
     "300691": {
       "name": "联合光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:58:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -4432,7 +4432,7 @@
     },
     "300696": {
       "name": "爱乐达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:58:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-07 09:44:00",
@@ -4441,7 +4441,7 @@
     },
     "300698": {
       "name": "万马科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:58:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-04 12:26:57",
@@ -4450,7 +4450,7 @@
     },
     "300699": {
       "name": "光威复材",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:59:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 11:23:36",
@@ -4459,7 +4459,7 @@
     },
     "300701": {
       "name": "森霸传感",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:59:09",
       "opinion_count": 1,
       "latest_publish_time": "2025-08-20 20:01:42",
@@ -4468,7 +4468,7 @@
     },
     "300706": {
       "name": "阿石创",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:59:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-30 20:53:45",
@@ -4477,7 +4477,7 @@
     },
     "300708": {
       "name": "聚灿光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:59:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -4486,7 +4486,7 @@
     },
     "300709": {
       "name": "精研科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:59:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -4495,7 +4495,7 @@
     },
     "300710": {
       "name": "万隆光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:59:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-02 10:44:00",
@@ -4504,7 +4504,7 @@
     },
     "300711": {
       "name": "广哈通信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:59:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-06 12:53:48",
@@ -4513,7 +4513,7 @@
     },
     "300719": {
       "name": "安达维尔",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:59:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-25 18:29:31",
@@ -4522,7 +4522,7 @@
     },
     "300722": {
       "name": "新余国科",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:59:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-27 21:10:44",
@@ -4531,7 +4531,7 @@
     },
     "300726": {
       "name": "宏达电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 15:59:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 19:44:00",
@@ -4540,7 +4540,7 @@
     },
     "300730": {
       "name": "科创信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:00:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-21 18:44:00",
@@ -4549,7 +4549,7 @@
     },
     "300735": {
       "name": "光弘科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:00:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-18 09:14:27",
@@ -4558,7 +4558,7 @@
     },
     "300736": {
       "name": "百邦科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:00:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-27 15:44:00",
@@ -4567,7 +4567,7 @@
     },
     "300738": {
       "name": "奥飞数据",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:00:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 13:44:00",
@@ -4576,7 +4576,7 @@
     },
     "300739": {
       "name": "明阳电路",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:00:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-10 10:44:00",
@@ -4585,7 +4585,7 @@
     },
     "300743": {
       "name": "天地数码",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:00:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-21 18:44:00",
@@ -4594,7 +4594,7 @@
     },
     "300747": {
       "name": "锐科激光",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:00:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 18:05:33",
@@ -4603,7 +4603,7 @@
     },
     "300752": {
       "name": "隆利科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:00:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-21 18:44:00",
@@ -4612,7 +4612,7 @@
     },
     "300757": {
       "name": "罗博特科",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:00:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 12:57:32",
@@ -4621,7 +4621,7 @@
     },
     "300762": {
       "name": "上海瀚讯",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:00:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -4630,7 +4630,7 @@
     },
     "300766": {
       "name": "每日互动",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:00:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 14:53:40",
@@ -4639,7 +4639,7 @@
     },
     "300768": {
       "name": "迪普科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:01:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:29:35",
@@ -4648,7 +4648,7 @@
     },
     "300771": {
       "name": "智莱科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:01:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-21 18:44:00",
@@ -4657,7 +4657,7 @@
     },
     "300775": {
       "name": "三角防务",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:01:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 10:06:16",
@@ -4666,7 +4666,7 @@
     },
     "300777": {
       "name": "中简科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:01:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 11:23:36",
@@ -4675,7 +4675,7 @@
     },
     "300782": {
       "name": "卓胜微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:01:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 13:23:38",
@@ -4684,7 +4684,7 @@
     },
     "300784": {
       "name": "利安科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:01:32",
       "opinion_count": 1,
       "latest_publish_time": "2025-12-07 20:09:24",
@@ -4693,7 +4693,7 @@
     },
     "300787": {
       "name": "海能实业",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:01:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-05 09:24:02",
@@ -4702,7 +4702,7 @@
     },
     "300789": {
       "name": "唐源电气",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:01:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-04 20:33:46",
@@ -4711,7 +4711,7 @@
     },
     "300790": {
       "name": "宇瞳光学",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:01:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 09:19:15",
@@ -4720,7 +4720,7 @@
     },
     "300793": {
       "name": "佳禾智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:01:55",
       "opinion_count": 1,
       "latest_publish_time": "2025-12-30 19:54:55",
@@ -4729,7 +4729,7 @@
     },
     "300802": {
       "name": "矩子科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:02:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-18 12:23:35",
@@ -4738,7 +4738,7 @@
     },
     "300803": {
       "name": "指南针",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:02:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 22:33:30",
@@ -4747,7 +4747,7 @@
     },
     "300807": {
       "name": "天迈科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:02:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-02 14:14:00",
@@ -4756,7 +4756,7 @@
     },
     "300808": {
       "name": "久量股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:02:17",
       "opinion_count": 1,
       "latest_publish_time": "2025-12-18 10:03:10",
@@ -4765,7 +4765,7 @@
     },
     "300812": {
       "name": "易天股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:02:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:14:00",
@@ -4774,7 +4774,7 @@
     },
     "300814": {
       "name": "中富电路",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:02:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 20:23:41",
@@ -4783,7 +4783,7 @@
     },
     "300822": {
       "name": "贝仕达克",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:02:35",
       "opinion_count": 1,
       "latest_publish_time": "2025-06-06 08:05:25",
@@ -4792,7 +4792,7 @@
     },
     "300830": {
       "name": "金现代",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:02:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-05 00:14:03",
@@ -4801,7 +4801,7 @@
     },
     "300836": {
       "name": "佰奥智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:02:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-18 17:22:07",
@@ -4810,7 +4810,7 @@
     },
     "300843": {
       "name": "胜蓝股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:02:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 22:00:28",
@@ -4819,7 +4819,7 @@
     },
     "300845": {
       "name": "捷安高科",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:02:57",
       "opinion_count": 1,
       "latest_publish_time": "2025-09-02 08:27:23",
@@ -4828,7 +4828,7 @@
     },
     "300846": {
       "name": "首都在线",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:03:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 09:34:06",
@@ -4837,7 +4837,7 @@
     },
     "300847": {
       "name": "中船汉光",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:03:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 23:44:00",
@@ -4846,7 +4846,7 @@
     },
     "300852": {
       "name": "四会富仕",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:03:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:23:38",
@@ -4855,7 +4855,7 @@
     },
     "300857": {
       "name": "协创数据",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:03:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 09:14:54",
@@ -4864,7 +4864,7 @@
     },
     "300866": {
       "name": "安克创新",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:03:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 07:02:35",
@@ -4873,7 +4873,7 @@
     },
     "300868": {
       "name": "杰美特",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:03:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 17:03:43",
@@ -4882,7 +4882,7 @@
     },
     "300872": {
       "name": "天阳科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:03:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-25 10:56:47",
@@ -4891,7 +4891,7 @@
     },
     "300884": {
       "name": "狄耐克",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:03:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-28 14:44:00",
@@ -4900,7 +4900,7 @@
     },
     "300889": {
       "name": "爱克股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:03:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-26 17:44:00",
@@ -4909,7 +4909,7 @@
     },
     "300895": {
       "name": "铜牛信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:03:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 08:53:34",
@@ -4918,7 +4918,7 @@
     },
     "300900": {
       "name": "广联航空",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:04:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:01:20",
@@ -4927,7 +4927,7 @@
     },
     "300903": {
       "name": "科翔股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:04:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 13:18:25",
@@ -4936,7 +4936,7 @@
     },
     "300909": {
       "name": "汇创达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:04:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 22:23:28",
@@ -4945,7 +4945,7 @@
     },
     "300913": {
       "name": "兆龙互连",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:04:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-10 00:04:00",
@@ -4954,7 +4954,7 @@
     },
     "300916": {
       "name": "朗特智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:04:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-01-19 15:08:06",
@@ -4963,7 +4963,7 @@
     },
     "300921": {
       "name": "南凌科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:04:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-25 20:04:11",
@@ -4972,7 +4972,7 @@
     },
     "300925": {
       "name": "法本信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:04:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-01 22:33:34",
@@ -4981,7 +4981,7 @@
     },
     "300928": {
       "name": "华安鑫创",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:04:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-09 12:14:00",
@@ -4990,7 +4990,7 @@
     },
     "300933": {
       "name": "中辰股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:04:46",
       "opinion_count": 1,
       "latest_publish_time": "2025-11-23 19:37:31",
@@ -4999,7 +4999,7 @@
     },
     "300935": {
       "name": "盈建科",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:04:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-09 16:41:20",
@@ -5008,7 +5008,7 @@
     },
     "300936": {
       "name": "中英科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:04:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-11 14:13:58",
@@ -5017,7 +5017,7 @@
     },
     "300939": {
       "name": "秋田微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:05:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-15 07:44:00",
@@ -5026,7 +5026,7 @@
     },
     "300940": {
       "name": "南极光",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:05:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-01-27 11:37:53",
@@ -5035,7 +5035,7 @@
     },
     "300941": {
       "name": "创识科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:05:14",
       "opinion_count": 1,
       "latest_publish_time": "2025-12-01 10:01:40",
@@ -5044,7 +5044,7 @@
     },
     "300951": {
       "name": "博硕科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:05:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:23:50",
@@ -5053,7 +5053,7 @@
     },
     "300956": {
       "name": "英力股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:05:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-01 22:23:40",
@@ -5062,7 +5062,7 @@
     },
     "300959": {
       "name": "线上线下",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:05:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-18 13:44:00",
@@ -5071,7 +5071,7 @@
     },
     "300964": {
       "name": "本川智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:05:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-14 22:03:56",
@@ -5080,7 +5080,7 @@
     },
     "300965": {
       "name": "恒宇信通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:05:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-31 13:44:00",
@@ -5089,7 +5089,7 @@
     },
     "300968": {
       "name": "格林精密",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:05:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-10 22:23:45",
@@ -5098,7 +5098,7 @@
     },
     "300975": {
       "name": "商络电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:05:54",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-11 23:34:39",
@@ -5107,7 +5107,7 @@
     },
     "300976": {
       "name": "达瑞电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:06:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:22:12",
@@ -5116,7 +5116,7 @@
     },
     "300988": {
       "name": "津荣天宇",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:06:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-04 21:07:10",
@@ -5125,7 +5125,7 @@
     },
     "300991": {
       "name": "创益通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:06:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-13 14:40:20",
@@ -5134,7 +5134,7 @@
     },
     "300996": {
       "name": "普联软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:06:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-11 08:36:47",
@@ -5143,7 +5143,7 @@
     },
     "301007": {
       "name": "德迈仕",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:06:23",
       "opinion_count": 1,
       "latest_publish_time": "2025-08-26 23:16:57",
@@ -5152,7 +5152,7 @@
     },
     "301012": {
       "name": "扬电科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:06:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-21 22:53:45",
@@ -5161,7 +5161,7 @@
     },
     "301013": {
       "name": "利和兴",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:06:34",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 08:03:22",
@@ -5170,7 +5170,7 @@
     },
     "301021": {
       "name": "英诺激光",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:06:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 00:13:49",
@@ -5179,7 +5179,7 @@
     },
     "301029": {
       "name": "怡合达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:06:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 17:44:00",
@@ -5188,7 +5188,7 @@
     },
     "301031": {
       "name": "中熔电气",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:06:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-08 16:44:00",
@@ -5197,7 +5197,7 @@
     },
     "301041": {
       "name": "金百泽",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:06:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-27 22:44:00",
@@ -5206,7 +5206,7 @@
     },
     "301042": {
       "name": "安联锐视",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:07:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-31 19:44:00",
@@ -5215,7 +5215,7 @@
     },
     "301045": {
       "name": "天禄科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:07:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 23:42:09",
@@ -5224,7 +5224,7 @@
     },
     "301050": {
       "name": "雷电微力",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:07:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-27 15:44:00",
@@ -5233,7 +5233,7 @@
     },
     "301051": {
       "name": "信濠光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:07:20",
       "opinion_count": 1,
       "latest_publish_time": "2025-10-21 21:58:15",
@@ -5242,7 +5242,7 @@
     },
     "301067": {
       "name": "显盈科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:07:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-03-10 19:25:33",
@@ -5251,7 +5251,7 @@
     },
     "301085": {
       "name": "亚康股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:07:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 09:34:06",
@@ -5260,7 +5260,7 @@
     },
     "301086": {
       "name": "鸿富瀚",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:07:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 16:23:38",
@@ -5269,7 +5269,7 @@
     },
     "301095": {
       "name": "广立微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:07:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-17 13:53:42",
@@ -5278,7 +5278,7 @@
     },
     "301099": {
       "name": "雅创电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:07:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-25 20:04:11",
@@ -5287,7 +5287,7 @@
     },
     "301106": {
       "name": "骏成科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:07:54",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-16 17:44:00",
@@ -5296,7 +5296,7 @@
     },
     "301112": {
       "name": "信邦智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:08:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-31 17:14:00",
@@ -5305,7 +5305,7 @@
     },
     "301123": {
       "name": "奕东电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:08:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:22:12",
@@ -5314,7 +5314,7 @@
     },
     "301128": {
       "name": "强瑞技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:08:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -5323,7 +5323,7 @@
     },
     "301132": {
       "name": "满坤科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:08:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:13:36",
@@ -5332,7 +5332,7 @@
     },
     "301153": {
       "name": "中科江南",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:08:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 08:44:00",
@@ -5341,7 +5341,7 @@
     },
     "301159": {
       "name": "三维天地",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:08:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-11 21:03:46",
@@ -5350,7 +5350,7 @@
     },
     "301162": {
       "name": "国能日新",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:08:34",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:23:50",
@@ -5359,7 +5359,7 @@
     },
     "301165": {
       "name": "锐捷网络",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:08:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:33:51",
@@ -5368,7 +5368,7 @@
     },
     "301172": {
       "name": "君逸数码",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:08:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-09 21:23:51",
@@ -5377,7 +5377,7 @@
     },
     "301176": {
       "name": "逸豪新材",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:08:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 08:34:02",
@@ -5386,7 +5386,7 @@
     },
     "301178": {
       "name": "天亿马",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:08:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 22:16:34",
@@ -5395,7 +5395,7 @@
     },
     "301180": {
       "name": "万祥科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:09:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-04-07 08:50:26",
@@ -5404,7 +5404,7 @@
     },
     "301182": {
       "name": "凯旺科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:09:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-04 09:39:42",
@@ -5413,7 +5413,7 @@
     },
     "301183": {
       "name": "东田微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:09:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 14:53:40",
@@ -5422,7 +5422,7 @@
     },
     "301185": {
       "name": "鸥玛软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:09:20",
       "opinion_count": 1,
       "latest_publish_time": "2025-10-15 17:42:41",
@@ -5431,7 +5431,7 @@
     },
     "301189": {
       "name": "奥尼电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:09:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 09:28:35",
@@ -5440,7 +5440,7 @@
     },
     "301191": {
       "name": "菲菱科思",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:09:31",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-13 19:14:00",
@@ -5449,7 +5449,7 @@
     },
     "301195": {
       "name": "北路智控",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:09:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-25 12:44:00",
@@ -5458,7 +5458,7 @@
     },
     "301199": {
       "name": "迈赫股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:09:43",
       "opinion_count": 1,
       "latest_publish_time": "2025-10-26 15:37:22",
@@ -5467,7 +5467,7 @@
     },
     "301200": {
       "name": "大族数控",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:09:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 22:42:43",
@@ -5476,7 +5476,7 @@
     },
     "301202": {
       "name": "朗威股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:09:54",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 15:53:37",
@@ -5485,7 +5485,7 @@
     },
     "301205": {
       "name": "联特科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:10:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 09:11:39",
@@ -5494,7 +5494,7 @@
     },
     "301208": {
       "name": "中亦科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:10:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 13:44:00",
@@ -5503,7 +5503,7 @@
     },
     "301213": {
       "name": "观想科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:10:11",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-03 08:34:59",
@@ -5512,7 +5512,7 @@
     },
     "301218": {
       "name": "华是科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:10:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:23:38",
@@ -5521,7 +5521,7 @@
     },
     "301236": {
       "name": "软通动力",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:10:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:23:50",
@@ -5530,7 +5530,7 @@
     },
     "301248": {
       "name": "杰创智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:10:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 23:39:16",
@@ -5539,7 +5539,7 @@
     },
     "301251": {
       "name": "威尔高",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:10:34",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:23:41",
@@ -5548,7 +5548,7 @@
     },
     "301269": {
       "name": "华大九天",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:10:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 23:39:16",
@@ -5557,7 +5557,7 @@
     },
     "301270": {
       "name": "汉仪股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:10:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-04 20:33:46",
@@ -5566,7 +5566,7 @@
     },
     "301275": {
       "name": "汉朔科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:10:51",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-04 18:14:00",
@@ -5575,7 +5575,7 @@
     },
     "301282": {
       "name": "金禄电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:10:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:23:41",
@@ -5584,7 +5584,7 @@
     },
     "301285": {
       "name": "鸿日达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:11:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 08:34:01",
@@ -5593,7 +5593,7 @@
     },
     "301291": {
       "name": "明阳电气",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:11:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-15 09:05:26",
@@ -5602,7 +5602,7 @@
     },
     "301297": {
       "name": "富乐德",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:11:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:22:12",
@@ -5611,7 +5611,7 @@
     },
     "301302": {
       "name": "华如科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:11:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 09:08:39",
@@ -5620,7 +5620,7 @@
     },
     "301306": {
       "name": "西测测试",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:11:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -5629,7 +5629,7 @@
     },
     "301307": {
       "name": "美利信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:11:31",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 09:23:36",
@@ -5638,7 +5638,7 @@
     },
     "301308": {
       "name": "江波龙",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:11:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -5647,7 +5647,7 @@
     },
     "301312": {
       "name": "智立方",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:11:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 07:53:39",
@@ -5656,7 +5656,7 @@
     },
     "301314": {
       "name": "科瑞思",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:11:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-03-30 13:03:35",
@@ -5665,7 +5665,7 @@
     },
     "301315": {
       "name": "威士顿",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:11:54",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-12 21:33:46",
@@ -5674,7 +5674,7 @@
     },
     "301316": {
       "name": "慧博云通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:12:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 14:53:40",
@@ -5683,7 +5683,7 @@
     },
     "301318": {
       "name": "维海德",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:12:06",
       "opinion_count": 1,
       "latest_publish_time": "2025-05-29 00:05:16",
@@ -5692,7 +5692,7 @@
     },
     "301319": {
       "name": "唯特偶",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:12:11",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-14 09:23:48",
@@ -5701,7 +5701,7 @@
     },
     "301320": {
       "name": "豪江智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:12:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-01-26 14:11:36",
@@ -5710,7 +5710,7 @@
     },
     "301321": {
       "name": "翰博高新",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:12:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 11:17:18",
@@ -5719,7 +5719,7 @@
     },
     "301326": {
       "name": "捷邦科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:12:28",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 14:53:40",
@@ -5728,7 +5728,7 @@
     },
     "301328": {
       "name": "维峰电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:12:34",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 02:44:00",
@@ -5737,7 +5737,7 @@
     },
     "301329": {
       "name": "信音电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:12:40",
       "opinion_count": 1,
       "latest_publish_time": "2025-04-11 20:18:16",
@@ -5746,7 +5746,7 @@
     },
     "301330": {
       "name": "熵基科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:12:45",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-04 21:23:45",
@@ -5755,7 +5755,7 @@
     },
     "301337": {
       "name": "亚华电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:12:51",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-04 21:23:45",
@@ -5764,7 +5764,7 @@
     },
     "301338": {
       "name": "凯格精机",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:12:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 22:42:43",
@@ -5773,7 +5773,7 @@
     },
     "301339": {
       "name": "苏交数智",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:13:02",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 20:49:35",
@@ -5782,7 +5782,7 @@
     },
     "301348": {
       "name": "蓝箭电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:13:08",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 22:33:30",
@@ -5791,7 +5791,7 @@
     },
     "301359": {
       "name": "东南电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:13:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-01-26 14:11:18",
@@ -5800,7 +5800,7 @@
     },
     "301366": {
       "name": "一博科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:13:19",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-16 18:33:42",
@@ -5809,7 +5809,7 @@
     },
     "301369": {
       "name": "联动科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:13:25",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:35:08",
@@ -5818,7 +5818,7 @@
     },
     "301378": {
       "name": "通达海",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:13:31",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-28 08:16:33",
@@ -5827,7 +5827,7 @@
     },
     "301379": {
       "name": "天山电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:13:36",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-09 16:54:29",
@@ -5836,7 +5836,7 @@
     },
     "301380": {
       "name": "挖金客",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:13:42",
       "opinion_count": 1,
       "latest_publish_time": "2025-12-31 14:09:05",
@@ -5845,7 +5845,7 @@
     },
     "301382": {
       "name": "蜂助手",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:13:48",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 08:46:20",
@@ -5854,7 +5854,7 @@
     },
     "301383": {
       "name": "天键股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:13:53",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-21 11:44:00",
@@ -5863,7 +5863,7 @@
     },
     "301387": {
       "name": "光大同创",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:13:59",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-10 12:53:48",
@@ -5872,7 +5872,7 @@
     },
     "301389": {
       "name": "隆扬电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:14:05",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-27 13:53:52",
@@ -5881,7 +5881,7 @@
     },
     "301391": {
       "name": "卡莱特",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:14:10",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:44:00",
@@ -5890,7 +5890,7 @@
     },
     "301392": {
       "name": "汇成真空",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:14:16",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:23:50",
@@ -5899,7 +5899,7 @@
     },
     "301396": {
       "name": "宏景科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:14:22",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 09:34:06",
@@ -5908,7 +5908,7 @@
     },
     "301418": {
       "name": "协昌科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:14:27",
       "opinion_count": 1,
       "latest_publish_time": "2026-01-05 08:14:33",
@@ -5917,7 +5917,7 @@
     },
     "301419": {
       "name": "阿莱德",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:14:33",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 13:39:10",
@@ -5926,7 +5926,7 @@
     },
     "301421": {
       "name": "波长光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:14:39",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-17 11:44:46",
@@ -5935,7 +5935,7 @@
     },
     "301428": {
       "name": "世纪恒通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:14:45",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-13 08:53:36",
@@ -5944,7 +5944,7 @@
     },
     "301458": {
       "name": "钧崴电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:14:50",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-30 13:44:00",
@@ -5953,7 +5953,7 @@
     },
     "301479": {
       "name": "弘景光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:14:56",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 16:23:42",
@@ -5962,7 +5962,7 @@
     },
     "301486": {
       "name": "致尚科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:15:02",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 09:17:37",
@@ -5971,7 +5971,7 @@
     },
     "301488": {
       "name": "豪恩汽电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:15:07",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-14 12:14:00",
@@ -5980,7 +5980,7 @@
     },
     "301489": {
       "name": "思泉新材",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:15:13",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:53:41",
@@ -5989,7 +5989,7 @@
     },
     "301491": {
       "name": "汉桑科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:15:19",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-13 13:44:00",
@@ -5998,7 +5998,7 @@
     },
     "301503": {
       "name": "智迪科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:15:24",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-01 21:23:41",
@@ -6007,7 +6007,7 @@
     },
     "301510": {
       "name": "固高科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:15:30",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 08:19:39",
@@ -6016,7 +6016,7 @@
     },
     "301512": {
       "name": "智信精密",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:15:36",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-30 16:44:00",
@@ -6025,7 +6025,7 @@
     },
     "301517": {
       "name": "陕西华达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:15:41",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-02 10:05:18",
@@ -6034,7 +6034,7 @@
     },
     "301536": {
       "name": "星宸科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:15:47",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 21:20:17",
@@ -6043,7 +6043,7 @@
     },
     "301563": {
       "name": "云汉芯城",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:15:53",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-12 09:23:43",
@@ -6052,7 +6052,7 @@
     },
     "301566": {
       "name": "达利凯普",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:15:58",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -6061,7 +6061,7 @@
     },
     "301567": {
       "name": "贝隆精密",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:16:04",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-29 07:55:03",
@@ -6070,7 +6070,7 @@
     },
     "301568": {
       "name": "思泰克",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:16:10",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-28 18:44:00",
@@ -6079,7 +6079,7 @@
     },
     "301571": {
       "name": "国科天成",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:16:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 09:18:26",
@@ -6088,7 +6088,7 @@
     },
     "301577": {
       "name": "美信科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:16:21",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-02 23:44:00",
@@ -6097,7 +6097,7 @@
     },
     "301583": {
       "name": "托伦斯",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:16:27",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 22:33:30",
@@ -6106,7 +6106,7 @@
     },
     "301586": {
       "name": "佳力奇",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:16:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-03-24 20:51:54",
@@ -6115,7 +6115,7 @@
     },
     "301589": {
       "name": "诺瓦星云",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:16:38",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-28 16:14:00",
@@ -6124,7 +6124,7 @@
     },
     "301592": {
       "name": "六九一二",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:16:44",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-19 20:54:30",
@@ -6133,7 +6133,7 @@
     },
     "301599": {
       "name": "理奇智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:16:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-31 18:52:03",
@@ -6142,7 +6142,7 @@
     },
     "301600": {
       "name": "慧翰股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:16:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-03-23 09:07:57",
@@ -6151,7 +6151,7 @@
     },
     "301606": {
       "name": "绿联科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:17:01",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-13 10:19:30",
@@ -6160,7 +6160,7 @@
     },
     "301608": {
       "name": "博实结",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:17:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-06 09:14:00",
@@ -6169,7 +6169,7 @@
     },
     "301611": {
       "name": "珂玛科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:17:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 16:43:26",
@@ -6178,7 +6178,7 @@
     },
     "301626": {
       "name": "苏州天脉",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:17:18",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 15:33:45",
@@ -6187,7 +6187,7 @@
     },
     "301628": {
       "name": "强达电路",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:17:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-10 07:53:57",
@@ -6196,7 +6196,7 @@
     },
     "301629": {
       "name": "矽电股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:17:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 07:53:39",
@@ -6205,7 +6205,7 @@
     },
     "301630": {
       "name": "同宇新材",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:17:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-26 22:23:32",
@@ -6214,7 +6214,7 @@
     },
     "301633": {
       "name": "港迪技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:17:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 21:36:26",
@@ -6223,7 +6223,7 @@
     },
     "301638": {
       "name": "南网数字",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:17:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-06 18:14:00",
@@ -6232,7 +6232,7 @@
     },
     "301660": {
       "name": "粤芯半导体",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:17:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 08:34:02",
@@ -6241,7 +6241,7 @@
     },
     "301666": {
       "name": "大普微-UW",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:17:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-30 21:44:00",
@@ -6250,7 +6250,7 @@
     },
     "301678": {
       "name": "新恒汇",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:18:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 12:46:23",
@@ -6259,7 +6259,7 @@
     },
     "301682": {
       "name": "宏明电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:18:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-14 15:53:53",
@@ -6268,7 +6268,7 @@
     },
     "301696": {
       "name": "三瑞智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:18:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-29 18:44:00",
@@ -6277,7 +6277,7 @@
     },
     "301707": {
       "name": "展芯股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:18:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 11:14:00",
@@ -6286,7 +6286,7 @@
     },
     "301717": {
       "name": "超纯应材",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:18:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 08:41:46",
@@ -6295,7 +6295,7 @@
     },
     "301718": {
       "name": "通则康威",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:18:31",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-02 18:14:00",
@@ -6304,7 +6304,7 @@
     },
     "600038": {
       "name": "中直股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:18:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-02 10:05:18",
@@ -6313,7 +6313,7 @@
     },
     "600050": {
       "name": "中国联通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:18:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -6322,7 +6322,7 @@
     },
     "600071": {
       "name": "凤凰光学",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:18:48",
       "opinion_count": 1,
       "latest_publish_time": "2026-01-26 22:45:46",
@@ -6331,7 +6331,7 @@
     },
     "600089": {
       "name": "特变电工",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:18:54",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 09:38:59",
@@ -6340,7 +6340,7 @@
     },
     "600100": {
       "name": "同方股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:19:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-30 08:44:00",
@@ -6349,7 +6349,7 @@
     },
     "600105": {
       "name": "永鼎股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:19:05",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 13:54:27",
@@ -6358,7 +6358,7 @@
     },
     "600118": {
       "name": "中国卫星",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:19:11",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -6367,7 +6367,7 @@
     },
     "600130": {
       "name": "波导股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:19:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-10 16:54:00",
@@ -6376,7 +6376,7 @@
     },
     "600131": {
       "name": "国网信通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:19:22",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -6385,7 +6385,7 @@
     },
     "600171": {
       "name": "上海贝岭",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:19:28",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-04 09:24:33",
@@ -6394,7 +6394,7 @@
     },
     "600183": {
       "name": "生益科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:19:34",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:23:38",
@@ -6403,7 +6403,7 @@
     },
     "600198": {
       "name": "大唐电信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:19:39",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-14 08:23:49",
@@ -6412,7 +6412,7 @@
     },
     "600203": {
       "name": "福日电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:19:45",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-01 21:23:41",
@@ -6421,7 +6421,7 @@
     },
     "600206": {
       "name": "有研新材",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:19:51",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-16 18:33:42",
@@ -6430,7 +6430,7 @@
     },
     "600215": {
       "name": "派斯林",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:19:56",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-01 12:14:00",
@@ -6439,7 +6439,7 @@
     },
     "600237": {
       "name": "铜峰电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:20:02",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-13 20:33:38",
@@ -6448,7 +6448,7 @@
     },
     "600271": {
       "name": "航天信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:20:08",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-18 20:44:00",
@@ -6457,7 +6457,7 @@
     },
     "600288": {
       "name": "大恒科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:20:13",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-23 00:03:45",
@@ -6466,7 +6466,7 @@
     },
     "600312": {
       "name": "平高电气",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:20:19",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 17:14:00",
@@ -6475,7 +6475,7 @@
     },
     "600316": {
       "name": "洪都航空",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:20:25",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 19:44:00",
@@ -6484,7 +6484,7 @@
     },
     "600330": {
       "name": "天通股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:20:30",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 22:52:50",
@@ -6493,7 +6493,7 @@
     },
     "600345": {
       "name": "长江通信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:20:36",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-28 09:34:21",
@@ -6502,7 +6502,7 @@
     },
     "600353": {
       "name": "旭光电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:20:42",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 13:18:25",
@@ -6511,7 +6511,7 @@
     },
     "600360": {
       "name": "华微电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:20:47",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-31 13:14:00",
@@ -6520,7 +6520,7 @@
     },
     "600363": {
       "name": "联创光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:20:53",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -6529,7 +6529,7 @@
     },
     "600372": {
       "name": "中航机载",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:20:59",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 19:44:00",
@@ -6538,7 +6538,7 @@
     },
     "600391": {
       "name": "航发科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:21:04",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 19:44:00",
@@ -6547,7 +6547,7 @@
     },
     "600406": {
       "name": "XD国电南",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:21:10",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 17:14:00",
@@ -6556,7 +6556,7 @@
     },
     "600410": {
       "name": "华胜天成",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:21:16",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-13 21:23:42",
@@ -6565,7 +6565,7 @@
     },
     "600446": {
       "name": "金证股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:21:21",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-09 15:44:00",
@@ -6574,7 +6574,7 @@
     },
     "600460": {
       "name": "士兰微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:21:27",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:35:08",
@@ -6583,7 +6583,7 @@
     },
     "600487": {
       "name": "亨通光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:21:33",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 11:34:08",
@@ -6592,7 +6592,7 @@
     },
     "600498": {
       "name": "烽火通信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:21:38",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:23:50",
@@ -6601,7 +6601,7 @@
     },
     "600520": {
       "name": "三佳科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:21:44",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-31 13:14:00",
@@ -6610,7 +6610,7 @@
     },
     "600522": {
       "name": "中天科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:21:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:14:00",
@@ -6619,7 +6619,7 @@
     },
     "600536": {
       "name": "中国软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:21:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-30 11:14:00",
@@ -6628,7 +6628,7 @@
     },
     "600539": {
       "name": "狮头股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:22:01",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-24 19:58:44",
@@ -6637,7 +6637,7 @@
     },
     "600552": {
       "name": "凯盛科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:22:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -6646,7 +6646,7 @@
     },
     "600562": {
       "name": "国睿科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:22:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:44:00",
@@ -6655,7 +6655,7 @@
     },
     "600563": {
       "name": "法拉电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:22:18",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-07 13:28:09",
@@ -6664,7 +6664,7 @@
     },
     "600570": {
       "name": "恒生电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:22:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 22:16:34",
@@ -6673,7 +6673,7 @@
     },
     "600571": {
       "name": "信雅达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:22:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-29 15:44:00",
@@ -6682,7 +6682,7 @@
     },
     "600584": {
       "name": "长电科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:22:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 17:23:31",
@@ -6691,7 +6691,7 @@
     },
     "600588": {
       "name": "用友网络",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:22:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 22:40:08",
@@ -6700,7 +6700,7 @@
     },
     "600589": {
       "name": "大位科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:22:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -6709,7 +6709,7 @@
     },
     "600601": {
       "name": "方正科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:22:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:23:41",
@@ -6718,7 +6718,7 @@
     },
     "600602": {
       "name": "云赛智联",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:22:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 21:03:33",
@@ -6727,7 +6727,7 @@
     },
     "600633": {
       "name": "浙数文化",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:23:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 08:40:46",
@@ -6736,7 +6736,7 @@
     },
     "600641": {
       "name": "先导基电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:23:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:15:30",
@@ -6745,7 +6745,7 @@
     },
     "600654": {
       "name": "中安科",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:23:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-28 09:34:21",
@@ -6754,7 +6754,7 @@
     },
     "600666": {
       "name": "奥瑞德",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:23:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 11:14:00",
@@ -6763,7 +6763,7 @@
     },
     "600699": {
       "name": "均胜电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:23:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -6772,7 +6772,7 @@
     },
     "600703": {
       "name": "三安光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:23:31",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:35:08",
@@ -6781,7 +6781,7 @@
     },
     "600707": {
       "name": "彩虹股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:23:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -6790,7 +6790,7 @@
     },
     "600718": {
       "name": "东软集团",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:23:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-14 17:48:30",
@@ -6799,7 +6799,7 @@
     },
     "600728": {
       "name": "佳都科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:23:48",
       "opinion_count": 1,
       "latest_publish_time": "2026-05-01 00:13:40",
@@ -6808,7 +6808,7 @@
     },
     "600756": {
       "name": "浪潮软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:23:54",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 13:33:38",
@@ -6817,7 +6817,7 @@
     },
     "600760": {
       "name": "中航沈飞",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:24:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 19:44:00",
@@ -6826,7 +6826,7 @@
     },
     "600765": {
       "name": "中航重机",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:24:05",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 10:06:16",
@@ -6835,7 +6835,7 @@
     },
     "600775": {
       "name": "南京熊猫",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:24:11",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-12 08:33:49",
@@ -6844,7 +6844,7 @@
     },
     "600776": {
       "name": "东方通信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:24:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 09:24:01",
@@ -6853,7 +6853,7 @@
     },
     "600797": {
       "name": "浙大网新",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:24:22",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -6862,7 +6862,7 @@
     },
     "600835": {
       "name": "上海机电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:24:28",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 22:33:30",
@@ -6871,7 +6871,7 @@
     },
     "600845": {
       "name": "宝信软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:24:34",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 21:06:45",
@@ -6880,7 +6880,7 @@
     },
     "600850": {
       "name": "电科数字",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:24:39",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -6889,7 +6889,7 @@
     },
     "600855": {
       "name": "航天长峰",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:24:45",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-14 08:23:49",
@@ -6898,7 +6898,7 @@
     },
     "600862": {
       "name": "中航高科",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:24:51",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 23:14:53",
@@ -6907,7 +6907,7 @@
     },
     "600869": {
       "name": "远东股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:24:56",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 01:23:16",
@@ -6916,7 +6916,7 @@
     },
     "600877": {
       "name": "电科芯片",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:25:02",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 13:39:44",
@@ -6925,7 +6925,7 @@
     },
     "600879": {
       "name": "航天电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:25:07",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -6934,7 +6934,7 @@
     },
     "600885": {
       "name": "宏发股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:25:13",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 09:06:17",
@@ -6943,7 +6943,7 @@
     },
     "600893": {
       "name": "航发动力",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:25:19",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 19:44:00",
@@ -6952,7 +6952,7 @@
     },
     "600936": {
       "name": "北投科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:25:24",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-25 20:53:40",
@@ -6961,7 +6961,7 @@
     },
     "600941": {
       "name": "中国移动",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:25:30",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-26 22:29:43",
@@ -6970,7 +6970,7 @@
     },
     "600986": {
       "name": "浙文互联",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:25:36",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-05 10:14:36",
@@ -6979,7 +6979,7 @@
     },
     "600990": {
       "name": "四创电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:25:41",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-14 09:09:37",
@@ -6988,7 +6988,7 @@
     },
     "601138": {
       "name": "工业富联",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:25:47",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -6997,7 +6997,7 @@
     },
     "601179": {
       "name": "中国西电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:25:53",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -7006,7 +7006,7 @@
     },
     "601231": {
       "name": "环旭电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:25:58",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 09:21:47",
@@ -7015,7 +7015,7 @@
     },
     "601360": {
       "name": "三六零",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:26:04",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 17:14:00",
@@ -7024,7 +7024,7 @@
     },
     "601519": {
       "name": "大智慧",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:26:10",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-26 12:23:38",
@@ -7033,7 +7033,7 @@
     },
     "601698": {
       "name": "中国卫通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:26:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-19 11:53:49",
@@ -7042,7 +7042,7 @@
     },
     "601728": {
       "name": "中国电信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:26:21",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:07:48",
@@ -7051,7 +7051,7 @@
     },
     "601869": {
       "name": "长飞光纤",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:26:27",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 08:44:00",
@@ -7060,7 +7060,7 @@
     },
     "601877": {
       "name": "正泰电器",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:26:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-30 22:29:00",
@@ -7069,7 +7069,7 @@
     },
     "601928": {
       "name": "凤凰传媒",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:26:38",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -7078,7 +7078,7 @@
     },
     "603000": {
       "name": "人民网",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:26:44",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 09:25:05",
@@ -7087,7 +7087,7 @@
     },
     "603002": {
       "name": "宏昌电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:26:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 07:33:38",
@@ -7096,7 +7096,7 @@
     },
     "603005": {
       "name": "晶方科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:26:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 22:23:28",
@@ -7105,7 +7105,7 @@
     },
     "603011": {
       "name": "合锻智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:27:01",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 08:48:25",
@@ -7114,7 +7114,7 @@
     },
     "603012": {
       "name": "XD创力集",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:27:06",
       "opinion_count": 1,
       "latest_publish_time": "2024-11-01 21:08:46",
@@ -7123,7 +7123,7 @@
     },
     "603015": {
       "name": "弘讯科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:27:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-03 12:33:38",
@@ -7132,7 +7132,7 @@
     },
     "603019": {
       "name": "中科曙光",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:27:18",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:23:50",
@@ -7141,7 +7141,7 @@
     },
     "603025": {
       "name": "大豪科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:27:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-13 19:23:42",
@@ -7150,7 +7150,7 @@
     },
     "603039": {
       "name": "泛微网络",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:27:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 17:14:00",
@@ -7159,7 +7159,7 @@
     },
     "603042": {
       "name": "华脉科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:27:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-16 18:33:42",
@@ -7168,7 +7168,7 @@
     },
     "603052": {
       "name": "可川科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:27:40",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-16 18:33:42",
@@ -7177,7 +7177,7 @@
     },
     "603061": {
       "name": "金海通",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:27:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:00:17",
@@ -7186,7 +7186,7 @@
     },
     "603068": {
       "name": "博通集成",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:27:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 08:34:02",
@@ -7195,7 +7195,7 @@
     },
     "603078": {
       "name": "江化微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:27:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 11:23:36",
@@ -7204,7 +7204,7 @@
     },
     "603082": {
       "name": "北自科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:28:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 10:01:45",
@@ -7213,7 +7213,7 @@
     },
     "603083": {
       "name": "剑桥科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:28:08",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:23:50",
@@ -7222,7 +7222,7 @@
     },
     "603097": {
       "name": "江苏华辰",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:28:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-13 10:44:00",
@@ -7231,7 +7231,7 @@
     },
     "603106": {
       "name": "恒银科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:28:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 21:33:29",
@@ -7240,7 +7240,7 @@
     },
     "603115": {
       "name": "海星股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:28:25",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:23:38",
@@ -7249,7 +7249,7 @@
     },
     "603118": {
       "name": "共进股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:28:31",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 13:19:40",
@@ -7258,7 +7258,7 @@
     },
     "603138": {
       "name": "海量数据",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:28:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 18:33:48",
@@ -7267,7 +7267,7 @@
     },
     "603160": {
       "name": "汇顶科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:28:42",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-01 21:23:41",
@@ -7276,7 +7276,7 @@
     },
     "603171": {
       "name": "税友股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:28:48",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:23:50",
@@ -7285,7 +7285,7 @@
     },
     "603175": {
       "name": "超颖电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:28:54",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-08 12:33:43",
@@ -7294,7 +7294,7 @@
     },
     "603186": {
       "name": "华正新材",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:28:59",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:23:38",
@@ -7303,7 +7303,7 @@
     },
     "603191": {
       "name": "望变电气",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:29:05",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-19 21:23:32",
@@ -7312,7 +7312,7 @@
     },
     "603203": {
       "name": "快克智能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:29:11",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 07:53:39",
@@ -7321,7 +7321,7 @@
     },
     "603206": {
       "name": "嘉环科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:29:16",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-15 10:14:00",
@@ -7330,7 +7330,7 @@
     },
     "603220": {
       "name": "中贝通信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:29:22",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 13:42:25",
@@ -7339,7 +7339,7 @@
     },
     "603228": {
       "name": "景旺电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:29:28",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:23:38",
@@ -7348,7 +7348,7 @@
     },
     "603232": {
       "name": "格尔软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:29:33",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 21:36:26",
@@ -7357,7 +7357,7 @@
     },
     "603236": {
       "name": "移远通信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:29:39",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:53:31",
@@ -7366,7 +7366,7 @@
     },
     "603260": {
       "name": "合盛硅业",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:29:45",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 11:23:36",
@@ -7375,7 +7375,7 @@
     },
     "603261": {
       "name": "立航科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:29:50",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-03 17:53:35",
@@ -7384,7 +7384,7 @@
     },
     "603267": {
       "name": "鸿远电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:29:56",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 19:44:00",
@@ -7393,7 +7393,7 @@
     },
     "603275": {
       "name": "众辰科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:30:02",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-03 11:33:48",
@@ -7402,7 +7402,7 @@
     },
     "603283": {
       "name": "赛腾股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:30:07",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -7411,7 +7411,7 @@
     },
     "603290": {
       "name": "斯达半导",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:30:13",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 22:33:30",
@@ -7420,7 +7420,7 @@
     },
     "603293": {
       "name": "埃泰克",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:30:19",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 19:33:09",
@@ -7429,7 +7429,7 @@
     },
     "603296": {
       "name": "华勤技术",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:30:24",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 22:40:08",
@@ -7438,7 +7438,7 @@
     },
     "603297": {
       "name": "永新光学",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:30:30",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 21:20:17",
@@ -7447,7 +7447,7 @@
     },
     "603316": {
       "name": "诚邦股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:30:36",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 22:26:57",
@@ -7456,7 +7456,7 @@
     },
     "603319": {
       "name": "美湖股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:30:41",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 11:12:40",
@@ -7465,7 +7465,7 @@
     },
     "603322": {
       "name": "超讯科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:30:47",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 15:03:48",
@@ -7474,7 +7474,7 @@
     },
     "603327": {
       "name": "福蓉科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:30:53",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-28 00:07:08",
@@ -7483,7 +7483,7 @@
     },
     "603328": {
       "name": "依顿电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:30:58",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -7492,7 +7492,7 @@
     },
     "603341": {
       "name": "龙旗科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:31:04",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 09:21:47",
@@ -7501,7 +7501,7 @@
     },
     "603375": {
       "name": "盛景微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:31:09",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-02 18:23:35",
@@ -7510,7 +7510,7 @@
     },
     "603380": {
       "name": "易德龙",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:31:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-25 17:14:00",
@@ -7519,7 +7519,7 @@
     },
     "603383": {
       "name": "顶点软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:31:21",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-23 15:14:00",
@@ -7528,7 +7528,7 @@
     },
     "603386": {
       "name": "骏亚科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:31:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-14 22:03:56",
@@ -7537,7 +7537,7 @@
     },
     "603416": {
       "name": "信捷电气",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:31:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 21:03:37",
@@ -7546,7 +7546,7 @@
     },
     "603421": {
       "name": "鼎信通讯",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:31:38",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-10 21:23:58",
@@ -7555,7 +7555,7 @@
     },
     "603435": {
       "name": "嘉德利",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:31:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-25 10:24:01",
@@ -7564,7 +7564,7 @@
     },
     "603459": {
       "name": "红板科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:31:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:23:38",
@@ -7573,7 +7573,7 @@
     },
     "603496": {
       "name": "恒为科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:31:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 21:14:00",
@@ -7582,7 +7582,7 @@
     },
     "603501": {
       "name": "豪威集团",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:32:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 17:23:31",
@@ -7591,7 +7591,7 @@
     },
     "603508": {
       "name": "思维列控",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:32:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-06 00:14:00",
@@ -7600,7 +7600,7 @@
     },
     "603516": {
       "name": "淳中科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:32:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-01 15:45:06",
@@ -7609,7 +7609,7 @@
     },
     "603528": {
       "name": "多伦科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:32:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-15 08:33:43",
@@ -7618,7 +7618,7 @@
     },
     "603559": {
       "name": "中通国脉",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:32:23",
       "opinion_count": 1,
       "latest_publish_time": "2026-07-14 08:23:49",
@@ -7627,7 +7627,7 @@
     },
     "603583": {
       "name": "捷昌驱动",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:32:29",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 10:14:00",
@@ -7636,7 +7636,7 @@
     },
     "603602": {
       "name": "纵横通信",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:32:34",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 13:09:01",
@@ -7645,7 +7645,7 @@
     },
     "603613": {
       "name": "国联股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:32:40",
       "opinion_count": 1,
       "latest_publish_time": "2025-09-08 19:38:50",
@@ -7654,7 +7654,7 @@
     },
     "603618": {
       "name": "杭电股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:32:46",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 01:23:16",
@@ -7663,7 +7663,7 @@
     },
     "603626": {
       "name": "科森科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:32:51",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-24 10:03:24",
@@ -7672,7 +7672,7 @@
     },
     "603629": {
       "name": "利通电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:32:57",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 16:23:42",
@@ -7681,7 +7681,7 @@
     },
     "603633": {
       "name": "徕木股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:33:03",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-29 23:03:59",
@@ -7690,7 +7690,7 @@
     },
     "603636": {
       "name": "南威软件",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:33:08",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 22:40:08",
@@ -7699,7 +7699,7 @@
     },
     "603660": {
       "name": "苏州科达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:33:14",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-04 13:14:00",
@@ -7708,7 +7708,7 @@
     },
     "603666": {
       "name": "亿嘉和",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:33:20",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-11 23:40:01",
@@ -7717,7 +7717,7 @@
     },
     "603678": {
       "name": "火炬电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:33:25",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 19:44:00",
@@ -7726,7 +7726,7 @@
     },
     "603679": {
       "name": "华体科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:33:31",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 21:36:27",
@@ -7735,7 +7735,7 @@
     },
     "603685": {
       "name": "晨丰科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:33:37",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-20 22:03:59",
@@ -7744,7 +7744,7 @@
     },
     "603688": {
       "name": "石英股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:33:42",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 00:13:42",
@@ -7753,7 +7753,7 @@
     },
     "603690": {
       "name": "至纯科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:33:48",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 00:13:42",
@@ -7762,7 +7762,7 @@
     },
     "603703": {
       "name": "盛洋科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:33:54",
       "opinion_count": 1,
       "latest_publish_time": "2026-04-16 07:50:47",
@@ -7771,7 +7771,7 @@
     },
     "603712": {
       "name": "七一二",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:33:59",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-04 16:44:00",
@@ -7780,7 +7780,7 @@
     },
     "603738": {
       "name": "泰晶科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:34:05",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-06 20:23:47",
@@ -7789,7 +7789,7 @@
     },
     "603773": {
       "name": "沃格光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:34:11",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -7798,7 +7798,7 @@
     },
     "603800": {
       "name": "洪田股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:34:16",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:23:50",
@@ -7807,7 +7807,7 @@
     },
     "603803": {
       "name": "瑞斯康达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:34:22",
       "opinion_count": 1,
       "latest_publish_time": "2026-04-29 21:33:43",
@@ -7816,7 +7816,7 @@
     },
     "603859": {
       "name": "能科科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:34:27",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:23:38",
@@ -7825,7 +7825,7 @@
     },
     "603861": {
       "name": "白云电器",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:34:33",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 23:09:55",
@@ -7834,7 +7834,7 @@
     },
     "603881": {
       "name": "数据港",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:34:39",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 21:03:33",
@@ -7843,7 +7843,7 @@
     },
     "603887": {
       "name": "城地香江",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:34:44",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-18 21:42:32",
@@ -7852,7 +7852,7 @@
     },
     "603890": {
       "name": "春秋电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:34:50",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-03 23:53:43",
@@ -7861,7 +7861,7 @@
     },
     "603893": {
       "name": "瑞芯微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:34:56",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-28 16:53:31",
@@ -7870,7 +7870,7 @@
     },
     "603918": {
       "name": "金桥信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:35:01",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-28 08:16:33",
@@ -7879,7 +7879,7 @@
     },
     "603920": {
       "name": "世运电路",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:35:07",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:23:41",
@@ -7888,7 +7888,7 @@
     },
     "603927": {
       "name": "中科软",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:35:13",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-05 08:44:00",
@@ -7897,7 +7897,7 @@
     },
     "603931": {
       "name": "格林达",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:35:18",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-22 11:23:36",
@@ -7906,7 +7906,7 @@
     },
     "603933": {
       "name": "睿能科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:35:24",
       "opinion_count": 1,
       "latest_publish_time": "2026-06-08 09:44:00",
@@ -7915,7 +7915,7 @@
     },
     "603936": {
       "name": "博敏电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:35:30",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 12:23:38",
@@ -7924,7 +7924,7 @@
     },
     "603956": {
       "name": "威派格",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:35:35",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 09:48:29",
@@ -7933,7 +7933,7 @@
     },
     "603986": {
       "name": "兆易创新",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:35:41",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 11:34:08",
@@ -7942,7 +7942,7 @@
     },
     "603989": {
       "name": "艾华集团",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:35:47",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -7951,7 +7951,7 @@
     },
     "603990": {
       "name": "麦迪科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:35:52",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 09:24:04",
@@ -7960,7 +7960,7 @@
     },
     "603991": {
       "name": "领先股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:35:58",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 12:46:23",
@@ -7969,7 +7969,7 @@
     },
     "605058": {
       "name": "澳弘电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:36:04",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:23:41",
@@ -7978,7 +7978,7 @@
     },
     "605066": {
       "name": "天正电气",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:36:09",
       "opinion_count": 1,
       "latest_publish_time": "2025-09-29 17:46:04",
@@ -7987,7 +7987,7 @@
     },
     "605111": {
       "name": "新洁能",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:36:15",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 10:35:08",
@@ -7996,7 +7996,7 @@
     },
     "605118": {
       "name": "力鼎光电",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:36:21",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-02 22:02:55",
@@ -8005,7 +8005,7 @@
     },
     "605123": {
       "name": "派克新材",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:36:26",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-21 10:06:16",
@@ -8014,7 +8014,7 @@
     },
     "605186": {
       "name": "健麾信息",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:36:32",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 22:23:33",
@@ -8023,7 +8023,7 @@
     },
     "605218": {
       "name": "伟时电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:36:38",
       "opinion_count": 1,
       "latest_publish_time": "2026-03-10 13:40:39",
@@ -8032,7 +8032,7 @@
     },
     "605258": {
       "name": "协和电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:36:43",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-13 20:33:38",
@@ -8041,7 +8041,7 @@
     },
     "605277": {
       "name": "新亚电子",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:36:49",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-10 00:04:00",
@@ -8050,7 +8050,7 @@
     },
     "605286": {
       "name": "同力天启",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:36:55",
       "opinion_count": 1,
       "latest_publish_time": "2026-08-14 09:23:56",
@@ -8059,7 +8059,7 @@
     },
     "605288": {
       "name": "凯迪股份",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:37:00",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-27 23:19:59",
@@ -8068,7 +8068,7 @@
     },
     "605358": {
       "name": "立昂微",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:37:06",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-29 01:04:05",
@@ -8077,7 +8077,7 @@
     },
     "605398": {
       "name": "新炬网络",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:37:12",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-23 06:14:26",
@@ -8086,7 +8086,7 @@
     },
     "605588": {
       "name": "冠石科技",
-      "status": "updated",
+      "status": "cached",
       "fetched_at": "2026-09-29 16:37:17",
       "opinion_count": 1,
       "latest_publish_time": "2026-09-18 09:58:43",

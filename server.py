@@ -9,6 +9,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from itertools import combinations
 import json, math, statistics, time, subprocess, re, threading, os, gzip, hashlib
 from multi_agent import load_chief_opinion_cache, load_latest as read_multi_agent_run, run_research_council
+from wyckoff import ENGINE_VERSION as WYCKOFF_ENGINE_VERSION, backtest as backtest_wyckoff, screen_universe
 
 HOST, PORT = "127.0.0.1", 4173
 GUPIAO_UNIVERSE_FILE = Path("/Users/pozansky/Documents/gupiao/fixed_universe_codes.json")
@@ -20,6 +21,7 @@ KLINE_MANIFEST_FILE = CACHE_DIR / "historical_data_manifest.json"
 FACTOR_AGENT_RUN_FILE = CACHE_DIR / "factor_agent_last_run.json"
 BACKTEST_RUN_FILE = CACHE_DIR / "backtest_factor_last_run.json"
 FACTOR_DAILY_METRICS_FILE = CACHE_DIR / "factor_daily_metrics.json"
+WYCKOFF_CACHE_FILE = CACHE_DIR / "wyckoff.json"
 TECH_UNIVERSE_FILE = Path(__file__).with_name("tech_universe.json")
 TECH_CONFIG_FILE = CACHE_DIR / "tech_universe_config.json"
 DATA_DIR = Path(__file__).with_name("data")
@@ -889,12 +891,22 @@ def eastmoney_json(url, jsonp=False):
             time.sleep(0.4 * (attempt + 1))
     raise last_error
 
+def decode_http_body(body):
+    """Decode Chinese market data without silently introducing mojibake."""
+    for encoding in ("utf-8", "gb18030"):
+        try:
+            return body.decode(encoding)
+        except UnicodeDecodeError:
+            continue
+    raise UnicodeDecodeError("utf-8/gb18030", body, 0, len(body), "unsupported response encoding")
+
+
 def http_text(url):
     last_error = None
     for attempt in range(3):
         try:
             result = subprocess.run(["curl", "-L", "--max-time", "12", "-sS", "-A", "Mozilla/5.0", url], capture_output=True, timeout=15, check=True)
-            return result.stdout.decode("gbk", "replace")
+            return decode_http_body(result.stdout)
         except Exception as exc:
             last_error = exc
             time.sleep(0.35 * (attempt + 1))
@@ -1131,7 +1143,6 @@ def fetch_stock_tencent(item):
     current, prev_close = float(parts[3]), float(parts[4] or 0)
     quote_pct, quote_change = float(parts[32] or 0), float(parts[31] or 0)
     quote_time = parts[30]
-    quote_name = parts[1] or item["name"]
     existing_klines = read_kline_cache(code)
     fetch_bars = 30 if existing_klines else 1000
     kline_text = http_text(f"http://ifzq.gtimg.cn/appstock/app/fqkline/get?param={symbol},day,,,{fetch_bars},qfq")
@@ -1157,7 +1168,7 @@ def fetch_stock_tencent(item):
     momentum20, momentum60 = change(20), change(60); ma5, ma20 = avg(closes[-5:]), avg(closes[-20:]); trend = ma5 / ma20 - 1 if ma20 else 0.0
     volume_ratio = avg(volumes[-5:]) / avg(volumes[-20:]) if len(volumes) >= 20 and avg(volumes[-20:]) else 1.0
     vol20 = statistics.pstdev(returns[-20:]) * math.sqrt(252) if len(returns) >= 20 else 0.0
-    return {**item, "name": quote_name, "price": current, "change": quote_change, "pct": quote_pct, "amount": float(parts[37] or 0), "volume": float(parts[6] or 0), "quote_time": quote_time, "last_date": klines[-1]["date"], "klines": klines[-60:], "mined_factors": latest_mined_factor_values(klines), **completed_factor_snapshot(klines), "raw": {}, "source": "tencent", "source_label": "腾讯实时 + 前复权日线", "factors": {"momentum20": momentum20, "momentum60": momentum60, "trend": trend, "volume_ratio": volume_ratio, "volatility20": vol20}}
+    return {**item, "price": current, "change": quote_change, "pct": quote_pct, "amount": float(parts[37] or 0), "volume": float(parts[6] or 0), "quote_time": quote_time, "last_date": klines[-1]["date"], "klines": klines[-60:], "mined_factors": latest_mined_factor_values(klines), **completed_factor_snapshot(klines), "raw": {}, "source": "tencent", "source_label": "腾讯实时 + 前复权日线", "factors": {"momentum20": momentum20, "momentum60": momentum60, "trend": trend, "volume_ratio": volume_ratio, "volatility20": vol20}}
 
 def fetch_stock(item):
     fields = "f43,f44,f45,f46,f47,f48,f57,f58,f60,f169,f170,f162,f163"
@@ -1197,7 +1208,7 @@ def fetch_stock(item):
     price = (quote.get("f43") or 0) / 100
     change = (quote.get("f169") or 0) / 100
     pct = (quote.get("f170") or 0) / 100
-    return {**item, "name": quote.get("f58") or item["name"], "price": price, "change": change, "pct": pct, "amount": quote.get("f48") or 0, "source": "eastmoney", "source_label": "东方财富公开行情",
+    return {**item, "price": price, "change": change, "pct": pct, "amount": quote.get("f48") or 0, "source": "eastmoney", "source_label": "东方财富公开行情",
             "volume": quote.get("f47") or 0, "last_date": klines[-1]["date"] if klines else None,
             "klines": klines[-60:], "mined_factors": latest_mined_factor_values(klines), **completed_factor_snapshot(klines), "raw": {"pe": quote.get("f162"), "pb": quote.get("f163")},
             "factors": {"momentum20": momentum20, "momentum60": momentum60, "trend": trend,
@@ -1221,15 +1232,6 @@ def fetch_stock_sina(item):
             continue
     klines = klines[-1000:]
     klines = write_kline_cache(item["code"], klines)
-    quote_name = item["name"]
-    try:
-        quote_text = http_text(f"https://qt.gtimg.cn/q={symbol}")
-        quote_match = re.search(r'=\"(.*)\"', quote_text)
-        if quote_match:
-            quote_parts = quote_match.group(1).split("~")
-            quote_name = quote_parts[1] or quote_name
-    except Exception:
-        pass
     closes = [x["close"] for x in klines]; volumes = [x["volume"] for x in klines]
     returns = [(closes[i] / closes[i-1] - 1) for i in range(1, len(closes)) if closes[i-1]]
     def mean(xs): return sum(xs) / len(xs) if xs else 0.0
@@ -1239,7 +1241,7 @@ def fetch_stock_sina(item):
     volume_ratio = mean(volumes[-5:]) / mean(volumes[-20:]) if len(volumes) >= 20 and mean(volumes[-20:]) else 1.0
     vol20 = statistics.pstdev(returns[-20:]) * math.sqrt(252) if len(returns) >= 20 else 0.0
     price = closes[-1] if closes else 0; change = price - closes[-2] if len(closes) > 1 else 0; pct = change / closes[-2] * 100 if len(closes) > 1 and closes[-2] else 0
-    return {**item, "name": quote_name, "price": price, "change": change, "pct": pct, "amount": 0, "volume": volumes[-1] if volumes else 0,
+    return {**item, "price": price, "change": change, "pct": pct, "amount": 0, "volume": volumes[-1] if volumes else 0,
             "last_date": klines[-1]["date"] if klines else None, "klines": klines[-60:], "mined_factors": latest_mined_factor_values(klines), **completed_factor_snapshot(klines), "raw": {},
             "source": "sina", "source_label": "新浪公开日线 K 线",
             "factors": {"momentum20": momentum20, "momentum60": momentum60, "trend": trend,
@@ -1344,6 +1346,46 @@ def read_backtest_run():
     except (FileNotFoundError, json.JSONDecodeError, OSError):
         return None
 
+
+def normalize_stock_names(payload, stocks):
+    """Replace stale provider names in nested research output by stock code."""
+    names_by_code = {
+        str(stock.get("code", "")): stock.get("name")
+        for stock in stocks
+        if re.fullmatch(r"\d{6}", str(stock.get("code", ""))) and stock.get("name")
+    }
+    aliases = {}
+
+    def collect(value):
+        if isinstance(value, dict):
+            code = str(value.get("code", ""))
+            old_name = value.get("name")
+            correct_name = names_by_code.get(code)
+            if correct_name and isinstance(old_name, str) and old_name != correct_name:
+                aliases[old_name] = correct_name
+                value["name"] = correct_name
+            for child in value.values():
+                collect(child)
+        elif isinstance(value, list):
+            for child in value:
+                collect(child)
+
+    def replace_text(value):
+        if isinstance(value, dict):
+            for key, child in list(value.items()):
+                value[key] = replace_text(child)
+        elif isinstance(value, list):
+            for index, child in enumerate(value):
+                value[index] = replace_text(child)
+        elif isinstance(value, str):
+            for old_name, correct_name in aliases.items():
+                value = value.replace(old_name, correct_name)
+        return value
+
+    collect(payload)
+    return replace_text(payload)
+
+
 def attach_research_runs(payload):
     if not payload.get("history_storage") and TECH_HISTORY_MANIFEST_FILE.exists():
         try:
@@ -1380,7 +1422,8 @@ def attach_research_runs(payload):
     payload["multi_agent_run"] = council
     backtest = payload.get("backtest_factor_run")
     if agent and backtest and backtest.get("results") and payload.get("stocks"):
-        combo = backtest["results"][0]
+        selected_factors = payload.get("selected_strategy_factors") or []
+        combo = next((item for item in backtest["results"] if item.get("factors") == selected_factors), backtest["results"][0])
         validation_map = {item["key"]: item for item in agent.get("validation", {}).get("results", [])}
         factor_keys = combo.get("factors", [])
         factors = [(key, 1 if validation_map.get(key, {}).get("direction") == "正向" else -1) for key in factor_keys]
@@ -1389,8 +1432,6 @@ def attach_research_runs(payload):
         for stock in payload["stocks"]:
             if (stock.get("completed_factor_date") or stock.get("last_date")) == latest_data_date and stock.get("completed_history_bars", 122) >= 122:
                 rows_by_code[stock["code"]] = stock
-        liquid_codes = liquid_codes_from_stocks(list(rows_by_code.values()))
-        rows_by_code = {code: stock for code, stock in rows_by_code.items() if code in liquid_codes}
         rank_columns = []
         for key, direction in factors:
             values = [(code, (value * direction if value is not None else None)) for code, stock in rows_by_code.items() for value in [(stock.get("completed_mined_factors") or stock.get("mined_factors", {})).get(key)]]
@@ -1400,16 +1441,14 @@ def attach_research_runs(payload):
         for code in rows_by_code:
             available = [column["scores"][code] for column in rank_columns if code in column["scores"]]
             if available: scores[code] = round(mean(available), 2)
-        top_codes = set(sorted(scores, key=lambda code: (scores[code], code), reverse=True)[:3])
-        cutoff = min((scores[code] for code in top_codes), default=100)
         for stock in payload["stocks"]:
             score = scores.get(stock["code"])
             stock["agent_combo_score"] = score
-            stock["agent_combo_selected"] = stock["code"] in top_codes
             stock["agent_combo_factors"] = factor_keys
-            stock["agent_combo_breakdown"] = [{"key":column["key"], "name":validation_map.get(column["key"], {}).get("name", column["key"]), "direction":"正向" if column["direction"] == 1 else "反向", "score":round(column["scores"].get(stock["code"], 0), 1)} for column in rank_columns]
-        payload["agent_selection"] = {"name":" / ".join(combo.get("names", [])), "factors":factor_keys, "direction_adjusted":True, "max_positions":3, "cutoff":cutoff, "selected_count":len(top_codes), "data_date":latest_data_date, "rule":"最新完整交易日先剔除近 20 日成交额最低 30%，再做方向调整后的因子截面排名并严格取 Top 3；科创板与 ST 已排除。"}
-    return payload
+            stock["agent_combo_breakdown"] = ([{"key":column["key"], "name":validation_map.get(column["key"], {}).get("name", column["key"]), "direction":"正向" if column["direction"] == 1 else "反向", "score":round(column["scores"][stock["code"]], 1)} for column in rank_columns]
+                                                if score is not None else [])
+        payload["agent_selection"] = {"name":" / ".join(combo.get("names", [])), "factors":factor_keys, "direction_adjusted":True, "scored_count":len(scores), "data_date":latest_data_date, "rule":"所选因子按历史验证方向调整后，对全部数据完整股票做截面排名并等权合成；科技总榜和分类榜统一使用该策略评分。"}
+    return normalize_stock_names(payload, payload.get("stocks", []))
 
 def build_multi_agent_context(dashboard):
     factor_run = read_factor_agent_run() or {}
@@ -1481,8 +1520,6 @@ def select_by_factor_keys(stocks, factor_keys):
     for stock in stocks:
         if (stock.get("completed_factor_date") or stock.get("last_date")) == latest_data_date and stock.get("completed_history_bars", 122) >= 122:
             rows_by_code[stock["code"]] = stock
-    liquid_codes = liquid_codes_from_stocks(list(rows_by_code.values()))
-    rows_by_code = {code: stock for code, stock in rows_by_code.items() if code in liquid_codes}
     columns = []
     for key, direction in factors:
         values = []
@@ -1496,10 +1533,9 @@ def select_by_factor_keys(stocks, factor_keys):
         available = [column["scores"][code] for column in columns if code in column["scores"]]
         if len(available) == len(columns) and available:
             scores[code] = round(mean(available), 2)
-    top_codes = sorted(scores, key=lambda code: (scores[code], code), reverse=True)[:3]
     names = [validation_map.get(key, {}).get("name", key) for key in factor_keys]
-    breakdowns = {code:[{"key":column["key"], "name":validation_map.get(column["key"], {}).get("name", column["key"]), "direction":"正向" if column["direction"] == 1 else "反向", "score":round(column["scores"].get(code, 0), 1)} for column in columns] for code in rows_by_code}
-    return {"name":" / ".join(names), "factors":factor_keys, "max_positions":3, "selected_count":len(top_codes), "data_date":latest_data_date, "rule":"在最新共同交易日按所选因子的方向调整后截面排名等权合成，严格取最高 3 只。", "scores":scores, "breakdowns":breakdowns, "top_codes":top_codes}
+    breakdowns = {code:[{"key":column["key"], "name":validation_map.get(column["key"], {}).get("name", column["key"]), "direction":"正向" if column["direction"] == 1 else "反向", "score":round(column["scores"][code], 1)} for column in columns] for code in scores}
+    return {"name":" / ".join(names), "factors":factor_keys, "scored_count":len(scores), "data_date":latest_data_date, "rule":"所选因子按历史验证方向调整后，对全部数据完整股票做截面排名并等权合成；科技总榜和分类榜统一使用该策略评分。", "scores":scores, "breakdowns":breakdowns}
 
 def write_dashboard_cache(payload):
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -1531,6 +1567,60 @@ def read_kline_cache(code):
         return payload.get("klines") or []
     except (FileNotFoundError, json.JSONDecodeError, OSError):
         return []
+
+
+def build_wyckoff(force=False):
+    """Build the independent Wyckoff screen without touching factor rankings."""
+    dashboard = read_dashboard_cache() or {}
+    stocks = dashboard.get("stocks") or []
+    if not stocks:
+        raise RuntimeError("真实行情缓存尚未完成")
+    signature = dashboard.get("universe_signature") or universe_signature_for_stocks(stocks)
+    data_date = max((stock.get("completed_factor_date") or stock.get("last_date") or "" for stock in stocks), default="")
+    if not force:
+        try:
+            cached = json.loads(WYCKOFF_CACHE_FILE.read_text(encoding="utf-8"))
+            if cached.get("engine_version") == WYCKOFF_ENGINE_VERSION and cached.get("universe_signature") == signature and cached.get("data_date") == data_date:
+                return {**cached, "cache_hit": True}
+        except (FileNotFoundError, OSError, json.JSONDecodeError):
+            pass
+
+    histories = {}
+
+    def history_loader(stock):
+        code = stock.get("code", "")
+        if code not in histories:
+            histories[code] = completed_daily_rows(read_kline_cache(code) or stock.get("klines", []))
+        return histories[code]
+
+    screened, insufficient, phase_counts = screen_universe(stocks, history_loader)
+    candidates = [item for item in screened if item.get("phase_key") != "neutral"]
+    result = backtest_wyckoff(stocks, history_loader)
+    payload = {
+        "engine_version": WYCKOFF_ENGINE_VERSION,
+        "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "data_date": data_date,
+        "universe_signature": signature,
+        "universe_name": "科技股池（独立威科夫模型）",
+        "analyzed_count": len(screened),
+        "insufficient_count": insufficient,
+        "candidate_count": len(candidates),
+        "phase_counts": phase_counts,
+        "candidates": candidates,
+        "backtest": result,
+        "model": {
+            "name": "Wyckoff Price-Volume v1",
+            "inputs": "仅使用前复权日线 OHLCV",
+            "phases": ["Spring 弹簧", "SOS 强势突破", "LPS 最后支撑", "吸筹观察"],
+            "independent": True,
+            "rule": "识别 60 日交易区间、支撑测试、突破量能与突破后缩量回踩；不读取当前多因子策略评分。",
+        },
+    }
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    temporary = WYCKOFF_CACHE_FILE.with_suffix(".tmp")
+    temporary.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    os.replace(temporary, WYCKOFF_CACHE_FILE)
+    return payload
 
 def write_kline_manifest():
     files = list(KLINE_CACHE_DIR.glob("*.json")) if KLINE_CACHE_DIR.exists() else []
@@ -1625,6 +1715,13 @@ def build_dashboard():
     return attach_research_runs(payload)
 
 class Handler(SimpleHTTPRequestHandler):
+    def end_headers(self):
+        if not urlparse(self.path).path.startswith("/api/"):
+            self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+            self.send_header("Pragma", "no-cache")
+            self.send_header("Expires", "0")
+        super().end_headers()
+
     def do_POST(self):
         global MULTI_AGENT_THREAD, MULTI_AGENT_PREP_STATUS
         parsed = urlparse(self.path)
@@ -1712,20 +1809,19 @@ class Handler(SimpleHTTPRequestHandler):
         if parsed.path == "/api/backtest/select":
             try:
                 dashboard = read_dashboard_cache()
-                keys = [str(key) for key in request_body.get("factors", [])][:3]
+                keys = [str(key) for key in request_body.get("factors", [])][:5]
                 if not dashboard or not dashboard.get("stocks") or not keys:
                     raise RuntimeError("没有可用的回测策略或因子")
                 selection = select_by_factor_keys(dashboard["stocks"], keys)
-                selected = []
                 for stock in dashboard["stocks"]:
                     code = stock["code"]
                     score = selection["scores"].get(code)
                     stock["agent_combo_score"] = score
-                    stock["agent_combo_selected"] = code in selection["top_codes"]
                     stock["agent_combo_factors"] = keys
                     stock["agent_combo_breakdown"] = selection["breakdowns"].get(code, [])
-                    if stock["agent_combo_selected"]: selected.append(stock)
-                body = json.dumps({"selection": selection, "stocks": selected}, ensure_ascii=False).encode("utf-8")
+                dashboard["selected_strategy_factors"] = keys
+                write_dashboard_cache(dashboard)
+                body = json.dumps({"selection": selection}, ensure_ascii=False).encode("utf-8")
                 self.send_response(200); self.send_header("Content-Type", "application/json; charset=utf-8"); self.send_header("Cache-Control", "no-store"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
             except Exception as exc:
                 body = json.dumps({"error": str(exc)}, ensure_ascii=False).encode("utf-8")
@@ -1735,6 +1831,16 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
+        if parsed.path == "/api/wyckoff":
+            try:
+                force = (parse_qs(parsed.query).get("refresh") or ["0"])[0] == "1"
+                payload = json.dumps(build_wyckoff(force=force), ensure_ascii=False).encode("utf-8")
+                self.send_response(200); self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Cache-Control", "no-store"); self.send_header("Content-Length", str(len(payload))); self.end_headers(); self.wfile.write(payload)
+            except Exception as exc:
+                payload = json.dumps({"error": str(exc)}, ensure_ascii=False).encode("utf-8")
+                self.send_response(502); self.send_header("Content-Type", "application/json; charset=utf-8"); self.send_header("Content-Length", str(len(payload))); self.end_headers(); self.wfile.write(payload)
+            return
         if parsed.path == "/api/chief-opinions":
             code = (parse_qs(parsed.query).get("stock") or [""])[0].strip()
             if not re.fullmatch(r"\d{6}", code):
@@ -1750,7 +1856,9 @@ class Handler(SimpleHTTPRequestHandler):
             return
         if parsed.path == "/api/agents":
             running = bool(MULTI_AGENT_THREAD and MULTI_AGENT_THREAD.is_alive())
-            payload = json.dumps({"running": running, "preparing": MULTI_AGENT_PREP_STATUS, "run": read_multi_agent_run(), "agent_count": 12, "team_count": 4}, ensure_ascii=False).encode("utf-8")
+            dashboard = read_dashboard_cache() or {}
+            response = {"running": running, "preparing": MULTI_AGENT_PREP_STATUS, "run": read_multi_agent_run(), "agent_count": 12, "team_count": 4}
+            payload = json.dumps(normalize_stock_names(response, dashboard.get("stocks", [])), ensure_ascii=False).encode("utf-8")
             self.send_response(200); self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Cache-Control", "no-store"); self.send_header("Content-Length", str(len(payload))); self.end_headers(); self.wfile.write(payload)
             return

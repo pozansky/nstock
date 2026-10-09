@@ -1,0 +1,43 @@
+{
+  "id": "challenger",
+  "name": "Challenger Agent",
+  "team": "实验验证组",
+  "role": "寻找过拟合、回撤和可成交性问题",
+  "status": "阻断",
+  "started_at": "2026-10-09 15:05:50",
+  "finished_at": "2026-10-09 15:05:50",
+  "duration_ms": 0,
+  "confidence": 0.8,
+  "data_quality": "已审查回测指标与验证缺口",
+  "depends_on": [
+    "backtest"
+  ],
+  "summary": "发现 3 项需要人工关注的问题",
+  "evidence": [
+    "当前策略选择与排名仍来自同一完整样本，尚未强制执行独立测试集",
+    "最大回撤 -36.42% 超过20%",
+    "年化 +105.34% 偏高，需排查过拟合与可成交性"
+  ],
+  "artifact": "data\\agent_runs\\20261009-145619-ba59ba\\agents\\challenger.json",
+  "process": [
+    {
+      "time": "2026-10-09 15:05:50",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-10-09 15:05:50",
+      "stage": "完成",
+      "detail": "发现 3 项需要人工关注的问题"
+    }
+  ],
+  "output": {
+    "approved_for_research": false,
+    "approved_for_live_trading": false,
+    "findings": [
+      "当前策略选择与排名仍来自同一完整样本，尚未强制执行独立测试集",
+      "最大回撤 -36.42% 超过20%",
+      "年化 +105.34% 偏高，需排查过拟合与可成交性"
+    ]
+  }
+}

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="theme.css" />
     <link rel="stylesheet" href="polish.css?v=20260929-10" />
-    <link rel="stylesheet" href="workspace.css?v=20260929-1" />
+    <link rel="stylesheet" href="workspace.css?v=20261008-4" />
   </head>
   <body>
     <div class="app-shell">
@@ -28,6 +28,7 @@
           <button class="nav-item" data-view="agents"><span class="nav-index">02</span><span>Agent 协作台</span><span class="nav-agent-state">LIVE</span></button>
           <button class="nav-item" data-view="factors"><span class="nav-index">03</span><span>因子实验室</span></button>
           <button class="nav-item" data-view="backtest"><span class="nav-index">04</span><span>回测实验</span></button>
+          <button class="nav-item" data-view="wyckoff"><span class="nav-index">05</span><span>威科夫策略</span><span class="nav-badge">NEW</span></button>
         </nav>
         <div class="sidebar-bottom">
           <div class="system-state"><span class="state-light"></span><div><strong id="systemStatus">等待数据</strong><small id="systemSync">未同步</small></div></div>
@@ -45,7 +46,7 @@
           <div class="page-heading animate-in"><div><div class="eyebrow">MARKET OVERVIEW</div><h1>市场与候选</h1><p>科技股池行情、策略候选与风险状态。</p></div><div class="heading-actions"><button class="button ghost" id="refreshButton"><span class="refresh-icon">↻</span> 刷新数据</button></div></div>
 
           <div class="overview-config-grid animate-in delay-1">
-          <div class="strategy-strip"><div><span class="eyebrow">SELECTION STRATEGY</span><strong id="activeStrategyName">等待回测策略</strong><small id="activeStrategyRule">从回测实验选择策略</small></div><div class="control-row"><select id="strategySelect"><option value="">选择回测策略</option></select><button class="button primary" id="applyStrategyButton">应用</button></div></div>
+          <div class="strategy-strip"><div><span class="eyebrow">ACTIVE RANKING MODEL</span><strong id="activeStrategyName">等待排名策略</strong><small id="activeStrategyRule">应用于科技总榜和全部分类榜</small></div><div class="strategy-metrics" id="activeStrategyMetrics"><div><span>回测排名</span><strong>—</strong></div><div><span>累计收益</span><strong>—</strong></div><div><span>年化收益</span><strong>—</strong></div><div><span>最大回撤</span><strong>—</strong></div><div><span>Sharpe</span><strong>—</strong></div><div><span>胜率</span><strong>—</strong></div></div><small class="strategy-backtest-meta" id="activeStrategyBacktestMeta">等待匹配回测结果</small><div class="control-row"><select id="strategySelect"><option value="">选择排名策略</option></select><button class="button primary" id="applyStrategyButton">应用到全部榜单</button></div></div>
 
           <section class="tech-universe-strip">
             <div class="tech-universe-head"><div><span class="eyebrow">TECH UNIVERSE</span><strong>科技股池</strong><small id="universeMeta">东方财富行业与概念分类 · 排除科创板 688/689</small></div><button class="button primary" id="applyUniverseButton">更新股池</button></div>
@@ -67,8 +68,8 @@
 
           <div class="workspace-grid animate-in delay-3">
             <section class="candidate-panel">
-              <div class="panel-toolbar"><div class="toolbar-title"><span class="live-bar"></span><strong>候选排名</strong><span class="timestamp" id="scanTimestamp">等待更新</span></div><span class="panel-note">综合评分降序</span></div>
-              <div class="candidate-table" id="candidateTable"><div class="table-row table-header"><span>证券</span><span>综合评分</span><span>真实因子</span><span>交易状态</span><span></span></div><div class="data-loading">读取东财实时行情与日线 K 线中…</div></div>
+              <div class="panel-toolbar"><div class="toolbar-title"><span class="live-bar"></span><strong>候选排名</strong><span class="timestamp" id="scanTimestamp">等待更新</span></div><span class="panel-note" id="rankingScoreNote">技术综合分降序</span></div>
+              <div class="candidate-table" id="candidateTable"><div class="table-row table-header"><span>证券</span><span>技术综合分</span><span>真实因子</span><span>交易状态</span><span></span></div><div class="data-loading">读取东财实时行情与日线 K 线中…</div></div>
               <button class="load-more" id="loadMore">等待真实候选 <span>↗</span></button>
             </section>
 
@@ -77,7 +78,7 @@
               <div class="signal-meta" id="signalMeta"><span class="status watch">未选择</span><span class="meta-sep">·</span><span>东财日线因子</span></div>
               <div class="price-line"><div><strong id="selectedPrice">—</strong><span id="selectedPct" class="up">—</span></div><span class="price-caption" id="priceCaption">真实行情</span></div>
               <div class="sparkline-wrap"><svg viewBox="0 0 460 120" preserveAspectRatio="none" class="sparkline"><defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#8ed9bd" stop-opacity=".34"/><stop offset="100%" stop-color="#8ed9bd" stop-opacity="0"/></linearGradient></defs><path id="sparkArea" class="spark-area"/><path id="sparkPath" class="spark-path"/></svg><div class="chart-labels" id="chartLabels"><span>—</span><span>—</span><span>—</span><span>—</span></div></div>
-              <div class="signal-summary"><span>综合评分</span><strong id="selectedScore">—</strong><div class="confidence-ring"><span id="confidenceLabel">—</span></div></div>
+              <div class="signal-summary"><span id="selectedScoreLabel">技术综合分</span><strong id="selectedScore">—</strong><div class="confidence-ring"><span id="confidenceLabel">—</span></div></div>
               <div class="agent-list" id="agentList"><div class="data-loading">等待真实因子计算结果…</div></div>
             </aside>
           </div>
@@ -141,9 +142,42 @@
           <section class="factor-catalog-panel"><div class="panel-toolbar"><div class="toolbar-title"><span class="live-bar"></span><strong>组合回测排名</strong></div><span class="timestamp" id="backtestDate">等待真实计算</span></div><div id="backtestResults" class="mine-results"><div class="data-loading">请先运行组合回测</div></div></section>
         </section>
 
+        <section class="wyckoff-view" id="wyckoffView" hidden>
+          <div class="page-heading animate-in"><div><div class="eyebrow">WYCKOFF PRICE · VOLUME</div><h1>威科夫策略</h1><p>独立识别 Spring、SOS、LPS 与吸筹结构，不使用多因子排名分。</p></div><div class="heading-actions"><button class="button ghost" id="wyckoffRefreshButton"><span class="refresh-icon">↻</span> 重新计算</button></div></div>
+
+          <div class="wyckoff-summary animate-in delay-1">
+            <div class="wyckoff-model"><span class="eyebrow">INDEPENDENT MODEL</span><strong id="wyckoffModel">Wyckoff Price-Volume v1</strong><small id="wyckoffModelNote">仅使用前复权日线 OHLCV</small></div>
+            <div><span>数据日期</span><strong id="wyckoffDate">—</strong></div>
+            <div><span>完成分析</span><strong id="wyckoffAnalyzed">—</strong></div>
+            <div><span>当前候选</span><strong id="wyckoffCandidateCount">—</strong></div>
+            <div><span>回测区间</span><strong id="wyckoffPeriods">—</strong></div>
+          </div>
+
+          <section class="wyckoff-performance animate-in delay-1">
+            <div><span>累计收益</span><strong id="wyckoffCumulative">—</strong></div>
+            <div><span>年化收益</span><strong id="wyckoffAnnual">—</strong></div>
+            <div><span>最大回撤</span><strong id="wyckoffDrawdown">—</strong></div>
+            <div><span>Sharpe</span><strong id="wyckoffSharpe">—</strong></div>
+            <div><span>胜率</span><strong id="wyckoffWinRate">—</strong></div>
+            <p id="wyckoffBacktestRule">等待独立回测结果</p>
+          </section>
+
+          <div class="section-head wyckoff-section-head animate-in delay-2"><div><div class="eyebrow">ACTIVE SETUPS</div><h2>量价结构候选</h2></div><div class="wyckoff-tabs" id="wyckoffTabs"><button class="ranking-tab active" data-phase="">全部</button><button class="ranking-tab" data-phase="spring">Spring</button><button class="ranking-tab" data-phase="sos">SOS</button><button class="ranking-tab" data-phase="lps">LPS</button><button class="ranking-tab" data-phase="accumulation">吸筹观察</button></div></div>
+
+          <div class="wyckoff-workspace animate-in delay-3">
+            <section class="wyckoff-list-panel">
+              <div class="panel-toolbar"><div class="toolbar-title"><span class="live-bar"></span><strong>威科夫评分排名</strong><span class="timestamp" id="wyckoffTimestamp">等待计算</span></div><span class="panel-note">独立评分降序</span></div>
+              <div class="wyckoff-table" id="wyckoffTable"><div class="data-loading">读取真实 K 线并识别量价结构…</div></div>
+            </section>
+            <aside class="wyckoff-detail" id="wyckoffDetail"><div class="data-loading">选择候选后查看结构证据</div></aside>
+          </div>
+
+          <section class="wyckoff-method animate-in delay-4"><strong>执行口径</strong><p id="wyckoffRule">60 日交易区间 + 量价确认。该策略有独立候选池与独立回测，不会改变市场驾驶舱的排名。</p></section>
+        </section>
+
       </main>
     </div>
     <div class="toast" id="toast"><span class="toast-icon">✓</span><span id="toastText">等待真实数据</span></div>
-    <script src="app.js?v=20260929-14"></script>
+    <script src="app.js?v=20261009-20"></script>
   </body>
 </html>

@@ -24,6 +24,26 @@ def make_rows(count=21, *, latest=None):
     return rows
 
 
+class MarketDataEncodingTests(unittest.TestCase):
+    def test_decodes_utf8_chinese_response(self):
+        self.assertEqual(server.decode_http_body("特变电工".encode("utf-8")), "特变电工")
+
+    def test_decodes_gb18030_chinese_response(self):
+        self.assertEqual(server.decode_http_body("特变电工".encode("gb18030")), "特变电工")
+
+    def test_normalizes_names_in_nested_research_output(self):
+        corrupted = "特变电工".encode("utf-8").decode("gbk")
+        payload = {
+            "holdings": [{"code": "600089", "name": corrupted}],
+            "evidence": [f"{corrupted}(600089)"],
+        }
+
+        normalized = server.normalize_stock_names(payload, [{"code": "600089", "name": "特变电工"}])
+
+        self.assertEqual(normalized["holdings"][0]["name"], "特变电工")
+        self.assertEqual(normalized["evidence"][0], "特变电工(600089)")
+
+
 class CandleVolumeFactorTests(unittest.TestCase):
     def test_new_factors_are_in_whitelist(self):
         keys = {key for key, _, _ in build_factor_search_space()}

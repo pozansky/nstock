@@ -1,0 +1,114 @@
+{
+  "id": "factor_hypothesis",
+  "name": "因子假设 Agent",
+  "team": "研究研发组",
+  "role": "根据历史实验提出可证伪的因子假设",
+  "status": "完成",
+  "started_at": "2026-10-08 11:09:08",
+  "finished_at": "2026-10-08 11:09:59",
+  "duration_ms": 50953,
+  "confidence": 0.6,
+  "data_quality": "白名单上下文完整",
+  "depends_on": [
+    "market_regime",
+    "industry_chain",
+    "event_news"
+  ],
+  "summary": "数据日期 2026-09-30，universe_size 897，breadth 为 up 187 / down 710，市场明显偏弱。previous_top 显示均线差、量比、40日动量、10日波动、ATR 等因子 rank_ic 为负，而 40/60日反转 rank_ic 为正。从白名单选取 reversal_10、reversal_5、volatility20、atr14、ma5_20 五个已有 candidate 做假设，并生成 5 个仅引用白名单 key 的结构化组合公式，重点检验弱市反转、低波和缩量确认。",
+  "evidence": [
+    "推理引擎：DeepSeek V4.1 Flash（只读、结构化输出）"
+  ],
+  "artifact": "data\\agent_runs\\20261008-110907-1208ac\\agents\\factor_hypothesis.json",
+  "process": [
+    {
+      "time": "2026-10-08 11:09:08",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-10-08 11:09:59",
+      "stage": "完成",
+      "detail": "数据日期 2026-09-30，universe_size 897，breadth 为 up 187 / down 710，市场明显偏弱。previous_top 显示均线差、量比、40日动量、10日波动、ATR 等因子 rank_ic 为负，而 40/60日反转 rank_ic 为正。从白名单选取 reversal_10、reversal_5、volatility20、atr14、ma5_20 五个已有 candidate 做假设，并生成 5 个仅引用白名单 key 的结构化组合公式，重点检验弱市反转、低波和缩量确认。"
+    }
+  ],
+  "output": {
+    "summary": "数据日期 2026-09-30，universe_size 897，breadth 为 up 187 / down 710，市场明显偏弱。previous_top 显示均线差、量比、40日动量、10日波动、ATR 等因子 rank_ic 为负，而 40/60日反转 rank_ic 为正。从白名单选取 reversal_10、reversal_5、volatility20、atr14、ma5_20 五个已有 candidate 做假设，并生成 5 个仅引用白名单 key 的结构化组合公式，重点检验弱市反转、低波和缩量确认。",
+    "hypotheses": [
+      {
+        "candidate": "reversal_10",
+        "rationale": "previous_top 中 reversal_40 rank_ic=0.0651、reversal_60 rank_ic=0.0584，反转方向在弱市为正；当前 breadth 仅 up 187 对 down 710，10日反转可能继续捕捉超跌修复。",
+        "expectation": "预期 rank_ic 为正，若转负或低于 reversal_60 的 0.0584 则证伪。"
+      },
+      {
+        "candidate": "reversal_5",
+        "rationale": "更短周期反转与 reversal_40/60 同向，但换手更快；弱 breadth 下短线超跌反弹可能先于中期反转出现。",
+        "expectation": "预期 rank_ic 为正，若转负或弱于 reversal_10 则证伪。"
+      },
+      {
+        "candidate": "volatility20",
+        "rationale": "previous_top 中 volatility_10 rank_ic=-0.06，高波动在弱市被惩罚；20日波动率作为更平滑的风险代理，预期仍为负向。",
+        "expectation": "预期 rank_ic 为负，若转正或绝对值低于 0.06 则证伪。"
+      },
+      {
+        "candidate": "atr14",
+        "rationale": "previous_top 中 atr14 rank_ic=-0.0554，但 gate 为淘汰/待验证；ATR 衡量真实波幅，弱市中高 ATR 个股可能继续跑输。",
+        "expectation": "预期 rank_ic 为负，若 gate 再次淘汰或 rank_ic 转正则证伪。"
+      },
+      {
+        "candidate": "ma5_20",
+        "rationale": "previous_top 中 ma_5_60 rank_ic=-0.0707、ma_5_120 rank_ic=-0.0706、ma_3_60 rank_ic=-0.0702，短期均线弱于长期均线在弱市为负向；ma5_20 是同类短周期均线差。",
+        "expectation": "预期 rank_ic 为负，若转正或方向与 ma_5_60 的 -0.0707 相反则证伪。"
+      }
+    ],
+    "generated_factors": [
+      {
+        "name": "反转低波比",
+        "left": "reversal_10",
+        "operator": "ratio",
+        "right": "volatility20",
+        "rationale": "previous_top 中 reversal_40 rank_ic=0.0651、volatility_10 rank_ic=-0.06；当前 down 710 远多于 up 187，ratio 放大高反弹且低波标的。",
+        "expectation": "预期 rank_ic 为正且优于 reversal_10 单因子；若 rank_ic<=0 或低于 reversal_10 单因子则证伪。"
+      },
+      {
+        "name": "反转减ATR",
+        "left": "reversal_5",
+        "operator": "difference",
+        "right": "atr14",
+        "rationale": "previous_top 中 atr14 rank_ic=-0.0554，reversal_40/60 为正；difference 用 5日反转减 14日ATR，弱市高ATR被惩罚、超跌被奖励。",
+        "expectation": "预期 rank_ic 为正；若为负或不如 reversal_5 单因子则证伪。"
+      },
+      {
+        "name": "反转确认动量",
+        "left": "reversal_10",
+        "operator": "confirm",
+        "right": "momentum_20",
+        "rationale": "previous_top 中 momentum_40 rank_ic=-0.0651，弱市追涨无效；confirm=reversal_10*max(momentum_20,0)，仅在20日动量非负时使用10日反转，捕捉上升趋势中的短期回调。",
+        "expectation": "预期 rank_ic 为正且回撤小于纯动量；若 rank_ic<0 或回撤大于 reversal_10 则证伪。"
+      },
+      {
+        "name": "反转下行波动比",
+        "left": "reversal_5",
+        "operator": "ratio",
+        "right": "downside_vol20",
+        "rationale": "downside_vol20 与 volatility_10 同属风险惩罚项（volatility_10 rank_ic=-0.06），reversal_40 为正；ratio 偏好近期下跌但下行波动低的标的。",
+        "expectation": "预期 rank_ic 为正；若为负或低于 reversal_5 单因子则证伪。"
+      },
+      {
+        "name": "缩量反转比",
+        "left": "reversal_10",
+        "operator": "ratio",
+        "right": "volume_ratio5_20",
+        "rationale": "previous_top 中 volume_ratio_5_120 rank_ic=-0.0681，量比在弱市负向；当前 down 710 远多于 up 187，缩量反弹更可信，ratio 用低量比放大反转。",
+        "expectation": "预期 rank_ic 为正；若量比因子转为正向或组合 rank_ic<0 则证伪。"
+      }
+    ],
+    "risks": [
+      "breadth 极端（down 710 / up 187）可能使反转与低波因子拥挤，样本外衰减。",
+      "atr14 的 gate 为淘汰/待验证，纳入组合可能降低稳健性。",
+      "弱市中缩量阴跌可能持续，反转因子存在左侧过早风险。",
+      "组合公式均为白名单因子的比值/差值/确认变换，存在多重共线性与过拟合风险。",
+      "2026-09-30 单日 breadth 不代表后续，需滚动验证并设置失效阈值。"
+    ]
+  },
+  "llm": "DeepSeek V4.1 Flash"
+}
