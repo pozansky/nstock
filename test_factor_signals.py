@@ -176,6 +176,9 @@ class IncrementalBacktestCacheTests(unittest.TestCase):
         result = {"audited": True, "sharpe": 1.0, "cumulative_return": .1}
         previous = {
             "engine_version": server.BACKTEST_ENGINE_VERSION,
+            "data_fingerprint": "same-data",
+            "factor_run_generated_at": "now",
+            "out_of_sample": {"status": "数据不足"},
             "universe_signature": "same-universe",
             "data_date": "2026-09-29",
             "usable_universe": 25,
@@ -185,10 +188,12 @@ class IncrementalBacktestCacheTests(unittest.TestCase):
                 {"factors": ["alpha", "beta"], "directions": ["正向", "反向"], "result": result},
             ],
         }
-        latest = {"generated_at": "now", "universe_signature": "same-universe", "validation": {"results": factors}}
+        latest = {"engine_version": server.FACTOR_ENGINE_VERSION, "generated_at": "now", "universe_signature": "same-universe", "validation": {"results": factors}}
         with tempfile.TemporaryDirectory() as temporary, \
              patch.object(server, "BACKTEST_RUN_FILE", Path(temporary) / "backtest.json"), \
              patch.object(server, "universe_signature_for_stocks", return_value="same-universe"), \
+             patch.object(server, "kline_data_fingerprint", return_value="same-data"), \
+             patch.object(server, "HOLDING_CHOICES", (server.DEFAULT_HOLDING_DAYS,)), \
              patch.object(server, "latest_completed_data_date", return_value="2026-09-29"), \
              patch.object(server, "read_factor_agent_run", return_value=latest), \
              patch.object(server, "read_backtest_run", return_value=previous), \
@@ -209,6 +214,8 @@ class IncrementalBacktestCacheTests(unittest.TestCase):
         result = {"audited": True, "sharpe": 1.0, "cumulative_return": .1}
         previous = {
             "engine_version": server.BACKTEST_ENGINE_VERSION,
+            "data_fingerprint": "same-data",
+            "factor_run_generated_at": "now",
             "universe_signature": "same-universe",
             "data_date": "2026-09-29",
             "usable_universe": 25,
@@ -217,11 +224,13 @@ class IncrementalBacktestCacheTests(unittest.TestCase):
                 {"factors": ["beta"], "directions": ["反向"], "result": result},
             ],
         }
-        latest = {"generated_at": "now", "universe_signature": "same-universe", "validation": {"results": factors}}
+        latest = {"engine_version": server.FACTOR_ENGINE_VERSION, "generated_at": "now", "universe_signature": "same-universe", "validation": {"results": factors}}
         prepared = {"usable": [("000001", [], {})], "observations": {}, "latest": [], "latest_data_date": "2026-09-29"}
         with tempfile.TemporaryDirectory() as temporary, \
              patch.object(server, "BACKTEST_RUN_FILE", Path(temporary) / "backtest.json"), \
              patch.object(server, "universe_signature_for_stocks", return_value="same-universe"), \
+             patch.object(server, "kline_data_fingerprint", return_value="same-data"), \
+             patch.object(server, "HOLDING_CHOICES", (server.DEFAULT_HOLDING_DAYS,)), \
              patch.object(server, "latest_completed_data_date", return_value="2026-09-29"), \
              patch.object(server, "read_factor_agent_run", return_value=latest), \
              patch.object(server, "read_backtest_run", return_value=previous), \

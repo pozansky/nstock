@@ -1,0 +1,99 @@
+{
+  "id": "backtest",
+  "name": "回测 Agent",
+  "team": "实验验证组",
+  "role": "确定性执行单、双、三因子回测",
+  "status": "复用",
+  "started_at": "2026-10-11 16:15:00",
+  "finished_at": "2026-10-11 16:15:00",
+  "duration_ms": 16,
+  "confidence": 0.65,
+  "data_quality": "年化样本可用",
+  "depends_on": [
+    "factor_developer",
+    "model_research",
+    "experiment_design"
+  ],
+  "summary": "复用最近一次 78 组回测；最佳成本后 Sharpe 1.68",
+  "evidence": [
+    "可回测 886 只",
+    "累计 +254.22%",
+    "最大回撤 -42.55%"
+  ],
+  "artifact": "data\\agent_runs\\20261011-161500-5b5928\\agents\\backtest.json",
+  "process": [
+    {
+      "time": "2026-10-11 16:15:00",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-10-11 16:15:00",
+      "stage": "直接复用",
+      "detail": "读取最近一次 78 组回测，不重建矩阵"
+    },
+    {
+      "time": "2026-10-11 16:15:00",
+      "stage": "完成",
+      "detail": "复用最近一次 78 组回测；最佳成本后 Sharpe 1.68"
+    }
+  ],
+  "output": {
+    "top_strategy": {
+      "kind": "1 因子",
+      "factor_count": 1,
+      "holding_days": 1,
+      "factors": [
+        "volume_ratio_3_120"
+      ],
+      "names": [
+        "3/120 日量比"
+      ],
+      "directions": [
+        "反向"
+      ],
+      "result": {
+        "status": "完成",
+        "portfolio": "Top 3 等权组合，每只 1/3，不是单只股票",
+        "universe": 886,
+        "holding_count": 3,
+        "latest_holdings": [
+          {
+            "code": "000062",
+            "name": "深圳华强"
+          },
+          {
+            "code": "600666",
+            "name": "奥瑞德"
+          },
+          {
+            "code": "300444",
+            "name": "双杰电气"
+          }
+        ],
+        "cost_bps": 15,
+        "audited": true,
+        "entry_offset": 0,
+        "holding_days": 1,
+        "return_definition": "T 日尾盘（收盘）买入，持有 1 个交易日，第二天收盘卖出；Top 3 等权，扣 15bp × 换手率",
+        "trade_delay_days": 0,
+        "days": 539,
+        "equity": 3.5422,
+        "cumulative_return": 2.5422,
+        "annual_return": 0.8063,
+        "max_drawdown": 0.4255,
+        "mean_daily": 0.002663,
+        "daily_sharpe": 0.1059,
+        "sharpe": 1.681,
+        "win_rate": 0.558,
+        "skewness": 0.3789,
+        "kurtosis": 6.5555,
+        "annualization_reliable": true
+      },
+      "rank": 1,
+      "rank_metric": "成本后 Sharpe"
+    },
+    "engine_version": "tech-top3-v11-close-entry",
+    "selection_rule": "T 日尾盘按因子截面排名买入前 3 只等权（先剔除近 20 日成交额最低 30%）；持有 1~2 个交易日后收盘卖出，扣除 15bp × 换手率。"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "id": "portfolio_manager",
+  "name": "组合经理 Agent",
+  "team": "决策执行组",
+  "role": "在通过审查的策略中选择最多三只",
+  "status": "完成",
+  "started_at": "2026-10-11 16:52:11",
+  "finished_at": "2026-10-11 16:52:11",
+  "duration_ms": 15,
+  "confidence": 0.55,
+  "data_quality": "年化样本可用",
+  "depends_on": [
+    "backtest",
+    "challenger",
+    "market_regime",
+    "industry_chain"
+  ],
+  "summary": "采用你在 Agent 协作台指定的策略，输出 3 只等权研究候选",
+  "evidence": [
+    "奥瑞德(600666)",
+    "双杰电气(300444)",
+    "乾照光电(300102)",
+    "Challenger仅批准研究用途"
+  ],
+  "artifact": "data\\agent_runs\\20261011-165211-a76b66\\agents\\portfolio_manager.json",
+  "process": [
+    {
+      "time": "2026-10-11 16:52:11",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-10-11 16:52:11",
+      "stage": "完成",
+      "detail": "采用你在 Agent 协作台指定的策略，输出 3 只等权研究候选"
+    }
+  ],
+  "output": {
+    "strategy": {
+      "factors": [
+        "momentum_40",
+        "volume_ratio_3_120",
+        "ma_10_120",
+        "momentum_120"
+      ],
+      "names": [
+        "40 日动量",
+        "3/120 日量比",
+        "10/120 日均线差",
+        "120 日动量"
+      ],
+      "holding_days": 1
+    },
+    "strategy_source": "user",
+    "holdings": [
+      {
+        "code": "600666",
+        "name": "奥瑞德"
+      },
+      {
+        "code": "300444",
+        "name": "双杰电气"
+      },
+      {
+        "code": "300102",
+        "name": "乾照光电"
+      }
+    ],
+    "weights": [
+      0.3333,
+      0.3333,
+      0.3333
+    ]
+  }
+}

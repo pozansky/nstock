@@ -1,7 +1,7 @@
 {
   "code": "002421",
   "name": "达实智能",
-  "fetched_at": "2026-10-08 18:43:50",
+  "fetched_at": "2026-10-12 09:09:05",
   "requested_limit": 1,
   "opinion_count": 1,
   "opinions": [
@@ -9,7 +9,9 @@
       "opi_pubtime": "2026-10-08T09:01:01",
       "publish_time_beijing": "2026-10-08 09:01:01",
       "title": "【国投证券非银】香港交易所深度报告：科技热潮推动交投活跃，互联互通巩固离岸枢纽",
-      "content": "",
+      "content": "港交所是承接内地资产与南向资金的主要离岸平台。我们认为短期科技资产带动的高换手与IPO活跃支撑港股成交维持高位，推动公司业绩增长；长期受益于内地资产持续在港上市与业务多元化，收入结构有望改善、盈利中枢有望抬升。",
+      "content_kind": "摘要",
+      "rpt_id": null,
       "opi_all": "{\"description\":\"港交所是承接内地资产与南向资金的主要离岸平台。我们认为短期科技资产带动的高换手与IPO活跃支撑港股成交维持高位，推动公司业绩增长；长期受益于内地资产持续在港上市与业务多元化，收入结构有望改善、盈利中枢有望抬升。\",\"title\":\"【国投证券非银】香港交易所深度报告：科技热潮推动交投活跃，互联互通巩固离岸枢纽\",\"content\":\"\",\"url\":\"https://mp.weixin.qq.com/s?__biz=MzU2NTc2OTU4Nw==&mid=2247493015&idx=1&sn=484b2f1093933c60b872290ca6e2b052&chksm=fd90ab074fb6a56bdeb9a5bc0024216c6bd5c1831b09768cef167580b09efef53e02f9c72932&mpshare=1&scene=1&srcid=1008zNU4QyULooPTKfWsS0WQ&sharer_shareinfo=0cfda38356f5f11a3db59de52f8b8e04&sharer_shareinfo_first=0cfda38356f5f11a3db59de52f8b8e04#rd\"}"
     }
   ]

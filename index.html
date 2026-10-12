@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="theme.css" />
     <link rel="stylesheet" href="polish.css?v=20260929-10" />
     <link rel="stylesheet" href="workspace.css?v=20261008-4" />
+    <link rel="stylesheet" href="refine.css?v=20261012-5" />
   </head>
-  <body>
+  <body data-workspace-view="overview">
     <div class="app-shell">
       <aside class="sidebar">
         <div class="brand-lockup">
@@ -25,10 +26,11 @@
         <div class="workspace-label">研究工作台</div>
         <nav class="nav-list" aria-label="主导航">
           <button class="nav-item active" data-view="overview"><span class="nav-index">01</span><span>市场驾驶舱</span><span class="nav-dot"></span></button>
-          <button class="nav-item" data-view="agents"><span class="nav-index">02</span><span>Agent 协作台</span><span class="nav-agent-state">LIVE</span></button>
+          <button class="nav-item" data-view="agents"><span class="nav-index">02</span><span>Agent 协作台</span><span class="nav-agent-state" id="navAgentState">待命</span></button>
           <button class="nav-item" data-view="factors"><span class="nav-index">03</span><span>因子实验室</span></button>
           <button class="nav-item" data-view="backtest"><span class="nav-index">04</span><span>回测实验</span></button>
           <button class="nav-item" data-view="wyckoff"><span class="nav-index">05</span><span>威科夫策略</span><span class="nav-badge">NEW</span></button>
+          <button class="nav-item" data-view="review"><span class="nav-index">06</span><span>推荐复盘</span></button>
         </nav>
         <div class="sidebar-bottom">
           <div class="system-state"><span class="state-light"></span><div><strong id="systemStatus">等待数据</strong><small id="systemSync">未同步</small></div></div>
@@ -43,8 +45,10 @@
         </header>
 
         <section class="page-content" id="overviewView">
-          <div class="page-heading animate-in"><div><div class="eyebrow">MARKET OVERVIEW</div><h1>市场与候选</h1><p>科技股池行情、策略候选与风险状态。</p></div><div class="heading-actions"><button class="button ghost" id="refreshButton"><span class="refresh-icon">↻</span> 刷新数据</button></div></div>
+          <div class="page-heading animate-in"><div><div class="eyebrow">MARKET OVERVIEW</div><h1>市场驾驶舱</h1><p>科技股池行情、策略候选与风险状态。</p></div><div class="heading-actions"><span class="session-label" id="overviewSession">等待行情</span><button class="button ghost" id="refreshButton"><i data-lucide="refresh-cw" aria-hidden="true"></i>刷新数据</button></div></div>
 
+          <details class="workspace-disclosure overview-settings">
+          <summary><i data-lucide="sliders-horizontal" aria-hidden="true"></i><strong>排名与股池设置</strong><span id="overviewStrategySummary">等待策略</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
           <div class="overview-config-grid animate-in delay-1">
           <div class="strategy-strip"><div><span class="eyebrow">ACTIVE RANKING MODEL</span><strong id="activeStrategyName">等待排名策略</strong><small id="activeStrategyRule">应用于科技总榜和全部分类榜</small></div><div class="strategy-metrics" id="activeStrategyMetrics"><div><span>回测排名</span><strong>—</strong></div><div><span>累计收益</span><strong>—</strong></div><div><span>年化收益</span><strong>—</strong></div><div><span>最大回撤</span><strong>—</strong></div><div><span>Sharpe</span><strong>—</strong></div><div><span>胜率</span><strong>—</strong></div></div><small class="strategy-backtest-meta" id="activeStrategyBacktestMeta">等待匹配回测结果</small><div class="control-row"><select id="strategySelect"><option value="">选择排名策略</option></select><button class="button primary" id="applyStrategyButton">应用到全部榜单</button></div></div>
 
@@ -53,6 +57,7 @@
             <div class="tech-sector-selector" id="techSectorSelector"><span class="data-loading">读取科技细分分类…</span></div>
           </section>
           </div>
+          </details>
 
           <div class="market-strip animate-in delay-1" id="marketStrip">
             <div class="market-strip-main"><div class="eyebrow">MARKET REGIME</div><div class="regime-row"><span class="regime-dot"></span><strong id="regimeText">等待东财数据</strong><span class="confidence" id="regimeConfidence">—</span></div><p id="regimeNote">正在读取真实行情与日线 K 线。</p></div>
@@ -61,6 +66,32 @@
             <div class="market-mini"><span>研究宇宙广度</span><strong id="breadth">—</strong><small>上涨 / 下跌</small></div>
             <div class="market-mini last"><span>数据源</span><strong id="dataSource">连接中</strong><small id="dataTimestamp">—</small></div>
           </div>
+
+          <section class="market-breadth-band" aria-label="科技股池涨跌分布">
+            <div class="breadth-overview"><span class="eyebrow">UNIVERSE BREADTH</span><div><strong id="breadthRatio">—</strong><span>上涨占比</span></div><div class="breadth-meter" id="breadthMeter"></div><small id="breadthLegend">等待行情分布</small></div>
+            <div class="breadth-distribution"><div class="band-title"><strong>涨跌分布</strong><small id="breadthMedian">中位数 —</small></div><div id="breadthHistogram" class="breadth-histogram"></div></div>
+            <div class="sector-leaders"><div class="band-title"><strong>板块强度</strong><small>平均涨跌幅</small></div><div id="sectorLeaders"><span class="data-loading">等待板块行情</span></div></div>
+          </section>
+
+          <section class="execution-plan animate-in delay-2" id="executionPlan">
+            <div class="execution-head">
+              <div>
+                <div class="eyebrow">EXECUTION RULE</div>
+                <h2>怎么买：执行口径</h2>
+                <p id="executionSummary">等待策略与回测结果…</p>
+              </div>
+              <span class="execution-state watch" id="executionState">等待数据</span>
+            </div>
+            <details class="execution-disclosure"><summary>执行细则<i data-lucide="chevron-down" aria-hidden="true"></i></summary><div class="execution-grid">
+              <div><span>选什么</span><strong id="executionPick">—</strong><small id="executionPickNote">—</small></div>
+              <div><span>何时买</span><strong id="executionEntry">—</strong><small id="executionEntryNote">—</small></div>
+              <div><span>何时卖</span><strong id="executionExit">—</strong><small id="executionExitNote">—</small></div>
+              <div><span>仓位与成本</span><strong id="executionSizing">—</strong><small id="executionSizingNote">—</small></div>
+              <div><span>风控闸门</span><strong id="executionGate">—</strong><small id="executionGateNote">—</small></div>
+              <div><span>本轮标的</span><strong id="executionList">—</strong><small id="executionListNote">—</small></div>
+            </div>
+            <p class="execution-disclaimer" id="executionDisclaimer">仅用于研究，不构成投资建议，系统不会自动下单。</p></details>
+          </section>
 
           <div class="section-head animate-in delay-2"><div><div class="eyebrow">RESEARCH SIGNALS</div><h2>今日候选池</h2></div><div class="section-tools"><button class="filter-button active">全部 <span>—</span></button><button class="filter-button">可建仓 <span>—</span></button><button class="filter-button">待确认 <span>—</span></button><button class="filter-button">高风险 <span>—</span></button></div></div>
 
@@ -89,8 +120,80 @@
           </div>
         </section>
 
+        <section class="review-view" id="reviewView" hidden>
+          <div class="page-heading animate-in"><div><div class="eyebrow">STRATEGY REVIEW</div><h1>推荐复盘</h1><p>2026 年 9 月 1 日起 · 每个策略前三只 · 两万元收益测算</p></div></div>
+          <section class="capital-review" id="capitalReview">
+            <div class="panel-toolbar"><div class="toolbar-title"><i data-lucide="chart-no-axes-combined"></i><strong>两万元策略收益</strong><span class="timestamp">历史测算 · 非实际账户收益</span></div><span class="timestamp" id="capitalCacheStatus">读取中</span></div>
+            <div class="review-strategy-picker"><label for="reviewStrategy">策略</label><select id="reviewStrategy"><option value="">读取策略…</option></select><span id="reviewStrategyMeta"></span></div>
+            <div class="capital-source"><label for="reviewKind">记录来源</label><select id="reviewKind"><option value="replay">历史回放</option><option value="council">真实会签候选</option><option value="ranking">真实榜单前三</option></select></div>
+            <div class="review-periods" id="capitalPeriods" role="group" aria-label="两万元收益区间"></div>
+            <div class="capital-summary"><div><span id="capitalPnlLabel">9 月至今盈亏</span><strong id="capitalPnl">—</strong><small id="capitalReturn">—</small></div><div><span>期初资产</span><strong id="capitalStarting">—</strong></div><div><span>期末资产</span><strong id="capitalEnding">—</strong></div><div><span>期末现金</span><strong id="capitalCash">—</strong></div></div>
+            <p class="review-note" id="capitalBasis" role="status">正在计算两万元策略收益…</p>
+          </section>
+          <section class="ledger-panel" id="ledgerPanel">
+            <div class="panel-toolbar"><div class="toolbar-title"><i data-lucide="wallet"></i><strong>模拟持仓账本</strong><span class="timestamp">独立资金账户 · 未连接券商</span></div><button class="button icon-button" id="ledgerRefresh" title="刷新账本" aria-label="刷新账本"><i data-lucide="refresh-cw"></i></button></div>
+            <div class="ledger-account-bar"><label>账户<select id="ledgerAccount" aria-label="模拟账户"></select></label><form id="ledgerCreate"><label>初始本金<input id="ledgerCapital" type="number" min="1" step="0.01" value="20000" required></label><button class="button" type="submit"><i data-lucide="plus"></i>新建模拟账户</button></form></div>
+            <div id="ledgerStats" class="review-stats"></div>
+            <p id="ledgerStatus" class="review-note" role="status"></p>
+            <div id="ledgerPositions" class="ledger-table"></div>
+            <details class="ledger-actions"><summary>订单与模拟成交</summary>
+              <div class="ledger-forms">
+                <form id="ledgerOrderForm"><h3>记录订单</h3><label>股票代码<input id="ledgerCode" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required></label><label>方向<select id="ledgerSide"><option value="buy">买入</option><option value="sell">卖出</option></select></label><label>计划股数<input id="ledgerOrderQuantity" type="number" min="1" step="1" value="100" required></label><label>信号日期<input id="ledgerSignalDate" type="date" required></label><button class="button" type="submit"><i data-lucide="file-plus-2"></i>记录订单</button></form>
+                <form id="ledgerFillForm"><h3>记录模拟成交</h3><label>未完成订单<select id="ledgerFillOrder" required></select></label><label>成交股数<input id="ledgerFillQuantity" type="number" min="1" step="1" value="100" required></label><label>成交价<input id="ledgerFillPrice" type="number" min="0.01" step="0.01" required></label><label>成交日期<input id="ledgerFillDate" type="date" required></label><label>费用合计（佣金与税费）<input id="ledgerFillFees" type="number" min="0" step="0.01" required></label><button class="button" type="submit"><i data-lucide="check"></i>记模拟成交</button></form>
+              </div><div id="ledgerOrders" class="ledger-table"></div>
+            </details>
+            <details class="ledger-actions"><summary>成交与资金流水</summary><div id="ledgerEvents" class="ledger-table"></div></details>
+          </section>
+          <section class="review-panel animate-in delay-1" id="recommendationPanel">
+            <div class="panel-toolbar">
+              <div class="toolbar-title"><span class="live-bar"></span><strong>历史信号涨幅 · 旧口径（非持仓收益）</strong><span class="timestamp" id="reviewTimestamp">等待数据</span></div>
+              <button class="button" id="reviewRefreshButton"><i data-lucide="refresh-cw"></i>更新复盘</button>
+            </div>
+            <details class="review-method"><summary id="reviewMethodSummary">收益口径与数据说明</summary><p class="review-note" id="reviewNote">涨跌幅以信号日收盘价为基准，不代表真实成交。逐只涨幅未扣成本，持有期净收益按 15bp 成本估算。服务运行期间自动更新。</p>
+            <p class="review-note review-replay-warning" id="reviewReplayWarning"></p>
+            <p class="review-basis" id="reviewBasis"></p></details>
+            <div class="review-periods" id="reviewPeriods" role="group" aria-label="组合收益区间"></div>
+            <div class="review-return-summary"><div><span id="reviewReturnLabel">9 月至今组合净收益</span><strong id="reviewReturnValue">—</strong></div><p id="reviewReturnBasis"></p></div>
+            <div class="review-stats" id="reviewStats"><div class="data-loading">等待组合记录…</div></div>
+            <details class="review-analytics"><summary>成本与信号衰减</summary><div class="review-insights">
+              <div class="review-block">
+                <div class="review-block-head"><strong>成本敏感性</strong><small>持有 1 日口径：成本假设上调后还剩多少超额</small></div>
+                <div class="review-costs" id="reviewCosts"><div class="data-loading">—</div></div>
+              </div>
+              <div class="review-block">
+                <div class="review-block-head"><strong>信号衰减</strong><small>建仓后各持有期的净收益与超额，样本随持有期递减</small></div>
+                <div class="review-decay" id="reviewDecay"><div class="data-loading">—</div></div>
+              </div>
+            </div>
+            </details><div class="review-detail-toolbar">
+              <label>开始日期<input type="date" id="reviewStartDate" value="2026-09-01" min="2026-09-01"></label>
+              <label>结束日期<input type="date" id="reviewEndDate"></label>
+              <label class="review-search">股票<input id="reviewSearch" type="search" placeholder="名称 / 代码" aria-label="搜索复盘股票"></label>
+              <button class="button icon-button" id="reviewExport" title="导出三只组合收益 CSV" aria-label="导出三只组合收益 CSV"><i data-lucide="download"></i></button>
+            </div>
+            <p id="reviewCoverage" class="review-note"></p>
+            <div class="review-stock-table" id="reviewTable"><div class="data-loading">读取推荐历史…</div></div>
+            <details class="review-stock-audit"><summary>逐股价格与持有期明细</summary><div class="review-stock-table" id="reviewStockDetails"></div></details>
+          </section>
+        </section>
+
         <section class="agent-collab-view" id="agentCollabView" hidden>
-          <div class="page-heading animate-in"><div><div class="eyebrow">AGENT COUNCIL</div><h1>Agent 协作台</h1><p>12 位 Agent，四组并行研究，一处完成决策。</p></div><div class="heading-actions"><button class="button ghost" id="agentRefreshButton">刷新</button><button class="button ghost" id="agentQuickRunButton">快速会签 · 复用因子</button><button class="button primary" id="agentRunButton">全量重算 · 含研发组 <span>↗</span></button></div></div>
+          <div class="page-heading animate-in"><div><div class="eyebrow">RESEARCH OPERATIONS</div><h1>Agent 协作台</h1><p>12 位 Agent · 4 个研究团队</p></div><div class="heading-actions"><button class="button ghost icon-button" id="agentRefreshButton" title="刷新运行记录" aria-label="刷新运行记录"><i data-lucide="refresh-cw" aria-hidden="true"></i></button><button class="button ghost" id="agentQuickRunButton"><i data-lucide="zap" aria-hidden="true"></i>快速会签</button><button class="button primary" id="agentRunButton"><i data-lucide="play" aria-hidden="true"></i>全量运行</button></div></div>
+
+          <details class="workspace-disclosure agent-strategy-settings"><summary><i data-lucide="sliders-horizontal" aria-hidden="true"></i><strong>本轮策略</strong><span id="agentStrategySummary">系统自动选择</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+          <section class="strategy-picker animate-in delay-1" id="strategyPicker">
+            <div class="strategy-picker-head">
+              <div><span class="eyebrow">STRATEGY SELECTION</span><strong>本轮用哪个策略</strong></div>
+              <div class="strategy-picker-current">
+                <span id="strategyPickSource">系统自动</span>
+                <b id="strategyPickName">按成本后 Sharpe 自动选择</b>
+              </div>
+              <button class="button ghost" type="button" id="strategyClearButton" hidden>恢复自动</button>
+            </div>
+            <div class="strategy-picker-list" id="strategyPickList"><div class="data-loading">等待回测结果…</div></div>
+            <p class="strategy-picker-note">会签与候选名单都以你选定的策略为准。选到回撤超 35% 的策略也能用，但会签会把它标为风险项。</p>
+          </section>
+          </details>
 
           <div class="agent-mission-strip animate-in delay-1">
             <div><span class="eyebrow">CURRENT MISSION</span><strong id="agentMission">等待真实研究结果</strong><small id="agentMissionMeta">尚未读取 Agent 运行记录</small></div>
@@ -100,8 +203,9 @@
           </div>
 
           <section class="agent-run-progress idle animate-in delay-1" id="agentRunProgress" aria-live="polite">
-            <div class="agent-progress-head"><div><span class="eyebrow">LIVE RUN</span><strong id="agentProgressTitle">等待启动十二 Agent 闭环</strong></div><b id="agentProgressCount">0/12</b></div>
-            <div class="agent-progress-track"><i id="agentProgressBar"></i></div>
+            <div class="agent-progress-head"><div><span class="eyebrow"><span class="run-indicator"></span>RUN STATUS</span><strong id="agentProgressTitle">等待启动十二 Agent 闭环</strong></div><div class="run-counters"><span id="agentElapsed">—</span><b id="agentProgressCount">0/12</b></div></div>
+            <div class="agent-progress-track" role="progressbar" aria-label="Agent 完成进度" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0"><i id="agentProgressBar"></i></div>
+            <ol class="council-pipeline" id="councilPipeline" aria-label="研究流程"></ol>
             <div class="agent-progress-meta"><span id="agentProgressDetail">点击运行后，这里会实时显示当前 Agent 与步骤。</span><time id="agentProgressTime">尚未运行</time></div>
             <div class="agent-progress-recent" id="agentProgressRecent"><span>等待本轮阶段日志</span></div>
           </section>
@@ -139,7 +243,17 @@
         <section class="backtest-view" id="backtestView" hidden>
           <div class="page-heading animate-in"><div><div class="eyebrow">PORTFOLIO BACKTEST</div><h1>回测实验</h1><p>比较 1–5 因子组合的收益、回撤与稳定性。</p></div><div class="heading-actions"><button class="button primary" id="runBacktestButton">运行组合回测 <span>↗</span></button></div></div>
           <div class="factor-lab-summary"><div><span class="eyebrow">INPUT</span><strong id="backtestInput">等待 Agent 因子</strong><small>最新因子研发结果</small></div><div><span class="eyebrow">UNIVERSE</span><strong id="backtestUniverse">科技股池</strong><small id="backtestUniverseNote">排除科创板 688/689</small></div><div><span class="eyebrow">RUNS</span><strong id="backtestCount">—</strong><small>束搜索组合</small></div><div><span class="eyebrow">COST</span><strong id="backtestCost">15bp</strong><small>按换手率扣除</small></div></div>
+          <section id="timingWeekReview" class="timing-strategy"><div class="data-loading">正在读取独立 14:50 周回放…</div></section>
           <section class="factor-catalog-panel"><div class="panel-toolbar"><div class="toolbar-title"><span class="live-bar"></span><strong>组合回测排名</strong></div><span class="timestamp" id="backtestDate">等待真实计算</span></div><div id="backtestResults" class="mine-results"><div class="data-loading">请先运行组合回测</div></div></section>
+
+          <section class="oos-panel" id="validationPanel">
+            <div class="panel-toolbar">
+              <div class="toolbar-title"><span class="live-bar"></span><strong>样本外验证与多重检验校正</strong><span class="timestamp" id="validationTimestamp">等待结果</span></div>
+            </div>
+            <p class="review-note">全样本 Sharpe 是「在整段历史上挑最好的一组」得到的，天然偏高。下面两项分别回答：挑选过程换个时间段还成立吗（滚动样本外），以及这份 Sharpe 有多少只是运气（Deflated Sharpe）。</p>
+            <div class="review-stats" id="validationStats"><div class="data-loading">等待回测结果…</div></div>
+            <div class="review-table" id="validationFolds"></div>
+          </section>
         </section>
 
         <section class="wyckoff-view" id="wyckoffView" hidden>
@@ -178,6 +292,7 @@
       </main>
     </div>
     <div class="toast" id="toast"><span class="toast-icon">✓</span><span id="toastText">等待真实数据</span></div>
-    <script src="app.js?v=20261009-20"></script>
+    <script src="assets/lucide.min.js"></script>
+  <script src="app.js?v=20261012-15"></script>
   </body>
 </html>

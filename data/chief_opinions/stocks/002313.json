@@ -1,7 +1,7 @@
 {
   "code": "002313",
   "name": "日海智能",
-  "fetched_at": "2026-10-08 18:41:02",
+  "fetched_at": "2026-10-11 18:37:56",
   "requested_limit": 1,
   "opinion_count": 1,
   "opinions": [
@@ -10,6 +10,8 @@
       "publish_time_beijing": "2026-09-29 10:27:25",
       "title": "华为Mate90系列将于10月1日正式发布",
       "content": "【华为Mate90系列将于10月1日正式发布】\n\n9月29日，华为终端宣布，华为Mate90系列将于10月1日10:00正式发布，12:08正式开售。\n\n实锤esim卡 日海智能",
+      "content_kind": "全文",
+      "rpt_id": null,
       "opi_all": "{\"title\":\"华为Mate90系列将于10月1日正式发布\",\"content\":\"【华为Mate90系列将于10月1日正式发布】\\n\\n9月29日，华为终端宣布，华为Mate90系列将于10月1日10:00正式发布，12:08正式开售。\\n\\n实锤esim卡 日海智能\"}"
     }
   ]

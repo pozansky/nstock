@@ -1,7 +1,7 @@
 {
   "code": "300034",
   "name": "钢研高纳",
-  "fetched_at": "2026-10-08 18:55:19",
+  "fetched_at": "2026-10-12 09:20:33",
   "requested_limit": 1,
   "opinion_count": 1,
   "opinions": [
@@ -9,7 +9,9 @@
       "opi_pubtime": "2026-09-10T08:51:09",
       "publish_time_beijing": "2026-09-10 08:51:09",
       "title": "【东吴计算机】商业航天深度报告：航天发动机",
-      "content": "",
+      "content": "【东吴计算机】商业航天深度报告：航天发动机",
+      "content_kind": "摘要",
+      "rpt_id": null,
       "opi_all": "{\"description\":\"【东吴计算机】商业航天深度报告：航天发动机\",\"title\":\"【东吴计算机】商业航天深度报告：航天发动机\",\"content\":\"\",\"url\":\"http://mp.weixin.qq.com/s?__biz=MzI0NDE0ODU3NQ==&mid=2666310758&idx=1&sn=59e6815947f56369582270266b84cb23&chksm=f3d55a4fff7e7bc3c54aa8b4dea89ddae1d84162d11ac80ac777fb1c4484954f92bce275e209&scene=0&xtrack=1#rd\"}"
     }
   ]

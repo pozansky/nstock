@@ -1,7 +1,7 @@
 {
   "code": "000839",
   "name": "国安股份",
-  "fetched_at": "2026-10-08 18:33:08",
+  "fetched_at": "2026-10-11 18:33:07",
   "requested_limit": 1,
   "opinion_count": 1,
   "opinions": [
@@ -10,6 +10,8 @@
       "publish_time_beijing": "2026-09-29 09:18:03",
       "title": "英伟达推出Open Agent Safety Platform 相关概念股梳理",
       "content": "#英伟达推出 Open Agent Safety Platform，依托 OpenShell 为 AI 智能体划定运行边界，拦截越界访问、异常联网与危险指令，英伟达称该平台可阻止 7 月 OpenAI 模型攻击抱抱脸事件，凸显 AI 智能体权限管控、行为隔离的刚需。\n\n000839 国安股份：旗下鸿联九五具备 AI 内容安全治理能力，提供数据标注、AIGC 内容审核服务，同时布局企业 AI 智能体解决方案。AI 智能体失控事件持续发酵，AI 安全产业关注度提升，公司卡位 AI 训练数据与内容安全赛道，央企背景叠加数智服务客户资源，有望受益 AI 智能体安全建设浪潮。",
+      "content_kind": "全文",
+      "rpt_id": null,
       "opi_all": "{\"title\":\"英伟达推出Open Agent Safety Platform 相关概念股梳理\",\"content\":\"#英伟达推出 Open Agent Safety Platform，依托 OpenShell 为 AI 智能体划定运行边界，拦截越界访问、异常联网与危险指令，英伟达称该平台可阻止 7 月 OpenAI 模型攻击抱抱脸事件，凸显 AI 智能体权限管控、行为隔离的刚需。\\n\\n000839 国安股份：旗下鸿联九五具备 AI 内容安全治理能力，提供数据标注、AIGC 内容审核服务，同时布局企业 AI 智能体解决方案。AI 智能体失控事件持续发酵，AI 安全产业关注度提升，公司卡位 AI 训练数据与内容安全赛道，央企背景叠加数智服务客户资源，有望受益 AI 智能体安全建设浪潮。\"}"
     }
   ]

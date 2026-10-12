@@ -1,7 +1,7 @@
 {
   "code": "002962",
   "name": "五方光电",
-  "fetched_at": "2026-10-08 18:52:26",
+  "fetched_at": "2026-10-12 09:17:40",
   "requested_limit": 1,
   "opinion_count": 1,
   "opinions": [
@@ -9,7 +9,9 @@
       "opi_pubtime": "2026-09-30T16:06:52",
       "publish_time_beijing": "2026-09-30 16:06:52",
       "title": "【华西中小盘】玻璃基板专题研究深度报告：先进封装升级，玻璃基板产业进展不断",
-      "content": null,
+      "content": "玻璃基板专题研究深度",
+      "content_kind": "摘要",
+      "rpt_id": null,
       "opi_all": "{\"description\":\"玻璃基板专题研究深度\",\"title\":\"【华西中小盘】玻璃基板专题研究深度报告：先进封装升级，玻璃基板产业进展不断\",\"url\":\"https://mp.weixin.qq.com/s?__biz=MzU2ODM0OTg4Ng==&mid=2247545021&idx=1&sn=829e7e007b123211d4a253c641312765&chksm=fd3cc7bd235f4d2e19d5bb1fb691f474d9fb7ba9b283e903e8e6e84ac6e0b58984cbbefe88ac&mpshare=1&scene=1&srcid=09305pgeju3HPomIFUxjP0eC&sharer_shareinfo=214abd7e84c37990a2f45bc516e000f1&sharer_shareinfo_first=c85d19cc5afc7a7b424b4e210a1d87d5#rd\"}"
     }
   ]

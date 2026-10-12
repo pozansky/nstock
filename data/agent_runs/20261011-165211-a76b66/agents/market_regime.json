@@ -1,0 +1,48 @@
+{
+  "id": "market_regime",
+  "name": "市场状态 Agent",
+  "team": "市场情报组",
+  "role": "识别指数、市场广度和波动状态",
+  "status": "完成",
+  "started_at": "2026-10-11 16:52:11",
+  "finished_at": "2026-10-11 16:52:11",
+  "duration_ms": 16,
+  "confidence": 0.8,
+  "data_quality": "行情与市场广度可用",
+  "depends_on": [],
+  "summary": "市场震荡：上涨占比 47%，个股涨跌中位数 -0.09%",
+  "evidence": [
+    "指数平均涨跌 +0.19%",
+    "科技股上涨/下跌 423/473",
+    "高波动股票 58 只",
+    "类涨停/类跌停 14/4",
+    "数据截止 2026-10-09"
+  ],
+  "artifact": "data\\agent_runs\\20261011-165211-a76b66\\agents\\market_regime.json",
+  "process": [
+    {
+      "time": "2026-10-11 16:52:11",
+      "stage": "开始",
+      "detail": "读取真实输入"
+    },
+    {
+      "time": "2026-10-11 16:52:11",
+      "stage": "完成",
+      "detail": "市场震荡：上涨占比 47%，个股涨跌中位数 -0.09%"
+    }
+  ],
+  "output": {
+    "regime": "震荡",
+    "regime_score": 0,
+    "average_index_pct": 0.191,
+    "breadth": {
+      "up": 423,
+      "down": 473,
+      "up_ratio": 0.472
+    },
+    "median_stock_pct": -0.092,
+    "high_volatility_count": 58,
+    "limit_up_like": 14,
+    "limit_down_like": 4
+  }
+}

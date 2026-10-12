@@ -1,16 +1,18 @@
 {
   "code": "300440",
   "name": "运达科技",
-  "fetched_at": "2026-09-29 15:48:40",
+  "fetched_at": "2026-10-12 09:32:13",
   "requested_limit": 1,
   "opinion_count": 1,
   "opinions": [
     {
-      "opi_pubtime": "2026-08-09T21:24:23",
-      "publish_time_beijing": "2026-08-09 21:24:23",
-      "title": "重视磷化铟短缺",
-      "content": "",
-      "opi_all": "{\"description\":\"本周建议关注组合：胜通能源、正帆科技、紫光股份、金斯瑞生物科技、药石科技 八月建议关注组合：长鑫科技、运达科技、甘李药业、欧林生物\",\"title\":\"重视磷化铟短缺\",\"content\":\"\",\"url\":\"http://mp.weixin.qq.com/s?__biz=Mzg2MDY5NjgyNA==&mid=2247528186&idx=1&sn=c239429a4b502c1568759116c8232a7c&chksm=cf8b4fb9887dfc8a59267f1d5795d741aa3093a20728653df20e95c4dd70725171df32834b9e&scene=0&xtrack=1#rd\"}"
+      "opi_pubtime": "2026-09-06T21:41:33",
+      "publish_time_beijing": "2026-09-06 21:41:33",
+      "title": "建议关注AI电源",
+      "content": "本周建议关注组合：欧陆通、科士达 九月建议关注组合：长鑫科技、运达科技、甘李药业、欧林生物",
+      "content_kind": "摘要",
+      "rpt_id": null,
+      "opi_all": "{\"description\":\"本周建议关注组合：欧陆通、科士达 九月建议关注组合：长鑫科技、运达科技、甘李药业、欧林生物\",\"title\":\"建议关注AI电源\",\"url\":\"https://mp.weixin.qq.com/s?__biz=Mzg2MDY5NjgyNA==&mid=2247528248&idx=1&sn=7096a69cdc9f789223c9a13f5530bc84&chksm=cfb6e29dd2ca4d7e0a523ddbf26c75f48870b2943dbdedf6cda26c5ca72afdcfc55e63f88ec7&mpshare=1&scene=1&srcid=0906kCxrHGTgkZRTGJEi0wTe&sharer_shareinfo=ff9f64c0c5fd5692944e6c9e215910eb&sharer_shareinfo_first=ff9f64c0c5fd5692944e6c9e215910eb#rd\"}"
     }
   ]
 }

@@ -171,6 +171,39 @@ def _load_cached_chief_opinions():
         return None
 
 
+def repair_opinion_record(opinion):
+    """老缓存只落了 title/content；摘要型记录的内容藏在原始串 opi_all 里，读时补回。"""
+    if not isinstance(opinion, dict) or not isinstance(opinion.get("opi_all"), str):
+        return opinion
+    try:
+        decoded = json.loads(opinion["opi_all"])
+    except json.JSONDecodeError:
+        return opinion
+    if not isinstance(decoded, dict):
+        return opinion
+    if not opinion.get("content"):
+        opinion["content"] = decoded.get("content") or decoded.get("description")
+    if not opinion.get("content_kind"):
+        opinion["content_kind"] = "全文" if decoded.get("content") else ("摘要" if decoded.get("description") else None)
+    opinion.setdefault("rpt_id", decoded.get("rpt_id"))
+    opinion.setdefault("title", decoded.get("title"))
+    return opinion
+
+
+def annotate_opinion_relevance(opinions, name):
+    """标记每条观点是否真的提到了这只股票。
+
+    观点源返回的是行业/市场级文章，一篇文章会覆盖多只标的，标题讲的往往是别的主体。
+    不校验匹配度，用户就会看到"奥瑞德"下面挂着讲"达瑞电子"的文章，像挂错了票。
+    """
+    for opinion in opinions or []:
+        if not isinstance(opinion, dict):
+            continue
+        text = "%s %s" % (opinion.get("title") or "", opinion.get("content") or "")
+        opinion["mentions_stock"] = bool(name) and name in text
+    return opinions
+
+
 def _load_stock_opinion_cache(stock):
     code = str(stock.get("code", "")).strip()
     if not code:
@@ -181,6 +214,10 @@ def _load_stock_opinion_cache(stock):
         return None
     if str(payload.get("code", "")) != code or not isinstance(payload.get("opinions"), list):
         return None
+    # 老缓存是修复前写入的，读出来时补算正文与匹配标记，不必等重新同步
+    for opinion in payload["opinions"]:
+        repair_opinion_record(opinion)
+    annotate_opinion_relevance(payload["opinions"], payload.get("name"))
     return payload
 
 
@@ -248,11 +285,16 @@ def _decode_mcp_records(result):
         if identity in seen:
             continue
         seen.add(identity)
+        # 观点源有两种形态：{content, title} 有全文；{description, rpt_id, title}
+        # 只有摘要。之前只读 content，于是摘要型记录在前端显示为"有观点但没正文"。
+        body = opinion.get("content") or opinion.get("description")
         normalized.append({
             "opi_pubtime": record.get("opi_pubtime"),
             "publish_time_beijing": record.get("publish_time_beijing"),
             "title": opinion.get("title"),
-            "content": opinion.get("content"),
+            "content": body,
+            "content_kind": "全文" if opinion.get("content") else ("摘要" if opinion.get("description") else None),
+            "rpt_id": opinion.get("rpt_id"),
             "opi_all": raw_opinion,
         })
     return normalized
@@ -301,6 +343,7 @@ def fetch_chief_opinions(stocks, limit=None):
             result = _mcp_request("tools/call", {"name": "get_stock_chief_opinions",
                                   "arguments": {"stock": code or name, "limit": requested_limit}}, token, endpoint)
             opinions = _decode_mcp_records(result)
+            annotate_opinion_relevance(opinions, name)
             stock_payload = {"code": code, "name": name, "fetched_at": _now(),
                              "requested_limit": requested_limit, "opinion_count": len(opinions), "opinions": opinions}
             results.append(stock_payload)
@@ -446,6 +489,35 @@ multiply为两因子相乘，difference为left-right，ratio为left/(abs(right)+
 
 def _pct(value):
     return f"{float(value or 0) * 100:+.2f}%"
+
+
+def resolve_round_strategy(backtest_run, user_strategy):
+    """决定本轮到底用哪个组合：用户选的优先，其次才是风控约束内最优。
+
+    用户显式选定的策略必须被尊重——哪怕它回撤超标，系统也只提示、不替换，
+    否则"我选了 A、系统用了 B"正是最让人困惑的那种不一致。
+    返回 (组合, 来源)，来源取值 user / user_missing / constrained / blocked / none。
+    """
+    results = [item for item in (backtest_run or {}).get("results") or []
+               if item.get("holding_days", 1) == 1]
+    if not results:
+        return None, "none"
+    user_strategy = user_strategy or {}
+    keys = [str(key) for key in (user_strategy.get("factors") or [])]
+    if keys:
+        for item in results:
+            if user_strategy.get("strategy_id") and item.get("strategy_id") != user_strategy["strategy_id"]:
+                continue
+            if list(item.get("factors") or []) != keys:
+                continue
+            if user_strategy.get("holding_days") is None or item.get("holding_days") == user_strategy.get("holding_days"):
+                return item, "user"
+        return None, "user_missing"
+    eligible = [item for item in results
+                if (item.get("result") or {}).get("days", 0) >= 20
+                and (item.get("result") or {}).get("max_drawdown") is not None
+                and (item.get("result") or {}).get("max_drawdown") <= .35]
+    return (eligible[0], "constrained") if eligible else (None, "blocked")
 
 
 def run_research_council(context, factor_runner, backtest_runner, progress=None):
@@ -625,21 +697,86 @@ def run_research_council(context, factor_runner, backtest_runner, progress=None)
                 "output": {"top_strategy": top, "engine_version": backtest_run.get("engine_version"), "selection_rule": backtest_run.get("selection_rule")}}
     backtest_agent = _execute(run, run_dir, "backtest", backtest_worker, progress)
 
+    def eligible_combos():
+        """风控约束内的组合，保持回测排名（成本后 Sharpe）原序。"""
+        return [item for item in (backtest_run or {}).get("results", [])
+                if (item.get("result") or {}).get("days", 0) >= 20
+                and (item.get("result") or {}).get("max_drawdown") is not None
+                and (item.get("result") or {}).get("max_drawdown") <= .35]
+
+    user_strategy = context.get("selected_strategy") or {}
+    resolved = {}
+
+    def chosen_combo():
+        item, source = resolve_round_strategy(backtest_run, user_strategy)
+        if source == "user_missing":
+            # 用户选的组合已不在当前回测里（可能重新回测过），退回约束内最优
+            fallback, fallback_source = resolve_round_strategy(backtest_run, None)
+            return fallback, fallback_source, "user_missing"
+        return item, source, source
+
     def challenger_worker():
         if not backtest_run or not backtest_run.get("results"):
             return {"status": "阻断", "summary": "没有回测结果可审查", "evidence": []}
-        result = backtest_run["results"][0].get("result", {})
+        results = backtest_run["results"]
+        champion = results[0].get("result", {})
+        champion_names = " / ".join(results[0].get("names") or [])
         findings = ["当前策略选择与排名仍来自同一完整样本，尚未强制执行独立测试集"]
-        severity = "警告"
-        if result.get("max_drawdown", 0) > .20: findings.append(f"最大回撤 {_pct(-result['max_drawdown'])} 超过20%")
-        if result.get("annual_return", 0) > .50: findings.append(f"年化 {_pct(result['annual_return'])} 偏高，需排查过拟合与可成交性")
-        if result.get("days", 0) < 252: findings.append("有效样本不足一年")
-        approved = result.get("days", 0) >= 20 and result.get("max_drawdown", 0) <= .35
-        if not approved:
-            severity = "阻断"
-        return {"status": severity, "summary": f"发现 {len(findings)} 项需要人工关注的问题", "evidence": findings,
-                "confidence": 0.8, "data_quality": "已审查回测指标与验证缺口",
-                "output": {"approved_for_research": approved, "approved_for_live_trading": False, "findings": findings}}
+        picked, source, raw_source = chosen_combo()
+        resolved["source"] = source
+        resolved["picked"] = picked
+
+        if raw_source == "user_missing":
+            findings.append("你在 Agent 协作台指定的策略已不在当前回测结果里（可能已重新回测），本轮按约束内最优执行")
+        if source == "user" and picked is not None:
+            result = picked.get("result") or {}
+            gate_ok = (result.get("days", 0) or 0) >= 20 and (result.get("max_drawdown", 1) or 1) <= .35
+            findings.append(f"本轮采用你在 Agent 协作台指定的策略：{ ' / '.join(picked.get('names') or []) }"
+                            f"（排名 #{picked.get('rank')}，持有 {picked.get('holding_days')} 个交易日）")
+            if gate_ok:
+                findings.append(f"该策略在风控阈值内（最大回撤 {_pct(-(result.get('max_drawdown') or 0))} ≤ 35%）")
+            else:
+                findings.append(f"注意：该策略最大回撤 {_pct(-(result.get('max_drawdown') or 0))} 超过 35% 上限；"
+                                f"系统按你的选择输出，但请自行下调仓位")
+        elif source != "user":
+            eligible = eligible_combos()
+            # 冠军是按 Sharpe 选出来的；它回撤超标不代表整个候选池都不能用，
+            # 应该在约束内另选一个更稳的组合，而不是直接给用户 0 个候选。
+            if not eligible:
+                findings.append("没有任何组合同时满足「样本 ≥20 天 且 最大回撤 ≤ 35%」")
+            elif (champion.get("max_drawdown", 0) or 0) > .35:
+                best = eligible[0]
+                findings.append(f"Sharpe 冠军（{champion_names}）最大回撤 {_pct(-(champion.get('max_drawdown') or 0))} "
+                                f"超过 35% 上限，已改用约束内最优组合 #{best.get('rank')}"
+                                f"（回撤 {_pct(-(best.get('result', {}).get('max_drawdown') or 0))}）")
+            elif (champion.get("max_drawdown", 0) or 0) > .20:
+                findings.append(f"最大回撤 {_pct(-(champion.get('max_drawdown') or 0))} 超过 20%，需要人工关注")
+        if (champion.get("annual_return", 0) or 0) > .50:
+            findings.append(f"冠军组合年化 {_pct(champion.get('annual_return'))} 偏高，需排查过拟合与可成交性")
+        if (champion.get("days", 0) or 0) < 252:
+            findings.append("有效样本不足一年")
+        # 样本外与多重检验校正只作为警示呈现，不改变硬闸门
+        validation = backtest_run.get("out_of_sample") or {}
+        if validation.get("status") == "完成":
+            oos = validation.get("out_of_sample") or {}
+            if (oos.get("sharpe") or 0) < (champion.get("sharpe") or 0):
+                findings.append(f"滚动样本外 Sharpe {oos.get('sharpe')} 低于全样本 {champion.get('sharpe')}；"
+                                f"样本外年化 {_pct(oos.get('annual_return'))}，过拟合缺口明显")
+        testing = backtest_run.get("multiple_testing") or {}
+        if testing.get("status") == "完成" and (testing.get("probability") or 0) < .95:
+            findings.append(f"多重检验校正后「真实 Sharpe > 0」仅 {testing.get('probability'):.1%}"
+                            f"（{testing.get('trials')} 组试算，纯运气上限就有 {testing.get('expected_max_sharpe')}）")
+
+        approved = picked is not None
+        return {"status": "警告" if approved else "阻断",
+                "summary": f"发现 {len(findings)} 项需要人工关注的问题" + ("" if approved else "，且无合规组合"),
+                "evidence": findings, "confidence": 0.8, "data_quality": "已审查回测指标与验证缺口",
+                "output": {"approved_for_research": approved, "approved_for_live_trading": False, "findings": findings,
+                           "strategy_source": resolved.get("source"),
+                           "selected_factors": (picked or {}).get("factors"),
+                           "selected_names": (picked or {}).get("names"),
+                           "selected_holding_days": (picked or {}).get("holding_days"),
+                           "selected_rank": (picked or {}).get("rank")}}
     challenger = _execute(run, run_dir, "challenger", challenger_worker, progress)
 
     def portfolio_worker():
@@ -648,12 +785,20 @@ def run_research_council(context, factor_runner, backtest_runner, progress=None)
         if not challenger.get("output", {}).get("approved_for_research"):
             return {"status": "阻断", "summary": "Challenger 未批准研究用途，组合经理不输出股票",
                     "evidence": challenger.get("evidence", []), "confidence": 0, "data_quality": "未通过压力审查", "output": {"holdings": []}}
-        top = backtest_run["results"][0]
+        top = resolved.get("picked") or (eligible_combos() or [None])[0] or backtest_run["results"][0]
+        source = resolved.get("source")
         holdings = top.get("result", {}).get("latest_holdings", [])[:3]
-        return {"summary": f"选择 #1 策略并输出 {len(holdings)} 只等权研究候选",
+        picked_rank = top.get("rank")
+        reason = ("采用你在 Agent 协作台指定的策略" if source == "user"
+                  else ("选择 #1 策略" if picked_rank == 1
+                        else f"选择约束内最优组合{f' #{picked_rank}' if picked_rank else ''}"
+                             f"（回撤 {_pct(-(top.get('result', {}).get('max_drawdown') or 0))}）"))
+        return {"summary": f"{reason}，输出 {len(holdings)} 只等权研究候选",
                 "evidence": [f"{item.get('name')}({item.get('code')})" for item in holdings] + ["Challenger仅批准研究用途"],
                 "confidence": 0.55, "data_quality": backtest_agent.get("data_quality", "待评估"),
-                "output": {"strategy": {"factors": top.get("factors"), "names": top.get("names")}, "holdings": holdings, "weights": [round(1 / len(holdings), 4)] * len(holdings) if holdings else []}}
+                "output": {"strategy": {"factors": top.get("factors"), "names": top.get("names"), "holding_days": top.get("holding_days")},
+                           "strategy_source": source,
+                           "holdings": holdings, "weights": [round(1 / len(holdings), 4)] * len(holdings) if holdings else []}}
     portfolio = _execute(run, run_dir, "portfolio_manager", portfolio_worker, progress)
 
     holdings = portfolio.get("output", {}).get("holdings", [])
@@ -681,7 +826,11 @@ def run_research_council(context, factor_runner, backtest_runner, progress=None)
                    "chief_opinions_reviewed": opinion_refs, "orders_created": 0, "live_trading_allowed": False}}, progress)
 
     top_result = ((backtest_run or {}).get("results") or [{}])[0]
-    run["decision"] = {"status": "等待人工批准" if holdings else "阻断", "strategy": top_result.get("names", []),
+    selected_strategy = (portfolio.get("output", {}).get("strategy") or {})
+    run["decision"] = {"status": "等待人工批准" if holdings else "阻断",
+                       "strategy": selected_strategy.get("names") or top_result.get("names", []),
+                       "strategy_factors": selected_strategy.get("factors") or top_result.get("factors", []),
+                       "holding_days": selected_strategy.get("holding_days") or top_result.get("holding_days"),
                        "holdings": holdings, "max_positions": 3, "orders_created": 0,
                        "challenger_status": challenger.get("status"), "risk_status": risk.get("status")}
     warnings = list(challenger.get("output", {}).get("findings", []))

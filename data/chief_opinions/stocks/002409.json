@@ -1,7 +1,7 @@
 {
   "code": "002409",
   "name": "雅克科技",
-  "fetched_at": "2026-10-08 18:43:21",
+  "fetched_at": "2026-10-12 09:08:46",
   "requested_limit": 1,
   "opinion_count": 1,
   "opinions": [
@@ -10,6 +10,8 @@
       "publish_time_beijing": "2026-10-08 08:26:21",
       "title": "中信建投晨会纪要-20261008.pdf",
       "content": null,
+      "content_kind": null,
+      "rpt_id": null,
       "opi_all": "{\"extension\":\".pdf\",\"size\":831544,\"resource_id\":16914929,\"title\":\"中信建投晨会纪要-20261008.pdf\",\"url\":\"gdp/wxrobot/chat/file/2026-10-08/中信建投晨会纪要-20261008.pdf\",\"md5\":\"5799fc34d00c318fb2d699996182d57e\"}"
     }
   ]

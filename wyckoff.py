@@ -7,7 +7,7 @@ import statistics
 from collections import Counter
 
 
-ENGINE_VERSION = "wyckoff-ohlcv-v1"
+ENGINE_VERSION = "wyckoff-ohlcv-v2"
 MIN_HISTORY = 80
 PHASE_LABELS = {
     "spring": "Spring 弹簧",

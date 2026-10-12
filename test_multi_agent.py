@@ -9,6 +9,49 @@ import multi_agent
 from multi_agent import _decode_mcp_records
 
 
+class StrategyResolutionTests(unittest.TestCase):
+    """用户在 Agent 协作台选定的策略必须被尊重，不能被系统悄悄替换。"""
+
+    def setUp(self):
+        self.run = {"results": [
+            {"rank": 1, "factors": ["a"], "holding_days": 1, "names": ["冠军"],
+             "result": {"days": 500, "max_drawdown": 0.42, "sharpe": 1.68}},
+            {"rank": 2, "factors": ["b", "c"], "holding_days": 1, "names": ["约束内最优"],
+             "result": {"days": 500, "max_drawdown": 0.28, "sharpe": 1.58}},
+            {"rank": 3, "factors": ["b", "c"], "holding_days": 2, "names": ["约束内最优·两日"],
+             "result": {"days": 500, "max_drawdown": 0.30, "sharpe": 1.31}},
+        ]}
+
+    def test_without_a_user_pick_it_falls_back_to_the_constrained_best(self):
+        picked, source = multi_agent.resolve_round_strategy(self.run, None)
+        self.assertEqual(source, "constrained")
+        self.assertEqual(picked["rank"], 2)
+
+    def test_user_pick_wins_even_when_it_breaches_the_risk_limit(self):
+        picked, source = multi_agent.resolve_round_strategy(self.run, {"factors": ["a"], "holding_days": 1})
+        self.assertEqual(source, "user")
+        self.assertEqual(picked["rank"], 1)
+        self.assertGreater(picked["result"]["max_drawdown"], 0.35)
+
+    def test_retired_two_day_strategy_cannot_be_selected(self):
+        picked, source = multi_agent.resolve_round_strategy(self.run, {"factors": ["b", "c"], "holding_days": 2})
+        self.assertEqual(source, "user_missing")
+        self.assertIsNone(picked)
+
+    def test_stale_user_pick_is_reported_instead_of_silently_substituted(self):
+        picked, source = multi_agent.resolve_round_strategy(self.run, {"factors": ["gone"], "holding_days": 1})
+        self.assertIsNone(picked)
+        self.assertEqual(source, "user_missing")
+
+    def test_blocks_when_nothing_is_eligible(self):
+        run = {"results": [{"rank": 1, "factors": ["a"], "result": {"days": 500, "max_drawdown": 0.9}}]}
+        self.assertEqual(multi_agent.resolve_round_strategy(run, None), (None, "blocked"))
+
+    def test_empty_results(self):
+        self.assertEqual(multi_agent.resolve_round_strategy({}, None), (None, "none"))
+        self.assertEqual(multi_agent.resolve_round_strategy(None, {"factors": ["a"]}), (None, "none"))
+
+
 class ChiefOpinionsParsingTests(unittest.TestCase):
     def test_decodes_structured_content_and_nested_opinion(self):
         raw = json.dumps({"title": "观点标题", "content": "观点正文"}, ensure_ascii=False)

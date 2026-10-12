@@ -1,7 +1,7 @@
 {
   "code": "002587",
   "name": "奥拓电子",
-  "fetched_at": "2026-10-08 18:46:09",
+  "fetched_at": "2026-10-12 09:11:23",
   "requested_limit": 1,
   "opinion_count": 1,
   "opinions": [
@@ -9,7 +9,9 @@
       "opi_pubtime": "2026-10-08T15:16:40",
       "publish_time_beijing": "2026-10-08 15:16:40",
       "title": "【华创交运|深度】航材股份：两机基石、大国之材：先进材料平台迎出海乘风、国产破局双催化——华创交运|航空强国系列研究（十三）",
-      "content": null,
+      "content": "【华创交运|深度】航材股份：两机基石、大国之材：先进材料平台迎出海乘风、国产破局双催化——华创交运|航空强国系列研究（十三）",
+      "content_kind": "摘要",
+      "rpt_id": null,
       "opi_all": "{\"description\":\"【华创交运|深度】航材股份：两机基石、大国之材：先进材料平台迎出海乘风、国产破局双催化——华创交运|航空强国系列研究（十三）\",\"title\":\"【华创交运|深度】航材股份：两机基石、大国之材：先进材料平台迎出海乘风、国产破局双催化——华创交运|航空强国系列研究（十三）\",\"url\":\"https://mp.weixin.qq.com/s?__biz=MzI2OTM5ODkwNg==&mid=2247521689&idx=1&sn=7ced8597a002587cabe1003e84409644&chksm=eba103a03529ade5daca8fff5027e743a39eb759b52966dd5216aba47082e1f43b3ee33c004a&mpshare=1&scene=1&srcid=1008XNPEzvlQdAVhoZ37eCMG&sharer_shareinfo=86a5f483c86342d5d115af0dd16959f0&sharer_shareinfo_first=a3ebf84ee2dd02ebd9937b2768c3f64e#rd\"}"
     }
   ]

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "accounts": [
+    {
+      "id": "dfd9a7c87ce345f4abb27ff4f3b393af",
+      "request_id": "41e42a6b-0785-4cef-8d69-4d560b4814f1",
+      "name": "两万元模拟账户",
+      "mode": "paper",
+      "initial_cash": "20000.00",
+      "created_at": "2026-10-12T10:30:41",
+      "events": []
+    }
+  ]
+}
